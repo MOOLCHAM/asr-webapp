@@ -14,6 +14,22 @@ Blueprint for About Page Endpoints
 Blueprint Data API Endpoints
 ----------------------------
 
+.. automodule:: blueprints.replay
+    :members:
+    :undoc-members:
+    :member-order: groupwise
+
+Blueprint for Replay page and API Endpoints
+----------------------------
+
+.. automodule:: blueprints.site_map
+    :members:
+    :undoc-members:
+    :member-order: groupwise
+
+Blueprint for Site Map and API Endpoints
+----------------------------
+
 .. automodule:: blueprints.data
     :members:
     :undoc-members:

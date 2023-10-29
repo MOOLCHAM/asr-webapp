@@ -1,7 +1,7 @@
 import os
 from flask import Flask
 
-from .blueprints import index, about, map, data, models
+from .blueprints import index, about, map, data, models, replay, site_map
 
 
 def create_app(test_config=None):
@@ -18,6 +18,8 @@ def create_app(test_config=None):
     app.register_blueprint(about.bp)
     app.register_blueprint(map.bp)
     app.register_blueprint(data.bp)
+    app.register_blueprint(replay.bp)
+    app.register_blueprint(site_map.bp)
  #   app.register_blueprint(models.bp)
 
     return app
