@@ -2,6 +2,7 @@ import pandas as pd
 from flask import Blueprint, g, make_response, request, jsonify
 from opensky_api import OpenSkyApi
 from requests.exceptions import ReadTimeout
+import subprocess # MOVE TO TRANSCRIBE FILE
 
 from .map import initial_center
 
@@ -17,6 +18,16 @@ try:
 except ImportError:
     # if the username/password secrets weren't configured, use without credentials
     opensky = OpenSkyApi()
+
+#================================================================================================================================
+# MOVE TO TRANSCRIBE FILE
+try:
+    subprocess.check_output('nvidia-smi') # this command will check if NVIDIA GPU AND appropriate drivers are installed, may fail if appropriate drivers not installed
+    print('NVIDIA GPU Detected')
+except Exception: # command may result in several different errors depending on config
+    print('NVIDIA GPU NOT FOUND!')
+
+#================================================================================================================================
 
 bp = Blueprint("data", __name__, url_prefix="/data")
 
