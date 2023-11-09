@@ -19,7 +19,7 @@ def create_app(test_config=None):
         date = db.Column(db.Date)
         time = db.Column(db.Time)
         longitude = db.Column(db.Float(9, 6))
-        lattitude = db.Column(db.Float(9, 6))
+        latitude = db.Column(db.Float(9, 6))
         atc = db.Column(db.Boolean)
 
         def __repr__(self):

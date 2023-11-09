@@ -2,19 +2,19 @@
 # from multiprocessing import Process, Lock
 # from flask import Blueprint, make_response, request
 
-<<<<<<< Updated upstream
+#<<<<<<< Updated upstream
 # from multiprocessing import Process, Queue
-bp = Blueprint("models", __name__, url_prefix="/models")
+#bp = Blueprint("models", __name__, url_prefix="/models")
 
 
 # if the model isn't run in a separate thread, it blocks the entire server
-def asr_model_thread():
-    pass
+#def asr_model_thread():
+#    pass
 
 # using mutliprocessing to sidestep GIL
-model_init_process = Process(target=asr_model_thread)
-model_init_process.start()
-=======
+#model_init_process = Process(target=asr_model_thread)
+#model_init_process.start()
+#=======
 # # from multiprocessing import Process, Queue
 # from asr_project.models import PretrainedFineTunedJasper, Model
 # from asr_project.utils import transcribe_audio_buffer
@@ -28,7 +28,7 @@ model_init_process.start()
 
 # model_init_process = Process(target=asr_model_thread)
 # model_init_process.start()
->>>>>>> Stashed changes
+#>>>>>>> Stashed changes
 
 
 # @bp.route("/transcribe", methods=["GET", "POST"])
