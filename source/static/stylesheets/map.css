@@ -19,7 +19,8 @@ body,
     width: 350px; /*changed by Maxwell Moolchan, from 30%*/
     /* position: absolute; */ /*remvoed by Maxwell Moolchan, this breaks the flex box controls*/
     z-index: 800;
-    background-color: white;
+    background-color: #ffffff;
+    border-right: 2px solid #cccccc;
     display: none; /*changed by Max M from none to inline-block, this may not work because using Jquery */
     cursor: default;
 }
@@ -206,3 +207,16 @@ body,
   .selectionClusterLocationParent {
     position: absolute;
   }
+
+/* infoPane styles */
+
+.infoPaneItem {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.infoPaneItem li {
+  list-style-type: none;
+  display: inline-block;
+}

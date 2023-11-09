@@ -15,32 +15,17 @@ var currentMapType = null;
 var VFRMapCycle = "20230810";
 var mapTiles = {};
 var mapTypes = {
-    geographic: {
-        maxZoom: 18,
-        defaultZoom: 7
-    },
-    vfrc: {
-        maxZoom: 12,
-        defaultZoom: 7
-    },
-    sectc: {
-        maxZoom: 11,
-        defaultZoom: 7
-    },
-    helic: {
-        maxZoom: 13,
-        defaultZoom: 7
-    },
-    ifrlc: {
-        maxZoom: 11,
-        defaultZoom: 7
-    },
-    ehc: {
-        maxZoom: 10,
-        defaultZoom: 7
-    }
+    geographic: { maxZoom: 18, defaultZoom: 7 },
+    vfrc: { maxZoom: 12, defaultZoom: 7 },
+    sectc: { maxZoom: 11, defaultZoom: 7 },
+    helic: { maxZoom: 13, defaultZoom: 7 },
+    ifrlc: { maxZoom: 11, defaultZoom: 7 },
+    ehc: { maxZoom: 10, defaultZoom: 7 }
 };
 
+/**
+ * Initalizes the map tilesets from OpenStreetMap and VFRMap
+ */
 function initializeMapTiles() {
     for (var type in mapTypes) {
         var mapLink;
@@ -61,6 +46,12 @@ function initializeMapTiles() {
     }
 }
 
+/**
+ * Sets the map type to the input map type
+ *
+ * @param {string} mapType string input corresponding to map type can be "geograpgic", "vfrc", "sectc", "helic", "ifrlc", "ehc"
+ * 
+ */
 function setMapType(mapType) {    
     if (currentMapType != null && mapType != currentMapType) {
         mapTiles[currentMapType].removeFrom(map);
@@ -71,17 +62,11 @@ function setMapType(mapType) {
         currentMapType = mapType;
         mapTiles[currentMapType].addTo(map);
     }
-
-    // The following code works but would refresh again after hitting button which personally I didn't like
-    /*
-    if (currentMapType) {
-        mapTiles[currentMapType].removeFrom(map);
-    }
-    currentMapType = mapType;
-    mapTiles[currentMapType].addTo(map);*/
-    
 }
 
+/**
+ * Initalizes the map with geographical map when the page is loaded
+ */
 function initializeMap() {
     initializeMapTiles();
     setMapType("geographic");
@@ -97,12 +82,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // THIS SORT OF WORKS NOW BUT NEEDS ADJUSTING
 // format for vfrmap is https://vfrmap.com/20230810/tiles/vfrc/{z}/{x}/{y}.jpg
-// FOR DIFFERENT VFRMaps
-// vfrc - 
-// ehc - 
-// sectc -
-// ifrlc -
-// helic - 
 
 // POSSIBLY FIXED WITH tms IN tileLayer SETTINGS
 /*
@@ -177,7 +156,7 @@ function clear_table() {
  * @param {int} category plane category from API endpoint
  * @returns {string} decoded plane category
  */
-// in the future use a lookup table for this, switch statement isnt the fastest or cleanest
+// in the future possibly use a lookup table for this, switch statement may not be the fastest or cleanest
 // https://dev.to/k_penguin_sato/use-lookup-tables-for-cleaning-up-your-js-ts-code-9gk
 function get_plane_category_string(category_plane) {
     var category = "";
@@ -325,13 +304,12 @@ function draw_plane_markers(plane_data) {
         // order in which these methods are called doesn't matter
         
         marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [20, 20], iconAnchor: [10, 10], className: "planeMarker" }));
-
-        // Rotate icon to match actual plane heading
-        marker.setRotationAngle(plane.true_track);
+        marker.setRotationAngle(plane.true_track); // Rotate icon to match actual plane heading
         marker.addTo(planeLayer);
 
         marker.on('click', () => {
             clear_table();
+
 
             // Add plane entries entries; TODO: find a better way to do this
             $("#infoTable").append(`
@@ -455,6 +433,22 @@ function draw_airport_markers(airport_data) {
         marker.on('click', (event) => {
             clear_table();
 
+            $("#infoPane").append(`
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Airport Identifier: </li>
+                        <li class="infoPaneData airportIdentifier">${airport.ident}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Airport Name: </li>
+                        <li class="infoPaneData airportName">${airport.name}</li>
+                    </ul>
+                </div>
+                
+            `);
+
             // Add airport properties
             $("#infoTable").append(`
                 <tr>
@@ -515,12 +509,22 @@ function draw_airport_markers(airport_data) {
                     <td>${airport.local_code}</td>
                 </tr>
             `);
-            $("#infoTable").append(`
+            if (airport.home_link != null) {
+                $("#infoTable").append(`
                 <tr>
                     <td>Website</td>
-                    <td>${airport.home_link}</td>
+                    <td><a href=${airport.home_link}>${airport.name}</a></td>
                 </tr>
             `);
+            }
+            else {
+                $("#infoTable").append(`
+                    <tr>
+                        <td>Website</td>
+                        <td>${airport.home_link}</td>
+                    </tr>
+                `);
+            }
 
             // If there are airport frequencies available, add them to the info pane
             if (airport.tower_frequencies) {
