@@ -1,11 +1,15 @@
 import pandas as pd
-from flask import Blueprint, g, make_response, request, jsonify
+from flask import Flask, Blueprint, g, make_response, request, jsonify
 from opensky_api import OpenSkyApi
 from requests.exceptions import ReadTimeout
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.sql import func
+from pandas.core.frame import DataFrame
 
 from .map import initial_center
 
 latLonBoundBox = [initial_center["lat"] - 3, initial_center["lat"] + 3, initial_center["lon"] - 3, initial_center["lon"] + 3]
+
 
 try:
     # try to use the opensky API with credentials
@@ -201,11 +205,11 @@ def airports(state):
                     "region_name": row.region_name,
                     "local_region": row.local_region,
                     "municipality": row.municipality,
-                    "gps_code": row.gps_code,
-                    "iata_code": row.iata_code,
-                    "local_code": row.local_code,
-                    "home_link": row.home_link,
-                }
+                   "gps_code": row.gps_code,
+                   "iata_code": row.iata_code,
+                   "local_code": row.local_code,
+                   "home_link": row.home_link,
+               }
 
                 # filter out nan values
                 for k, v in data.items():
@@ -218,6 +222,7 @@ def airports(state):
 
                 response_data["airport_data"].append(data)
 
+    
     return make_response(response_data)
 
 @bp.route("/getMapLatLonBounds", methods=["POST"])
