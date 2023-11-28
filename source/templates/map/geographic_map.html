@@ -14,10 +14,14 @@
     <script src="{{ url_for('static', filename='vendor/leaflet.rotatedMarker.js') }}"></script>
 </head>
 
-<body onload="initializeMap()">
+<body onload="initializeMap()"> 
     <div id="map">
         <div id="infoPane">
-            <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
+            <div class="INFOPANETEMP">
+                <span class="infoPaneTitle">Info Pane</span>
+                <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
+            </div>
+            
             <table id="infoTable"></table>
         </div>
         <div id="zoomedTooFarOut">
@@ -25,17 +29,32 @@
         </div>
         <div class="selectionClusterLocationParent">
             <div class="selectionClusterLocation">
+                <div class="altitudeToggleCluster">
+                    <button title="Altitude Coloring Toggle" aria-label="Altitude Coloring Toggle" onclick="toggleAltitudeColors()" class="altitudeColorButton">
+                        <span>A</span>
+                    </button>
+                </div>
                 <div class="selectionCluster">
-                    <button onclick="dropDownSelection()" class="mapCollapsible primaryButton"></button>
+                    <button title="Map Type Toggle" aria-label="Map Type Toggle" onclick="dropDownSelection()" class="mapCollapsible primaryButton"></button>
                     <div class="contentDropdown">
-                        <button onclick="tileSetChange('geographic')" class="collapsibleContent" id="geographic">
-                            <!--<span>G</span>-->
+                        <button title="Geographic Map" aria-label="Geographic Map" onclick="tileSetChange('geographic')" class="collapsibleContent" id="geographic">
+                            <span>G</span>
                         </button>
-                        <button onclick="tileSetChange('vfrc')" class="collapsibleContent" id="vfrc"></button>
-                        <button onclick="tileSetChange('sectc')" class="collapsibleContent" id="sectc"></button>
-                        <button onclick="tileSetChange('helic')" class="collapsibleContent" id="helic"></button>
-                        <button onclick="tileSetChange('ifrlc')" class="collapsibleContent" id="ifrlc"></button>
-                        <button onclick="tileSetChange('ehc')" class="collapsibleContent lastButton" id="ehc"></button>
+                        <button title="Hybrid VFR Map" aria-label="Hybrid VFR Map" onclick="tileSetChange('vfrc')" class="collapsibleContent" id="vfrc">
+                            <span>V</span>
+                        </button>
+                        <button title="Sectionals Map" aria-label="Sectionals Map" onclick="tileSetChange('sectc')" class="collapsibleContent" id="sectc">
+                            <span>S</span>
+                        </button>
+                        <button title="Helicopter Map" aria-label="Helicopter Map" onclick="tileSetChange('helic')" class="collapsibleContent" id="helic">
+                            <span>H</span>
+                        </button>
+                        <button title="Low IFR Map" aria-label="Low IFR Map" onclick="tileSetChange('ifrlc')" class="collapsibleContent" id="ifrlc">
+                            <span>LI</span>
+                        </button>
+                        <button title="High IFR Map" aria-label="High IFR Map" onclick="tileSetChange('ehc')" class="collapsibleContent lastButton" id="ehc">
+                            <span>HI</span>
+                        </button>
                     </div>
                 </div>
             </div>
