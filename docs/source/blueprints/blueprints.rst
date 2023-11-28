@@ -16,6 +16,10 @@ Presently, there are five groups of endpoints either planned or currently implem
 
 * ``map`` - The map pages and API endpoints.
 
+* ``replay`` - The replay page and API endpoints.
+
+* ``site_map`` - The site map page and API endpoints.
+
 * ``models`` - The ASR and NLP model endpoints.
 
 The root of each of these endpoints serves either a home page (e.g. the templates rendered and returned from ``index`` and ``about``) or an API and/or endpoint status when a homepage is not necessary or has not been created.

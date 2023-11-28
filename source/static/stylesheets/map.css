@@ -19,15 +19,23 @@ body,
     width: 350px; /*changed by Maxwell Moolchan, from 30%*/
     /* position: absolute; */ /*remvoed by Maxwell Moolchan, this breaks the flex box controls*/
     z-index: 800;
-    background-color: white;
+    background-color: #ffffff;
+    border-right: 2px solid #cccccc;
     display: none; /*changed by Max M from none to inline-block, this may not work because using Jquery */
     cursor: default;
 }
 
 #closeButton {
-    height: 25px;
-    width: 25px;
-    float: right;
+    height: 18px; 
+    width: 18px; 
+    /* float: right; */
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding-left: 5px;
+    padding-right: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
 }
 
 #closeButton:hover {
@@ -55,7 +63,7 @@ body,
     content: "\02B9C";
 }
 
-.active:after {
+.activeTower:after {
     content: "\02B9F";
 }
 
@@ -119,9 +127,10 @@ body,
 
 /* for the collapsable menu menu on the map screen */
 
-.mapCollapsible, .collapsibleContent{
+.mapCollapsible, .collapsibleContent, .altitudeColorButton {
     background-color: #ffffff;
-    color: white;
+    color: #000000;
+    /*color: white;*/
     cursor: pointer;
     padding: 0px;
     width: 30px;
@@ -130,13 +139,15 @@ body,
     text-align: center;
     outline: none;
     font-size: 15px;
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: bold;
   }
   
   .active {
     border-radius: 2px 2px 0px 0px !important;
   }
   
-  .active, .mapCollapsible:hover, .collapsibleContent:hover {
+  .active, .mapCollapsible:hover, .collapsibleContent:hover, .altitudeColorButton:hover{
     background-color: #f4f4f4;  
   }
   
@@ -149,13 +160,31 @@ body,
   }
   
   
-  .mapCollapsible:after, .collapsibleContent:after {
+  .mapCollapsible:after {/*
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+    */
+    color: #000000;
+    font-weight: bold;
     content: '\002B';
+  }
+
+  .collapsibleContent {
     color: #000000;
     font-weight: bold;
   }
   
-  .active:after {
+  .active:after {/*
+    border: solid black;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);*/
     content: "\2212";
   }
   
@@ -200,9 +229,85 @@ body,
     z-index: 1000;
     pointer-events: none;
     margin-left: 10px;
-    margin-top: 80px;
+    margin-top: 84px;
   }
 
   .selectionClusterLocationParent {
     position: absolute;
   }
+
+/* infoPane styles */
+
+.infoPaneItem {
+  margin: 0;
+  padding: 0;
+  display: block;
+}
+
+.infoPaneItem li {
+  list-style-type: none;
+  /*display: inline-block;*/
+  float: left;
+}
+
+.infoPaneLabel {
+  width: 125px;
+}
+
+.infoPaneItem {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  content: " ";
+  display: block;
+  clear: both;
+  
+}
+
+.infoPaneTitle {
+  padding-top: 5px;
+  padding-bottom: 5px;
+  display: block;
+  font-weight: bold;
+}
+
+.INFOPANETEMP {
+  text-align: center;
+  position: relative;
+}
+
+.infoPaneData {
+  width: 215px;
+}
+
+.clearFloat:after {
+  content: " ";
+  display: block;
+  clear: both;
+}
+/**
+* We want to override leaflet font configs so we mark as !important
+*/
+.leaflet-control-zoom-in, .leaflet-control-zoom-out /*, .selectionCluster, .altitudeToggleCluster */ {
+  font-size: 15px !important;
+  font-family: Arial, Helvetica, sans-serif !important;
+  color: #000000;
+  font-weight: bold !important;
+}
+
+.altitudeToggleCluster {
+  margin-bottom: 10px;
+  width: 30px;
+  border: 2px solid rgba(0,0,0,0.2);
+  background-clip: padding-box;
+  border-radius: 4px;
+}
+
+.altitudeColorButton {
+  pointer-events: auto;
+}
+.toggleActive {
+  background-color: #cccccc !important;
+}

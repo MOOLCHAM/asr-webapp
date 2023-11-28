@@ -46,8 +46,8 @@ airport_data = pd.read_excel(
 @bp.route("/plane_states")
 def plane_states():
     """
-    Fetches the available plane states from the OpenSky Network API within +/- 3
-    degrees of the initial map center (KDAB airport).
+    Fetches the available plane states from the OpenSky Network API within the specified bounding box
+    based on the user display
 
     **Endpoint**: ``/data/plane_states``
 
@@ -72,13 +72,6 @@ def plane_states():
 
     try:
         states = opensky.get_states(
-#            bbox=(
-#                initial_center["lat"] - 3,
-#                initial_center["lat"] + 3,
-#                initial_center["lon"] - 3,
-#                initial_center["lon"] + 3,
-#            )
-
             bbox=(
                 latLonBoundBox[0],
                 latLonBoundBox[1],

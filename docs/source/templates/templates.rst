@@ -51,6 +51,28 @@ The two blocks from the base template are defined with the following data:
 
 * ``content``: TODO (nothing at the moment)
 
+Replay Template
+--------------
+
+File: ``replay.html``
+
+The two blocks from the base template are defined with the following data:
+
+* ``title``: ``"Audio Replays"``
+
+* ``content``: TODO (nothing at the moment)
+
+Site Map Template
+--------------
+
+File: ``site_map.html``
+
+The two blocks from the base template are defined with the following data:
+
+* ``title``: ``"Site Map"``
+
+* ``content``: TODO (nothing at the moment)
+
 Map Templates
 -------------
 

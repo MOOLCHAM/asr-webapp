@@ -60,7 +60,8 @@ nav ul {
 nav li {
     list-style-type: none;
     font-size: 14pt;
-    display: inline-block;
+    /* display: inline-block; */
+    float: left;
 }
 
 nav a {
@@ -145,4 +146,10 @@ nav a:hover {
 
 .indexCenterMapLinks a:hover {
     background-color: #444444;
+}
+
+.clearFloat:after {
+    content: " ";
+    display: block;
+    clear: both;
 }

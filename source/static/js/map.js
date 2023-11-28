@@ -15,32 +15,17 @@ var currentMapType = null;
 var VFRMapCycle = "20230810";
 var mapTiles = {};
 var mapTypes = {
-    geographic: {
-        maxZoom: 18,
-        defaultZoom: 7
-    },
-    vfrc: {
-        maxZoom: 12,
-        defaultZoom: 7
-    },
-    sectc: {
-        maxZoom: 11,
-        defaultZoom: 7
-    },
-    helic: {
-        maxZoom: 13,
-        defaultZoom: 7
-    },
-    ifrlc: {
-        maxZoom: 11,
-        defaultZoom: 7
-    },
-    ehc: {
-        maxZoom: 10,
-        defaultZoom: 7
-    }
+    geographic: { maxZoom: 18, defaultZoom: 7 },
+    vfrc: { maxZoom: 12, defaultZoom: 7 },
+    sectc: { maxZoom: 11, defaultZoom: 7 },
+    helic: { maxZoom: 13, defaultZoom: 7 },
+    ifrlc: { maxZoom: 11, defaultZoom: 7 },
+    ehc: { maxZoom: 10, defaultZoom: 7 }
 };
 
+/**
+ * Initalizes the map tilesets from OpenStreetMap and VFRMap
+ */
 function initializeMapTiles() {
     for (var type in mapTypes) {
         var mapLink;
@@ -61,6 +46,12 @@ function initializeMapTiles() {
     }
 }
 
+/**
+ * Sets the map type to the input map type
+ *
+ * @param {string} mapType string input corresponding to map type can be "geograpgic", "vfrc", "sectc", "helic", "ifrlc", "ehc"
+ * 
+ */
 function setMapType(mapType) {    
     if (currentMapType != null && mapType != currentMapType) {
         mapTiles[currentMapType].removeFrom(map);
@@ -71,17 +62,11 @@ function setMapType(mapType) {
         currentMapType = mapType;
         mapTiles[currentMapType].addTo(map);
     }
-
-    // The following code works but would refresh again after hitting button which personally I didn't like
-    /*
-    if (currentMapType) {
-        mapTiles[currentMapType].removeFrom(map);
-    }
-    currentMapType = mapType;
-    mapTiles[currentMapType].addTo(map);*/
-    
 }
 
+/**
+ * Initalizes the map with geographical map when the page is loaded
+ */
 function initializeMap() {
     initializeMapTiles();
     setMapType("geographic");
@@ -97,12 +82,6 @@ L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
 
 // THIS SORT OF WORKS NOW BUT NEEDS ADJUSTING
 // format for vfrmap is https://vfrmap.com/20230810/tiles/vfrc/{z}/{x}/{y}.jpg
-// FOR DIFFERENT VFRMaps
-// vfrc - 
-// ehc - 
-// sectc -
-// ifrlc -
-// helic - 
 
 // POSSIBLY FIXED WITH tms IN tileLayer SETTINGS
 /*
@@ -162,7 +141,7 @@ function get_position_source_string(position_source) {
 function clear_table() {
     // Remove previous data
     $("#infoPane").children().each(function (index) {
-        if ($(this).attr("id") != "infoTable" && $(this).attr("id") != "closeButton")
+        if ($(this).attr("id") != "infoTable" && $(this).attr("id") != "closeButton" && $(this).attr("class") != "INFOPANETEMP") // THIS IS KINDA TERRIBLE we really should just be removing those with a tag instead of everything with not this tag
             $(this).remove();
     });
 
@@ -177,7 +156,7 @@ function clear_table() {
  * @param {int} category plane category from API endpoint
  * @returns {string} decoded plane category
  */
-// in the future use a lookup table for this, switch statement isnt the fastest or cleanest
+// in the future possibly use a lookup table for this, switch statement may not be the fastest or cleanest
 // https://dev.to/k_penguin_sato/use-lookup-tables-for-cleaning-up-your-js-ts-code-9gk
 function get_plane_category_string(category_plane) {
     var category = "";
@@ -325,15 +304,105 @@ function draw_plane_markers(plane_data) {
         // order in which these methods are called doesn't matter
         
         marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [20, 20], iconAnchor: [10, 10], className: "planeMarker" }));
-
-        // Rotate icon to match actual plane heading
-        marker.setRotationAngle(plane.true_track);
+        marker.setRotationAngle(plane.true_track); // Rotate icon to match actual plane heading
         marker.addTo(planeLayer);
 
         marker.on('click', () => {
             clear_table();
 
+            // Change the title text
+            $(".infoPaneTitle").text("Aircraft Information");
+
+            // Add airport properties
+            $("#infoPane").append(`
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Callsign: </li>
+                        <li class="infoPaneData aircraftCallsign">${plane.callsign}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Position: </li>
+                        <li class="infoPaneData aircraftPosition">${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">ICAO 24-Bit Address: </li>
+                        <li class="infoPaneData aircraftICAO">${plane.icao24.toUpperCase()}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Origin Country: </li>
+                        <li class="infoPaneData aircraftOrigin">${plane.origin_country}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Time of Last Position Report: </li>
+                        <li class="infoPaneData aircraftTimePosition">${Date(plane.time_position)}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Last Contact: </li>
+                        <li class="infoPaneData aircraftLastContact">${Date(plane.last_contact)}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Geometric Altitude: </li>
+                        <li class="infoPaneData aircraftGeoAltitude">${plane.geo_altitude} meters</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">On Ground?: </li>
+                        <li class="infoPaneData aircraftGroundStatus">${plane.on_ground ? "Yes" : "No"}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Velocity: </li>
+                        <li class="infoPaneData aircraftVelocity">${plane.velocity} meters per second</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Heading: </li>
+                        <li class="infoPaneData aircraftHeading">${plane.true_track}\u00b0</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Vertical Rate: </li>
+                        <li class="infoPaneData aircraftVerticalRate">${plane.vertical_rate} meters per second</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Squawk: </li>
+                        <li class="infoPaneData aircraftSquawk">${plane.squawk}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Position Source: </li>
+                        <li class="infoPaneData aircraftPositionSource">${get_position_source_string(plane.position_source)}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Category: </li>
+                        <li class="infoPaneData aircraftCategory">${get_plane_category_string(plane.category)}</li>
+                    </ul>
+                </div>
+            `);
+
             // Add plane entries entries; TODO: find a better way to do this
+            /*
             $("#infoTable").append(`
                 <tr>
                     <th colspan="2">Plane Properties</th>
@@ -421,7 +490,7 @@ function draw_plane_markers(plane_data) {
                     <td>Plane Category</td>
                     <td>${get_plane_category_string(plane.category)}</td>
                 </tr>
-            `);
+            `);*/
 
             draw_flight_path(plane.icao24);
 
@@ -455,7 +524,79 @@ function draw_airport_markers(airport_data) {
         marker.on('click', (event) => {
             clear_table();
 
+            // Change the title text
+            $(".infoPaneTitle").text("Airport Information");
+
             // Add airport properties
+            $("#infoPane").append(`
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Airport Identifier: </li>
+                        <li class="infoPaneData airportIdentifier">${airport.ident}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Airport Name: </li>
+                        <li class="infoPaneData airportName">${airport.name}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Position: </li>
+                        <li class="infoPaneData airportPosition">${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Elevation: </li>
+                        <li class="infoPaneData airportElevation">${airport.elevation} Feet</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Region: </li>
+                        <li class="infoPaneData airportRegion">${airport.region_name}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Municipality: </li>
+                        <li class="infoPaneData airportMunicipality">${airport.municipality}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">GPS Code: </li>
+                        <li class="infoPaneData airportGPS">${airport.gps_code}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">IATA Code: </li>
+                        <li class="infoPaneData airportIATA">${airport.iata_code}</li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="infoPaneItem">
+                        <li class="infoPaneLabel">Local Code: </li>
+                        <li class="infoPaneData airportLocal">${airport.local_code}</li>
+                    </ul>
+                </div>
+            `);
+            if (airport.home_link != null) { // if the airport doesn't have a website, don't display a website block
+                $("#infoPane").append(`
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Website: </li>
+                            <li class="infoPaneData airportWebsite"><a href=${airport.home_link}>${airport.name}</a></li>
+                        </ul>
+                    </div>
+                `);
+            }
+
+            
+            /*
             $("#infoTable").append(`
                 <tr>
                     <th colspan="2">Airport Properties</th>
@@ -515,13 +656,15 @@ function draw_airport_markers(airport_data) {
                     <td>${airport.local_code}</td>
                 </tr>
             `);
-            $("#infoTable").append(`
+            if (airport.home_link != null) {
+                $("#infoTable").append(`
                 <tr>
                     <td>Website</td>
-                    <td>${airport.home_link}</td>
+                    <td><a href=${airport.home_link}>${airport.name}</a></td>
                 </tr>
-            `);
-
+                `);
+            }
+            */
             // If there are airport frequencies available, add them to the info pane
             if (airport.tower_frequencies) {
                 // collapsible button to show/hide media players
@@ -536,11 +679,14 @@ function draw_airport_markers(airport_data) {
                     // toggle visibility
                     $content_div.toggle();
                     // toggle active class (mostly for visual feedback)
-                    $tower_freq.toggleClass("active");
+                    $tower_freq.toggleClass("activeTower");
                 });
 
                 // place collapsible menu after the airport properties
-                $("#infoTable").after($tower_freq);
+                //$("#infoTable").after($tower_freq); // InfoTable is being phased out
+                
+                $("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
+
                 // 'content' div for the media players after the frequency menus
                 $tower_freq.after($content_div);
 
@@ -714,8 +860,12 @@ function tileSetChange(mapType) {
     document.getElementById(currentMapTilesetSelection).style.backgroundColor = '';
     document.getElementById(mapType).style.backgroundColor = '#cccccc';
     currentMapTilesetSelection = mapType;
-    // also need to change the active tileset on the map and remove the old but that sounds like a tommorow issue
     setMapType(mapType);
 }
 
+function toggleAltitudeColors() {
+    var toggle = document.getElementsByClassName("altitudeColorButton");
+    toggle[0].classList.toggle("toggleActive");
 
+    /* do other stuff to change plane icon color */
+}
