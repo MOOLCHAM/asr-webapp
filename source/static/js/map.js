@@ -16,9 +16,9 @@ var VFRMapCycle = "20230810";
 var mapTiles = {};
 var mapTypes = {
     geographic: { maxZoom: 18, defaultZoom: 7 },
-    vfrc: { maxZoom: 12, defaultZoom: 7 },
+    vfrc: { maxZoom: 11, defaultZoom: 7 }, // Has zoom level 12 in some areas
     sectc: { maxZoom: 11, defaultZoom: 7 },
-    helic: { maxZoom: 13, defaultZoom: 7 },
+    helic: { maxZoom: 11, defaultZoom: 7 }, // Has zoom level 12 in some areas
     ifrlc: { maxZoom: 11, defaultZoom: 7 },
     ehc: { maxZoom: 10, defaultZoom: 7 }
 };
@@ -31,7 +31,7 @@ function initializeMapTiles() {
         var mapLink;
         var mapSettings = {
             attribution: "&copy; <a href='https://vfrmap.com/tos.html'>VFRMap</a> contributors",
-            maxZoomSetting: mapTypes[type].maxZoom,
+            maxZoom: mapTypes[type].maxZoom,
             tms: true
         };
         if (type == "geographic") {
