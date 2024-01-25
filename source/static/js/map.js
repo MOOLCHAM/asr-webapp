@@ -9,7 +9,7 @@ var flightPathLayer = L.layerGroup().addTo(map).setZIndex(550);     // For fligh
 var planeData = [];
 var airportData = [];
 
-var testInterval;
+var callInterval;
 
 var currentMapType = null;
 var VFRMapCycle = "20230810";
@@ -73,37 +73,6 @@ function initializeMap() {
     tileSetChange("geographic");
 }
 
-// IMPORTANT, KEEP THE TILELAYER BELOW THIS COMMENT, IS PRIMARY FOR GEOGRAPHIC MAP
-/*
-L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
-}).addTo(map);
-*/
-
-// THIS SORT OF WORKS NOW BUT NEEDS ADJUSTING
-// format for vfrmap is https://vfrmap.com/20230810/tiles/vfrc/{z}/{x}/{y}.jpg
-
-// POSSIBLY FIXED WITH tms IN tileLayer SETTINGS
-/*
-L.TileLayer.VFRCoords = L.TileLayer.extend({
-    getTileUrl: function(tilecoords) {
-        var tilecoordsNewZ = tilecoords.z;
-        var tilecoordsNewX = ((2**tilecoords.z) - 1) - tilecoords.y;
-        var tilecoordsNewY = tilecoords.x;
-        return 'https://vfrmap.com/20230810/tiles/ifrlc/' + tilecoordsNewZ + '/' + tilecoordsNewX + '/' + tilecoordsNewY + '.jpg';
-    },
-    getAttribution: function() {
-        return "&copy; <a href='https://vfrmap.com/tos.html'>VFRMap</a> contributors"
-    }
-});
-
-L.tileLayer.VFRCoords = function() {
-    return new L.TileLayer.VFRCoords();
-}
-
-L.tileLayer.VFRCoords().addTo(map);
-*/
-
 /**
  * Decodes a transponder type to the string version (i.e. int -> string). Useful for displaying this data in the UI.
  *
@@ -115,25 +84,14 @@ function get_position_source_string(position_source) {
 
     // From the API docs for OpenSky
     switch (position_source) {
-        case 0:
-            source = "ADS-B";
-            break;
-        case 1:
-            source = "ASTERIX";
-            break;
-        case 2:
-            source = "MLAT";
-            break;
-        case 3:
-            source = "FLARM";
-            break;
-        default:
-            source = "N/A";
+        case 0: source = "ADS-B"; break;
+        case 1: source = "ASTERIX"; break;
+        case 2: source = "MLAT"; break;
+        case 3: source = "FLARM"; break;
+        default: source = "N/A";
     }
-
     return source;
 }
-
 
 /**
  * Clears the table in the info pane in preparation for new data.
@@ -153,81 +111,35 @@ function clear_table() {
 /**
  * Decodes a plane category from the integer representation (i.e. int -> string)
  *
- * @param {int} category plane category from API endpoint
+ * @param {int} category_plane plane category from API endpoint
  * @returns {string} decoded plane category
  */
-// in the future possibly use a lookup table for this, switch statement may not be the fastest or cleanest
-// https://dev.to/k_penguin_sato/use-lookup-tables-for-cleaning-up-your-js-ts-code-9gk
 function get_plane_category_string(category_plane) {
     var category = "";
     switch (category_plane) {
-        case 0:
-            category = "No Information";
-            break;
-        case 1:
-            category = "No ADS-B Emitter Category Information";
-            break;
-        case 2:
-            category = "Light";
-            break;
-        case 3:
-            category = "Small";
-            break;
-        case 4:
-            category = "Large";
-            break;
-        case 5:
-            category = "High Vortex Large";
-            break;
-        case 6:
-            category = "Heavy";
-            break;
-        case 7:
-            category = "High Performance";
-            break;
-        case 8:
-            category = "Rotocraft";
-            break;
-        case 9:
-            category = "Glider/sailplane";
-            break;
-        case 10:
-            category = "Lighter-than-air";
-            break;
-        case 11:
-            category = "Parachutist/Skydiver";
-            break;
-        case 12:
-            category = "Ultralight/Hang-Glider/Paraglider";
-            break;
-        case 13:
-            category = "Reserved";
-            break;
-        case 14:
-            category = "Unmanned Aerial Vehicle";
-            break;
-        case 15:
-            category = "Space/Trans-Atmospheric Vehicle";
-            break;
-        case 16:
-            category = "Surface Vehicle-Emergency Vehicle";
-            break;
-        case 17:
-            category = "Surface Vehicle-Service Vehicle";
-            break;
-        case 18:
-            category = "Point Obstacle";
-            break;
-        case 19:
-            category = "Cluster Obstacle";
-            break;
-        case 20:
-            category = "Line Obstacle";
-            break;
-        default:
-            category = "Unknown Aircraft";
+        case 0: category = "No Information"; break;
+        case 1: category = "No ADS-B Emitter Category Information"; break;
+        case 2: category = "Light"; break;
+        case 3: category = "Small"; break;
+        case 4: category = "Large"; break;
+        case 5: category = "High Vortex Large"; break;
+        case 6: category = "Heavy"; break;
+        case 7: category = "High Performance"; break;
+        case 8: category = "Rotocraft"; break;
+        case 9: category = "Glider/Sailplane"; break;
+        case 10: category = "Lighter-than-air"; break;
+        case 11: category = "Parachutist/Skydiver"; break;
+        case 12: category = "Ultralight/Hang-Glider/Paraglider"; break;
+        case 13: category = "Reserved"; break;
+        case 14: category = "Unmanned Aerial Vehicle"; break;
+        case 15: category = "Space/Trans-Atmospheric Vehicle"; break;
+        case 16: category = "Surface Vehicle-Emergency Vehicle"; break;
+        case 17: category = "Surface Vehicle-Service Vehicle"; break;
+        case 18: category = "Point Obstacle"; break;
+        case 19: category = "Cluster Obstacle"; break;
+        case 20: category = "Line Obstacle"; break;
+        default: category = "Unknown Aircraft";
     }
-
     return category;
 }
 
@@ -296,18 +208,23 @@ function draw_plane_markers(plane_data) {
     planeLayer.clearLayers();
 
     for (const plane of plane_data) {
+        let marker = L.marker([plane.latitude, plane.longitude]);
+
+        /*
         let marker = L.marker({
             lat: plane.latitude,
             lng: plane.longitude,
-        });
+        });*/
 
-        // order in which these methods are called doesn't matter
-        
         marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [20, 20], iconAnchor: [10, 10], className: "planeMarker" }));
         marker.setRotationAngle(plane.true_track); // Rotate icon to match actual plane heading
         marker.addTo(planeLayer);
 
-        marker.on('click', () => {
+        marker.on('mouseover', (event) => { // testing mouseover for future hover for each aircraft
+            console.log(`${plane.callsign}`);
+        });
+
+        marker.on('click', (event) => {
             clear_table();
 
             // Change the title text
@@ -401,97 +318,6 @@ function draw_plane_markers(plane_data) {
                 </div>
             `);
 
-            // Add plane entries entries; TODO: find a better way to do this
-            /*
-            $("#infoTable").append(`
-                <tr>
-                    <th colspan="2">Plane Properties</th>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>ICAO 24-bit Address</td>
-                    <td>${plane.icao24.toUpperCase()}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Callsign</td>
-                    <td>${plane.callsign}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Country Origin</td>
-                    <td>${plane.origin_country}</td>
-                </tr>`
-            );
-            $("#infoTable").append(`
-                <tr>
-                    <td>Time of Last Position Report</td>
-                    <td>${Date(plane.time_position)}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Last Contact (time)</td>
-                    <td>${Date(plane.last_contact)}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Position</td>
-                    <td>${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Geometric Altitude</td>
-                    <td>${plane.geo_altitude} meters</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>On Ground?</td>
-                    <td>${plane.on_ground ? "Yes" : "No"}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Velocity</td><td>${plane.velocity} meters per second</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Heading</td>
-                    <td>${plane.true_track}\u00b0</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Vertical Rate</td>
-                    <td>${plane.vertical_rate} meters per second</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Squawk</td>
-                    <td>${plane.squawk}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Position Source</td>
-                    <td>${get_position_source_string(plane.position_source)}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Plane Category</td>
-                    <td>${get_plane_category_string(plane.category)}</td>
-                </tr>
-            `);*/
-
             draw_flight_path(plane.icao24);
 
             // Hide zoom controls and map type selection (draws over top of the table)
@@ -518,8 +344,13 @@ function draw_airport_markers(airport_data) {
 
     for (const airport of airport_data) {
         let marker = L.marker([airport.latitude, airport.longitude]);
-        marker.setIcon(airportIcon);
+
+        marker.setIcon(L.icon({ iconUrl: "../static/images/markers/airport.svg", iconSize: [30, 30], iconAnchor: [15, 15], className: "airportMarker" }));
         marker.addTo(airportLayer);
+
+        marker.on('mouseover', (event) => { // testing mouseover for future hover for each airport
+            console.log(`${airport.ident} ${airport.name}`);
+        });
 
         marker.on('click', (event) => {
             clear_table();
@@ -595,76 +426,6 @@ function draw_airport_markers(airport_data) {
                 `);
             }
 
-            
-            /*
-            $("#infoTable").append(`
-                <tr>
-                    <th colspan="2">Airport Properties</th>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Identifier</td>
-                    <td>${airport.ident}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Name</td>
-                    <td>${airport.name}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Position</td>
-                    <td>${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Elevation</td>
-                    <td>${airport.elevation} feet</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Region Name</td>
-                    <td>${airport.region_name}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Municipality</td>
-                    <td>${airport.municipality}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>GPS Code</td>
-                    <td>${airport.gps_code}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>IATA Code</td>
-                    <td>${airport.iata_code}</td>
-                </tr>
-            `);
-            $("#infoTable").append(`
-                <tr>
-                    <td>Local Code</td>
-                    <td>${airport.local_code}</td>
-                </tr>
-            `);
-            if (airport.home_link != null) {
-                $("#infoTable").append(`
-                <tr>
-                    <td>Website</td>
-                    <td><a href=${airport.home_link}>${airport.name}</a></td>
-                </tr>
-                `);
-            }
-            */
             // If there are airport frequencies available, add them to the info pane
             if (airport.tower_frequencies) {
                 // collapsible button to show/hide media players
@@ -760,6 +521,9 @@ function setup_event_listeners() {
 
         draw_plane_markers(planeData);
     });
+
+    map.on("zoomend", onMapZoomEnd);
+    map.on("moveend", onMapMoveEnd);
 }
 
 /**
@@ -779,17 +543,10 @@ function main() {
         draw_plane_markers(plane_data_request.response.plane_data);
     });
 
-    // Create a GET request to send to the plane_states endpoint
-    plane_data_request.open("GET", "/data/plane_states");
-    // Specify a JSON return type
-    plane_data_request.responseType = "json";
-    // Send request
-    plane_data_request.send();
+    plane_data_request.open("GET", "/data/plane_states"); // Create a GET request to send to the plane_states endpoint
+    plane_data_request.responseType = "json"; // Specify a JSON return type
+    plane_data_request.send(); // Send request
 }
-
-
-map.on("zoomend", onMapZoomEnd);
-map.on("moveend", onMapMoveEnd);
 
 function getMapLatLonBounds() { // this function order got fucked up, need to fix mm
     var minLonEast = map.getBounds().getEast();
@@ -828,16 +585,16 @@ function checkMapZoomLevel() {
         document.getElementsByClassName('leaflet-map-pane')[0].style.filter = 'blur(10px)';
         document.getElementById('zoomedTooFarOut').style.display = 'flex';
 
-        clearInterval(testInterval); // clear the current interval we have to stop calling planes
-        testInterval = null;
+        clearInterval(callInterval); // clear the current interval we have to stop calling planes
+        callInterval = null;
     }
     // Disable the overlay, we are zoomed in enough to load planes
     else {
         document.getElementsByClassName('leaflet-map-pane')[0].style.filter = 'blur(0px)';
         document.getElementById('zoomedTooFarOut').style.display = 'none';
 
-        if (map.getZoom() == 8 && testInterval == null) {
-            testInterval = setInterval(main, 30000);
+        if (map.getZoom() == 8 && callInterval == null) {
+            callInterval = setInterval(main, 30000);
         }
     }
 }
