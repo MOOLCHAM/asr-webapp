@@ -1,5 +1,12 @@
+:root {
+    --riddle-gold: #f0c85a;
+    --riddle-navy: #000e2e;
+    --white: #ffffff;
+    --light-gray: #e6e6e6;
+}
+
 body {
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
     font-size: 12pt;
     margin: 0px;
 }
@@ -29,12 +36,12 @@ header {
 
 #headerBlock {
     height: 150px;
-    background-color: #000e2e;
+    background-color: var(--riddle-navy);
     color: #ffffff;
 }
 
 #navBlock {
-    background: linear-gradient(to bottom, #b7b7b7 0%, #d4d4d4 50%, #b7b7b7 100%);
+    background: linear-gradient(to bottom, var(--light-gray) 0%, var(--white) 85%, var(--light-gray) 100%);
 }
 
 footer {
@@ -42,12 +49,12 @@ footer {
 }
 
 #upperFooterBlock {
-    background: linear-gradient(to bottom, #b7b7b7 0%, #d4d4d4 50%, #b7b7b7 100%);
+    background: linear-gradient(to bottom, var(--light-gray) 0%, var(--white) 85%, var(--light-gray) 100%);
 }
 
 #lowerFooterBlock {
     height: 200px;
-    background-color: #000e2e;
+    background-color: var(--riddle-navy);
     color: #ffffff;
 }
 
@@ -74,7 +81,7 @@ nav a {
     color: #000000;
     font-weight: bold;
     font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
 }
 
 nav a:hover {
@@ -136,10 +143,10 @@ nav a:hover {
     padding-right: 30px;
     padding-top: 20px;
     padding-bottom: 20px;
-    background-color: #000000;
+    background-color: var(--riddle-navy);
     font-size: 20px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: #ffffff;
+    font-family: Arial, sans-serif;
+    color: var(--white);
     font-weight: bold;
     text-decoration: none;
 }
@@ -152,4 +159,62 @@ nav a:hover {
     content: " ";
     display: block;
     clear: both;
+}
+
+.bold-font {
+    font-weight: bold;
+}
+
+.gold-font {
+    color: var(--riddle-gold);
+}
+
+.middle-align {
+    text-align: center;
+}
+
+.no-underline {
+    text-decoration-line: none;
+}
+
+.small-font {
+    font-size: 14px;
+}
+
+.link-spacing {
+    padding: 0px 5px 0px 5px;
+}
+
+.right-link-spacing {
+    padding: 0px 5px 0px 0px;
+}
+
+.bar-spacing {
+    padding: 0px 3px 0px 8px;
+}
+.navy-font {
+    color: var(--riddle-navy)
+}
+
+.rounded {
+    border-radius: 4px 4px;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 36px;
+    margin-top: 0px;
+}
+
+.vertical-bottom {
+    vertical-align: bottom;
+    padding-top: 100px;
+}
+
+.less-left-content {
+    padding-left: 0px;
+}
+
+.some-left-padding {
+    padding-left: 10px;
 }
