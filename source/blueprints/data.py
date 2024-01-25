@@ -42,6 +42,17 @@ airport_data = pd.read_excel(
 )
 #! Table of airport data loaded from the excel sheet in "data/us-airports.xlsx"
 
+previousPlaneStateData = {"previousPlaneData": []}
+#print(previousPlaneStateData)
+
+# THIS IS FOR WHEN OPENSKY DECIDES TO NOT WORK BECAUSE OF MAINTENANCE OR WHATEVER ISSUE OR TIMEOUT DUE TO TOO MANY CALLS, dpesnt work currently
+#@bp.route("/plane_states")
+def recallSavedData():
+    importDumpFile = open("planeDataDumpFile.txt","r")
+    savedData = importDumpFile.readline()
+    importDumpFile.close()
+    return make_response(savedData, 901)
+
 
 @bp.route("/plane_states")
 def plane_states():
@@ -69,6 +80,7 @@ def plane_states():
     * ``category`` - (``Number`` | ``int``) Category of the aircraft
     """
     data = {"plane_data": []}
+    global previousPlaneStateData
 
     try:
         states = opensky.get_states(
@@ -87,7 +99,8 @@ def plane_states():
         states = g.get("states_cache")
 
     if states is None:
-        return make_response("Too many requests", 500)
+        #return make_response("Too many requests", 500)
+        return make_response(previousPlaneStateData, 500) # This just uses data from the previous cycle
 
     for state in states.states:
         data["plane_data"].append(
@@ -111,6 +124,14 @@ def plane_states():
             }
         )
 
+    previousPlaneStateData = data
+    
+    #outputDumpFile = open("planeDataDumpFile.txt","a")
+    #outputDumpFile.write(str(data) + "\n")
+    #outputDumpFile.close()
+    
+    #print(previousPlaneStateData)
+    #print(data)
     return make_response(data, 200)
 
 

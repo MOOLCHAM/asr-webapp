@@ -101,10 +101,9 @@ nav a:hover {
 #indexContentBackground1 {
     height: 500px;
     /*background-color: #ff0000;*/
-    background-image: url("../images/backgroundImages/testimage.jpg");
+    background-image: url("../images/backgroundImages/mapBackgroundImage.png");
     background-repeat: no-repeat;
     background-size: cover;
-    backdrop-filter: blur(2px);
 }
 
 #indexContentBackground2 {

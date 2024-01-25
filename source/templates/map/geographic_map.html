@@ -65,21 +65,6 @@
     <script>
         setup_event_listeners();
 
-        // THIS ISNT REQUIRED ANYMORE, WILL REMOVE SOON, KEPT IN FOR DEBUGGING PURPOSES
-        var planeIcon = L.icon({
-            iconUrl: "{{ url_for('static', filename='images/markers/plane-up-solid.svg') }}",
-            iconSize: [20, 20],
-            iconAnchor: [10, 10],
-            className: "planeMarker"
-        });
-
-        const airportIcon = L.icon({
-            iconUrl: "{{ url_for('static', filename='images/markers/airport.svg') }}",
-            iconSize: [30, 30],
-            iconAnchor: [15, 15],
-            className: "airportMarker"
-        });
-
         map.setView({ lat: {{ initial_center['lat'] }}, lng: {{ initial_center['lon'] }}, }, {{ initial_center['zoom'] }});
 
         const airport_data_request = new XMLHttpRequest();
@@ -100,9 +85,7 @@
         airport_data_request.responseType = "json";
         airport_data_request.send();
         
-        //main();
-        //setInterval(main, 30000);
-        
+        main();
     </script>
 </body>
 
