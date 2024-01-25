@@ -46,6 +46,7 @@ header {
 
 footer {
     width: 100%;
+    overflow: hidden;
 }
 
 #upperFooterBlock {
@@ -53,9 +54,11 @@ footer {
 }
 
 #lowerFooterBlock {
-    height: 200px;
+    height: 100vh;
     background-color: var(--riddle-navy);
     color: #ffffff;
+    overflow: hidden;
+    position: relative;
 }
 
 nav ul {
@@ -111,15 +114,6 @@ nav a:hover {
     background-image: url("../images/backgroundImages/mapBackgroundImage.png");
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-#indexContentBackground2 {
-    height: 500px;
-    /*background-color: #0000ff;*/
-    background-image: url("../images/backgroundImages/testimage.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    filter: blur(2px);
 }
 
 .indexContentBackgroundContent {
