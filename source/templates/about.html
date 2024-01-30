@@ -4,22 +4,42 @@
 
 {% block content %}
 <div>
-    <div class="content">
-        <h2>About the App</h2>
-        <h3>How to use:</h3>
-        <p>The map interface has zoom functionality and the ability to toggle between geographical and various aeronautical maps</p>
-        <h2>About the development</h2>
-        <p>ASR for ATC App, designed by students at Embry-Riddle Aeronautical univserity under the guidence of Dr. Jianhua Liu, listed below are the teams of students who have worked on the project since it begain</p>
-        <h3>Senior Design 2022 - 2023</h3>
-        <p>The first year senior design team proved the concept of an ASR app for ATC by creating the original app in python and using the NeMo ASR software to impliemnt ASR models</p>
-        <h3>Senior Design 2023 - 2024</h3>
-        <p>Second year senior design team was divided into two groups, Kaldi Group and NeMo Group, Kaldi was tasked with developing a suitable model for ASR for ATC using Kaldi ASR, while NeMo was tasked with continuing developing the application in javascript, continuing the work done By Aaron Van De Brooke over the summer, and reintegrating and better optimizing the connection to NeMo ASR software</p>
-        <h3>Work done by Aaron Van De Brooke</h3>
-        <p>much of the initial transfer of the application interface to javascript was done by Aaron Van De Brooke, along with creating better ASR models for NeMo, getting the Word Error Rate down from ~0.3 to about 0.15</p>
-        <h3>Dr. Jianhua Liu</h3>
-        <p>Details:</p>
-        <h3>Andrew Schneider</h3>
-        <p>Details:</p>
+    <div style="width: 100%;">
+        <div class="content navy-font">
+            <h1 style="margin-top: 5px; margin-bottom: 10px;">About the App</h1>
+            <p>
+                This Automatic Speech Recognition (ASR) application is designed to be a study tool for student pilots, or those who are new to aviation phraseology found withing Air Traffic Communication (ATC). With this application, you can view live aircraft
+                data on a geographic or various aeronautical maps, including:
+                <ul>
+                    <li>Hybrid Visual Flight Rules</li>
+                    <li>Low Instrument Flight Rules</li>
+                    <li>High Instrument Flight Rules</li>
+                    <li>Sectionals</li>
+                    <li>Helicopters</li>
+                </ul>
+                You can select an aircraft icon from the map and see information about the aircraft such as callsign, coordinates, altitude, and much more. Once an aircraft is selected, audio communications can be listened
+                to and transcribed. You can also select an airport icon from the map and see their information such as their name, identifier, coordinates and more.
+            </p>
+            <h3 class="small-margins">How to Use:</h3>
+            <p ">
+                Click the <i>Interactive Map</i> tab to view the default geographic map. To view other maps, select the <i>+</i> button on the left-hand side of the screen to enable
+                the map drop-down menu. From there, select the map you desire or toggle between them.<br /><br /><i>All maps have zoom capabilities.</i> For best viewing practices, a zoom limit is enacted. If this occurs, either zoom back in or out.
+            </p>
+            <h1 style="margin-top: 15px; margin-bottom: 10px;">About the Development</h1>
+            <p>This application is designed by students at Embry-Riddle Aeronautical University under the guidance of Dr. Jianhua Liu and in collaboration with Dr. Andrew Schnieder. Listed below are the teams of students who have worked on the project since its inception.</p>
+            <h3 class="small-margins">Senior Design 2022 - 2023</h3>
+            <p>The first year senior design team provided the concept of an ASR app for ATC by creating the original app in Python and Plotly Dash, and using the NeMo ASR software to implement ASR models</p>
+            <p><i>Team Members:</i> Braeden Burnett, Jackob Haehre, Kira McFadden, Tyler Carr</p>
+            <h3 class="small-margins">Senior Design 2023 - 2024</h3>
+            <p>The second year senior design team was divided into two groups: Kaldi and NeMo. Kaldi was tasked with developing a better suited model for ASR for ATC using the Kaldi ASR. NeMo was tasked with continuing development of the application in Javascript, Python, and Flask. This is a continuation of the work done By Aaron Van De Brooke over the summer, while also reintegrating and better optimizing the connection to NeMo ASR software</p>
+            <p><i>Team Members:</i> Maegan Lucas, Taylor Sumlin, Adam Fitch, Darian Hopkins, Maxwell Moolchan</p>
+            <h3>Work Completed by Aaron Van De Brooke</h3>
+            <p>Much of the initial transfer of the application interface to Javascript and Flask was done by Aaron Van De Brooke. Along with this, he created better ASR models for NeMo, getting the Word Error Rate down from about 0.30 to about 0.15.</p>
+            <h3 class="small-margins">Dr. Jianhua Liu</h3>
+            <p>Dr. Jianhua Liu is an Associate Professor and Program Coordinator for M.S. in Electrical and Computer Engineering. He joined Embry-Riddle in 2004, and has been developing teaching expertise primarily in devices, circuits, signals, and systems. He has extensive publications in the areas of wireless communications, signal processing, embedded systems, sensor networks, and avionics.</p>
+            <h3 class="small-margins">Andrew Schneider</h3>
+            <p>Andrew Schneider is an Aviation English Coordinator and Adjunct Faculty with the College of Aviation.</p>
+        </div>
     </div>
 </div>
 {% endblock %}
