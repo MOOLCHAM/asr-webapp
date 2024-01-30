@@ -1,6 +1,6 @@
 var map = L.map('map').fitWorld();
 
-// Organize different elements into groups (makes it easier to clear and redraw markers on update)
+// Organize different elements into groups (makes it easier to clear and re  markers on update)
 var planeLayer = L.layerGroup().addTo(map).setZIndex(600);          // For plane markers
 var airportLayer = L.layerGroup().addTo(map).setZIndex(600);        // For airport markers
 var infoLayer = L.layerGroup().addTo(map).setZIndex(800);           // For info pane
@@ -209,15 +209,9 @@ function draw_plane_markers(plane_data) {
 
     for (const plane of plane_data) {
         let marker = L.marker([plane.latitude, plane.longitude]);
-
-        /*
-        let marker = L.marker({
-            lat: plane.latitude,
-            lng: plane.longitude,
-        });*/
-
         marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [20, 20], iconAnchor: [10, 10], className: "planeMarker" }));
         marker.setRotationAngle(plane.true_track); // Rotate icon to match actual plane heading
+        marker.setRotationOrigin('center center') // This is required otherwise the rotation will mess up where planes actually are
         marker.addTo(planeLayer);
 
         marker.on('mouseover', (event) => { // testing mouseover for future hover for each aircraft
@@ -518,8 +512,10 @@ function setup_event_listeners() {
     map.on('zoom', function (event) {
         planeLayer.clearLayers();
         flightPathLayer.clearLayers();
-
-        draw_plane_markers(planeData);
+        
+        if (map.getZoom() > 7) {
+            draw_plane_markers(planeData);
+        }
     });
 
     map.on("zoomend", onMapZoomEnd);
