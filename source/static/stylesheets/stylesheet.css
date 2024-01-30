@@ -5,6 +5,10 @@
     --light-gray: #e6e6e6;
 }
 
+html {
+    background: var(--riddle-navy);
+}
+
 body {
     font-family: Arial, sans-serif;
     font-size: 12pt;
@@ -54,11 +58,10 @@ footer {
 }
 
 #lowerFooterBlock {
-    height: 100vh;
+    min-height: 200px;
     background-color: var(--riddle-navy);
     color: #ffffff;
     overflow: hidden;
-    position: relative;
 }
 
 nav ul {
@@ -210,4 +213,8 @@ h1 {
 
 .some-left-padding {
     padding-left: 10px;
+}
+
+.sticky {
+    position: sticky;
 }
