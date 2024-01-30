@@ -215,6 +215,7 @@ h1 {
     padding-left: 10px;
 }
 
-.sticky {
-    position: sticky;
+.small-margins {
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
