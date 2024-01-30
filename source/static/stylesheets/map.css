@@ -311,3 +311,35 @@ body,
 .toggleActive {
   background-color: #cccccc !important;
 }
+
+.audio-container {
+  margin-bottom: 10px;
+}
+
+.content {
+  display: none;
+  padding: 10px;
+}
+
+audio {
+  width: 100%;
+  max-width: 200px;
+}
+
+button.collapsible {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  text-align: center;
+  padding: 10px;
+  cursor: pointer;
+  width: 100%;
+}
+
+button.collapsible:hover {
+  background-color: #2980b9;
+}
+
+button.collapsible:focus {
+  outline: none;
+}
