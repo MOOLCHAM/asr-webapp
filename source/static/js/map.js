@@ -1,6 +1,6 @@
 var map = L.map('map').fitWorld();
 
-// Organize different elements into groups (makes it easier to clear and re  markers on update)
+// Organize different elements into groups (makes it easier to clear and redraw markers on update)
 var planeLayer = L.layerGroup().addTo(map).setZIndex(600);          // For plane markers
 var airportLayer = L.layerGroup().addTo(map).setZIndex(600);        // For airport markers
 var infoLayer = L.layerGroup().addTo(map).setZIndex(800);           // For info pane
