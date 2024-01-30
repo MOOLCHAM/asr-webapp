@@ -16,9 +16,9 @@ var VFRMapCycle = "20230810";
 var mapTiles = {};
 var mapTypes = {
     geographic: { maxZoom: 18, defaultZoom: 7 },
-    vfrc: { maxZoom: 11, defaultZoom: 7 }, // Has zoom level 12 in some areas
+    vfrc: { maxZoom: 12, defaultZoom: 7 },
     sectc: { maxZoom: 11, defaultZoom: 7 },
-    helic: { maxZoom: 11, defaultZoom: 7 }, // Has zoom level 12 in some areas
+    helic: { maxZoom: 13, defaultZoom: 7 },
     ifrlc: { maxZoom: 11, defaultZoom: 7 },
     ehc: { maxZoom: 10, defaultZoom: 7 }
 };
@@ -31,7 +31,7 @@ function initializeMapTiles() {
         var mapLink;
         var mapSettings = {
             attribution: "&copy; <a href='https://vfrmap.com/tos.html'>VFRMap</a> contributors",
-            maxZoom: mapTypes[type].maxZoom,
+            maxZoomSetting: mapTypes[type].maxZoom,
             tms: true
         };
         if (type == "geographic") {
@@ -209,9 +209,15 @@ function draw_plane_markers(plane_data) {
 
     for (const plane of plane_data) {
         let marker = L.marker([plane.latitude, plane.longitude]);
+
+        /*
+        let marker = L.marker({
+            lat: plane.latitude,
+            lng: plane.longitude,
+        });*/
+
         marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [20, 20], iconAnchor: [10, 10], className: "planeMarker" }));
         marker.setRotationAngle(plane.true_track); // Rotate icon to match actual plane heading
-        marker.setRotationOrigin('center center') // This is required otherwise the rotation will mess up where planes actually are
         marker.addTo(planeLayer);
 
         marker.on('mouseover', (event) => { // testing mouseover for future hover for each aircraft
@@ -420,66 +426,61 @@ function draw_airport_markers(airport_data) {
                 `);
             }
 
-             // If there are airport frequencies available, add them to the info pane
-             if (airport.tower_frequencies) {
-                // collapsible button to show/hide media players
-                const $tower_freq = $(`
-                    <button type='button' class='collapsible'>Tower Frequencies</button>
-                `);
-                // container for the media players and labels
-                let $content_div = $("<div class='content'></div>");
+  // If there are airport frequencies available, add them to the info pane
+  if (airport.tower_frequencies) {
+    // collapsible button to show/hide media players
+    const $tower_freq = $(`
+        <button type='button' class='collapsible'>Tower Frequencies</button>
+    `);
+    // container for the media players and labels
+    let $content_div = $("<div class='content'></div>");
 
-                // click event handler for the tower frequency dropdown
-                $tower_freq.on("click", () => {
-                    // toggle visibility
-                    $content_div.toggle();
-                    // toggle active class (mostly for visual feedback)
-                    $tower_freq.toggleClass("activeTower");
-                });
+    // click event handler for the tower frequency dropdown
+    $tower_freq.on("click", () => {
+        // toggle visibility
+        $content_div.toggle();
+        // toggle active class (mostly for visual feedback)
+        $tower_freq.toggleClass("activeTower");
+    });
 
-                // place collapsible menu after the airport properties
-                //$("#infoTable").after($tower_freq); // InfoTable is being phased out
-                
-                $("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
+    // place collapsible menu after the airport properties
+    //$("#infoTable").after($tower_freq); // InfoTable is being phased out
+    
+    $("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
 
-                // 'content' div for the media players after the frequency menus
-                $tower_freq.after($content_div);
+    // 'content' div for the media players after the frequency menus
+    $tower_freq.after($content_div);
 
-                for (const frequency of airport.tower_frequencies) {
-                    let $audio_figure = $(`
-                        <figure class ="audio-container">
-                            <button class="collapsible">${frequency}</button>
-                            <div class="content">
-                                <audio
-                                    controls
-                                    src="https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3"
-                        >
-                        </audio>
-                        <button id="transcribe-${airport.ident}_${frequency.replace(".", "")}">Transcribe</button>
-                    </div>
-                </figure>
-                    `);
+    for (const frequency of airport.tower_frequencies) {
+        let $audio_figure = $(`
+            <figure>
+                <button class="collapsible">${frequency}</button>
+            </figure>
+        `);
 
-                    $content_div.append($audio_figure);
 
-                    // Add event listener to toggle the content when the button is clicked
-                    $audio_figure.find(".collapsible").on("click", function() {
-                        const content = $(this).next(".content");
-                        content.toggle();
-                    });
+        $content_div.append($audio_figure);
+        $audio_figure.append(`
+            <audio
+                controls
+                src="https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3"
+            >
+            </audio>
+            <button id="transcribe-${airport.ident}_${frequency.replace(".", "")}">Transcribe</button>
+        `);
 
-                    $(`#transcribe-${airport.ident}_${frequency.replace(".", "")}`).on("click", (event) => {
-                        $.ajax({
-                            url: "/models/transcribe",
-                            method: "POST",
-                            contentType: "text/plain",
-                            data: `https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3`,
-                        }).done(() => {
-                            console.log("Done");
-                        })
-                    });
-                }
-            }
+        $(`#transcribe-${airport.ident}_${frequency.replace(".", "")}`).on("click", (event) => {
+            $.ajax({
+                url: "/models/transcribe",
+                method: "POST",
+                contentType: "text/plain",
+                data: `https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3`,
+            }).done(() => {
+                console.log("Done");
+            })
+        });
+    }
+}
 
             // Hide zoom controls and map type selection (draws over top of the table)
             $(".leaflet-control-zoom").hide();
@@ -518,10 +519,8 @@ function setup_event_listeners() {
     map.on('zoom', function (event) {
         planeLayer.clearLayers();
         flightPathLayer.clearLayers();
-        
-        if (map.getZoom() > 7) {
-            draw_plane_markers(planeData);
-        }
+
+        draw_plane_markers(planeData);
     });
 
     map.on("zoomend", onMapZoomEnd);
