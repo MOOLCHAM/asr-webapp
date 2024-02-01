@@ -209,7 +209,16 @@ function draw_plane_markers(plane_data) {
 
     for (const plane of plane_data) {
         let marker = L.marker([plane.latitude, plane.longitude]);
-        marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [20, 20], iconAnchor: [10, 10], className: "planeMarker" }));
+
+        if (map.getZoom() < 10) {
+            var mapZoomBasedIconSize = (map.getZoom() * 2);
+            var mapZoomBasedIconSizeCenter = map.getZoom();
+            marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [mapZoomBasedIconSize, mapZoomBasedIconSize], iconAnchor: [mapZoomBasedIconSizeCenter, mapZoomBasedIconSizeCenter], className: "planeMarker" }));
+        }
+        else {
+            marker.setIcon(L.icon({ iconUrl: plane.category_icon, iconSize: [20, 20], iconAnchor: [10, 10], className: "planeMarker" }));
+        }
+        
         marker.setRotationAngle(plane.true_track); // Rotate icon to match actual plane heading
         marker.setRotationOrigin('center center') // This is required otherwise the rotation will mess up where planes actually are
         marker.addTo(planeLayer);
@@ -512,7 +521,7 @@ function setup_event_listeners() {
     map.on('zoom', function (event) {
         planeLayer.clearLayers();
         flightPathLayer.clearLayers();
-        
+        console.log(map.getZoom());
         if (map.getZoom() > 7) {
             draw_plane_markers(planeData);
         }
