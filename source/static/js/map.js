@@ -1,4 +1,4 @@
-var map = L.map('map').fitWorld();
+var map = L.map('map',{zoomSnap: 1, zoomDelta: 1}).fitWorld();
 
 // Organize different elements into groups (makes it easier to clear and redraw markers on update)
 var planeLayer = L.layerGroup().addTo(map).setZIndex(600);          // For plane markers
@@ -521,12 +521,11 @@ function setup_event_listeners() {
     map.on('zoom', function (event) {
         planeLayer.clearLayers();
         flightPathLayer.clearLayers();
-        console.log(map.getZoom());
+        
         if (map.getZoom() > 7) {
             draw_plane_markers(planeData);
         }
     });
-
     map.on("zoomend", onMapZoomEnd);
     map.on("moveend", onMapMoveEnd);
 }
