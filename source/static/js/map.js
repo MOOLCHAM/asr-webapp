@@ -521,7 +521,6 @@ function setup_event_listeners() {
     map.on('zoom', function (event) {
         planeLayer.clearLayers();
         flightPathLayer.clearLayers();
-        console.log(map.getZoom());
         if (map.getZoom() > 7) {
             draw_plane_markers(planeData);
         }
@@ -562,15 +561,15 @@ function getMapLatLonBounds() { // this function order got fucked up, need to fi
     //var latLonBounds = [minLonEast, maxLonWest, minLatSouth, maxLatNorth]
     var latLonBounds = [minLatSouth, maxLatNorth, maxLonWest, minLonEast]
     
-    //console.log(JSON.stringify({latLonBounds : latLonBounds})); // for debugging purposes
+    //(JSON.stringify({latLonBounds : latLonBounds})); // for debugging purposes
     $.ajax({
         url: '/data/getMapLatLonBounds',
         type: 'POST',
         contentType: 'application/json',
         data: JSON.stringify({latLonBounds: latLonBounds}),
-//        success: function(response) { console.log(response); },
+//        success: function(response) { (response); },
         error: function(error) {
-            console.log(error);
+            (error);
         }
     })
 }
