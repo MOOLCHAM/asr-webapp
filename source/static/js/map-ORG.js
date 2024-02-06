@@ -460,6 +460,8 @@ function draw_airport_markers(airport_data) {
 
 
         $content_div.append($audio_figure);
+        
+        
         $audio_figure.append(`
             <audio
                 controls
