@@ -521,7 +521,10 @@ function setup_event_listeners() {
     map.on('zoom', function (event) {
         planeLayer.clearLayers();
         flightPathLayer.clearLayers();
+<<<<<<< HEAD
         
+=======
+>>>>>>> 17eb48c8dea4fdc5002c2a4230cfbf490bffd2aa
         if (map.getZoom() > 7) {
             draw_plane_markers(planeData);
         }
