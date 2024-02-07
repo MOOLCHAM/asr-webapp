@@ -11,47 +11,45 @@
         <link rel="stylesheet" href="{{ url_for('static', filename='stylesheets/stylesheet.css') }}" />
     </head>
     <body>
-        <div style="height:100%;">
-            <header>
-                <div id="headerBlock">
-                    <div class="content" style="padding-right: 5px;">
-                        <h1 class="vertical-bottom">ASR for ATC App</h1>
+        <header>
+            <div id="headerBlock">
+                <div class="content" style="padding-right: 5px;">
+                    <h1 class="vertical-bottom">ASR for ATC App</h1>
+                </div>
+            </div>
+            <div id="navBlock" class="clearFloat">
+                <nav class="content less-left-content">
+                    <ul>
+                        <li><a class="navy-font" href="{{ url_for('index.index') }}">Home</a></li>
+                        <li><a class="navy-font" href="{{ url_for('about.about') }}">About</a></li>
+                        <li><a class="navy-font" href="{{ url_for('contact.contact') }}">Contact</a></li>
+                        <li><a class="navy-font" href="{{ url_for('map.map', type='geo') }}">Interactive Map</a></li>
+                        <li><a class="navy-font" href="{{ url_for('replay.replay') }}">Replay Audio</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+        <section>
+            {% block content %}
+            {% endblock %}
+        </section>
+        <footer>
+            <div id="upperFooterBlock">
+                <div class="content white-background">
+                    <div class="wrapper white-background">
                     </div>
                 </div>
-                <div id="navBlock" class="clearFloat">
-                    <nav class="content less-left-content">
-                        <ul>
-                            <li><a class="navy-font" href="{{ url_for('index.index') }}">Home</a></li>
-                            <li><a class="navy-font" href="{{ url_for('about.about') }}">About</a></li>
-                            <li><a class="navy-font" href="{{ url_for('map.map', type='geo') }}">Interactive Map</a></li>
-                            <li><a class="navy-font" href="{{ url_for('replay.replay') }}">Replay Audio</a></li>
-                        </ul>
-                    </nav>
-                </div>
-            </header>
-            <section>
-                {% block content %}
-                {% endblock %}
-            </section>
-            <footer>
-                <div id="upperFooterBlock">
-                    <div class="content white-background">
-                        <div class="wrapper white-background">
-                        </div>
+            </div>
+            <div id="lowerFooterBlock">
+                <div class="content">
+                    <div class="wrapper">
+                        <p class="middle-align small-font">
+                        <a class="right-link-spacing"><a class="bold-font gold-font no-underline small-font" href="https://erau.edu/">Embry-Riddle</a></a>
+                        <a class="bar-spacing">|</a> <a class="link-spacing"><a class="bold-font gold-font no-underline small-font">Terms of Use</a></a>
+                        <a class="bar-spacing">|</a> <a class="link-spacing"><a class="bold-font gold-font no-underline small-font">Privacy Policy</a></a></p>
                     </div>
                 </div>
-                <div id="lowerFooterBlock">
-                    <div class="content">
-                        <div class="wrapper">
-                            <p class="middle-align small-font">
-                                <a class="right-link-spacing"><a class="bold-font gold-font no-underline small-font" href="https://erau.edu/">Embry-Riddle</a></a>
-                                <a class="bar-spacing">|</a> <a class="link-spacing"><a class="bold-font gold-font no-underline small-font">Terms of Use</a></a>
-                                <a class="bar-spacing">|</a> <a class="link-spacing"><a class="bold-font gold-font no-underline small-font">Privacy Policy</a></a>
-                            </p>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-        </div>
+            </div>
+        </footer>
     </body>
 </html>
