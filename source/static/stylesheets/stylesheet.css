@@ -5,10 +5,15 @@
     --light-gray: #e6e6e6;
 }
 
+html {
+    background: var(--riddle-navy);
+}
+
 body {
     font-family: Arial, sans-serif;
     font-size: 12pt;
     margin: 0px;
+    background: var(--white)
 }
 
 @media (min-width: 1200px) {
@@ -45,6 +50,7 @@ header {
 
 footer {
     width: 100%;
+    overflow: hidden;
 }
 
 #upperFooterBlock {
@@ -52,9 +58,10 @@ footer {
 }
 
 #lowerFooterBlock {
-    height: 200px;
+    min-height: 200px;
     background-color: var(--riddle-navy);
     color: #ffffff;
+    overflow: hidden;
 }
 
 nav ul {
@@ -110,15 +117,6 @@ nav a:hover {
     background-image: url("../images/backgroundImages/mapBackgroundImage.png");
     background-repeat: no-repeat;
     background-size: cover;
-}
-
-#indexContentBackground2 {
-    height: 500px;
-    /*background-color: #0000ff;*/
-    background-image: url("../images/backgroundImages/testimage.jpg");
-    background-repeat: no-repeat;
-    background-size: cover;
-    filter: blur(2px);
 }
 
 .indexContentBackgroundContent {
