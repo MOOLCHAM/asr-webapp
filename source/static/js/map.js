@@ -466,26 +466,25 @@ function draw_airport_markers(airport_data) {
                         `);
                         
                         // Define $transcribeButton
-                        const $transcribeButton = $(`#transcribe-${airport.ident}_${selectedFrequencyfrequency.replace(".", "")}`);
+                        const $transcribeButton = $(`#transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}`);
 
                         $transcribeButton.on("click", (event) => {
                             $.ajax({
                                 url: "/models/transcribe",
                                 method: "POST",
                                 contentType: "text/plain",
-                                data: `https://livetraffic2.near.aero/stream/${airport.ident}_${selectedFrequencyfrequency.replace(".", "")}.mp3`,
+                                data: `https://livetraffic2.near.aero/stream/${airport.ident}_${selectedFrequency.replace(".", "")}.mp3`,
                             }).done(() => {
                                 console.log("Done");
                             })
                         });
+                        // Append the audio player and transcribe button to the audio container
+                        $audioContainer.append($audioPlayer, $transcribeButton);
                     }
-                // Append the audio player and transcribe button to the audio container
-                $audioContainer.append($audioPlayer, $transcribeButton);
-                
+                    
                 });
 
-            
-
+        
                 // Append the select frequency dropdown to the info pane
                 $("#infoPane").append($selectFrequency);
 
