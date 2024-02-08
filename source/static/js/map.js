@@ -1,4 +1,9 @@
-var map = L.map('map',{zoomSnap: 1, zoomDelta: 1}).fitWorld();
+var map = L.map('map',{
+    zoomControl: false,
+    zoomSnap: 1,
+    zoomDelta: 1
+}).fitWorld();
+L.control.zoom({ position: 'topright'}).addTo(map);
 
 // Organize different elements into groups (makes it easier to clear and redraw markers on update)
 var planeLayer = L.layerGroup().addTo(map).setZIndex(600);          // For plane markers
@@ -12,6 +17,7 @@ var airportData = [];
 var callInterval;
 
 var currentMapType = null;
+var currentMapTilesetSelection = "geographic";
 var VFRMapCycle = "20230810";
 var mapTiles = {};
 var mapTypes = {
@@ -99,12 +105,9 @@ function get_position_source_string(position_source) {
 function clear_table() {
     // Remove previous data
     $("#infoPane").children().each(function (index) {
-        if ($(this).attr("id") != "infoTable" && $(this).attr("id") != "closeButton" && $(this).attr("class") != "INFOPANETEMP") // THIS IS KINDA TERRIBLE we really should just be removing those with a tag instead of everything with not this tag
+        if ($(this).attr("id") != "infoPanePrimaryHeader") {
             $(this).remove();
-    });
-
-    $("#infoTable").children().each(function (index) {
-        $(this).remove();
+        }
     });
 }
 
@@ -228,10 +231,10 @@ function draw_plane_markers(plane_data) {
         });
 
         marker.on('click', (event) => {
-            clear_table();
+            resetLeftPane();
 
             // Change the title text
-            $(".infoPaneTitle").text("Aircraft Information");
+            $("#infoPaneTitle").text("Aircraft Information");
 
             // Add airport properties
             $("#infoPane").append(`
@@ -323,10 +326,6 @@ function draw_plane_markers(plane_data) {
 
             draw_flight_path(plane.icao24);
 
-            // Hide zoom controls and map type selection (draws over top of the table)
-            $(".leaflet-control-zoom").hide();
-            $(".selectionClusterLocation").hide();
-
             // Display data
             $("#infoPane").show();
         });
@@ -356,10 +355,10 @@ function draw_airport_markers(airport_data) {
         });
 
         marker.on('click', (event) => {
-            clear_table();
+            resetLeftPane();
 
             // Change the title text
-            $(".infoPaneTitle").text("Airport Information");
+            $("#infoPaneTitle").text("Airport Information");
 
             // Add airport properties
             $("#infoPane").append(`
@@ -445,9 +444,6 @@ function draw_airport_markers(airport_data) {
                     // toggle active class (mostly for visual feedback)
                     $tower_freq.toggleClass("activeTower");
                 });
-
-                // place collapsible menu after the airport properties
-                //$("#infoTable").after($tower_freq); // InfoTable is being phased out
                 
                 $("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
 
@@ -490,10 +486,6 @@ function draw_airport_markers(airport_data) {
                 }
             }
 
-            // Hide zoom controls and map type selection (draws over top of the table)
-            $(".leaflet-control-zoom").hide();
-            $(".selectionClusterLocation").hide();
-
             // Display data
             $("#infoPane").show();
         });
@@ -507,10 +499,8 @@ function setup_event_listeners() {
     // Event listener for clicking on the close button
     $("#closeButton").on('click', (event) => {
         // Hide table
-        $("#infoPane").hide();
-        // Redraw zoom and map type selection controls
-        $(".leaflet-control-zoom").show();
-        $(".selectionClusterLocation").show();
+        resetLeftPane();
+        //$("#infoPane").hide();
     });
 
     // Prevent mouse events from interacting with the map below the info panel
@@ -620,18 +610,39 @@ function dropDownSelection() {
     }
 }
 
-var currentMapTilesetSelection = "geographic";
+
 
 function tileSetChange(mapType) {
-    document.getElementById(currentMapTilesetSelection).style.backgroundColor = '';
-    document.getElementById(mapType).style.backgroundColor = '#cccccc';
+    $(`#${currentMapTilesetSelection}`).css("background-color","");
+    $(`#${mapType}`).css("background-color","#cccccc");
     currentMapTilesetSelection = mapType;
     setMapType(mapType);
 }
 
-function toggleAltitudeColors() {
-    var toggle = document.getElementsByClassName("altitudeColorButton");
-    toggle[0].classList.toggle("toggleActive");
+function toggleSettings() {
+    clear_table();
+    if ($("#settingsButton").hasClass("toggleActive")) {
+        $("#infoPane").hide();
+    }
+    else {
+        $("#infoPaneTitle").text("Settings");
+        $("#infoPane").show();
+        $("#infoPane").append(`
+            <div>
+                <ul class="infoPaneItem">
+                    <li class="infoPaneLabel">Example Setting: </li>
+                    <li class="infoPaneData">Change the setting</li>
+                </ul>
+            </div>
+    `);
+    }
+    $("#settingsButton").toggleClass("toggleActive");
+}
 
-    /* do other stuff to change plane icon color */
+function resetLeftPane() {
+    clear_table();
+    $("#infoPane").hide();
+    if ($("#settingsButton").hasClass("toggleActive")) {
+        $("#settingsButton").removeClass("toggleActive");
+    }
 }

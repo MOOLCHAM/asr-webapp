@@ -17,12 +17,10 @@
 <body onload="initializeMap()"> 
     <div id="map">
         <div id="infoPane">
-            <div class="INFOPANETEMP">
-                <span class="infoPaneTitle">Info Pane</span>
+            <div id="infoPanePrimaryHeader">
+                <span id="infoPaneTitle">Information Pane</span>
                 <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
             </div>
-            
-            <table id="infoTable"></table>
         </div>
         <div id="zoomedTooFarOut">
             <span>Zoom to View Content</span>
@@ -30,8 +28,8 @@
         <div class="selectionClusterLocationParent">
             <div class="selectionClusterLocation">
                 <div class="altitudeToggleCluster">
-                    <button title="Altitude Coloring Toggle" aria-label="Altitude Coloring Toggle" onclick="toggleAltitudeColors()" class="altitudeColorButton">
-                        <span>A</span>
+                    <button title="Settings" aria-label="Settings" onclick="toggleSettings()" id="settingsButton">
+                        <span>S</span>
                     </button>
                 </div>
                 <div class="selectionCluster">
