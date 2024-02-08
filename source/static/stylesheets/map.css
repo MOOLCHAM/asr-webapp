@@ -19,25 +19,23 @@ body,
 #map {
     height: 100%;
     width: 100%;
-    position: fixed; /*changed by Maxwell Moolchan, from relative*/
-    display: flex; /*added by Maxwell Moolchan*/
+    position: fixed; 
+    display: flex;
 }
 
 #infoPane {
     height: 100%;
-    width: 350px; /*changed by Maxwell Moolchan, from 30%*/
-    /* position: absolute; */ /*remvoed by Maxwell Moolchan, this breaks the flex box controls*/
+    width: 350px;
     z-index: 800;
     background-color: var(--white);
     border-right: 2px solid var(--leaflet-dark-gray);
-    display: none; /*changed by Max M from none to inline-block, this may not work because using Jquery */
+    display: none;
     cursor: default;
 }
 
 #closeButton {
-    height: 18px; 
-    width: 18px; 
-    /* float: right; */
+    height: 24px; 
+    width: 24px;
     position: absolute;
     right: 0;
     top: 0;
@@ -108,7 +106,7 @@ body,
 
 /* for the collapsable menu menu on the map screen */
 
-.mapCollapsible, .collapsibleContent, .altitudeColorButton {
+.mapCollapsible, .collapsibleContent, #settingsButton {
     background-color: var(--white);
     color: var(--black);
     /*color: white;*/
@@ -128,7 +126,7 @@ body,
     border-radius: 2px 2px 0px 0px !important;
   }
   
-  .active, .mapCollapsible:hover, .collapsibleContent:hover, .altitudeColorButton:hover{
+  .active, .mapCollapsible:hover, .collapsibleContent:hover, #settingsButton:hover{
     background-color: var(--leaflet-light-gray);  
   }
   
@@ -141,14 +139,7 @@ body,
   }
   
   
-  .mapCollapsible:after {/*
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    transform: rotate(-135deg);
-    -webkit-transform: rotate(-135deg);
-    */
+  .mapCollapsible:after {
     color: var(--black);
     font-weight: bold;
     content: '\002B';
@@ -159,13 +150,7 @@ body,
     font-weight: bold;
   }
   
-  .active:after {/*
-    border: solid black;
-    border-width: 0 3px 3px 0;
-    display: inline-block;
-    padding: 3px;
-    transform: rotate(45deg);
-    -webkit-transform: rotate(45deg);*/
+  .active:after {
     content: "\2212";
   }
   
@@ -181,7 +166,6 @@ body,
     width: 30px;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
-    /* background-color: #f1f1f1; */
   }
   
   .selectionCluster {
@@ -209,12 +193,10 @@ body,
     position: absolute;
     z-index: 1000;
     pointer-events: none;
-    margin-left: 10px;
+    margin-right: 10px;
     margin-top: 84px;
-  }
-
-  .selectionClusterLocationParent {
-    position: absolute;
+    top: 0;
+    right: 0;
   }
 
 /* infoPane styles */
@@ -247,14 +229,15 @@ body,
   
 }
 
-.infoPaneTitle {
+#infoPaneTitle {
   padding-top: 5px;
   padding-bottom: 5px;
   display: block;
   font-weight: bold;
+  font-size: 16px;
 }
 
-.INFOPANETEMP {
+#infoPanePrimaryHeader {
   text-align: center;
   position: relative;
 }
@@ -286,7 +269,7 @@ body,
   border-radius: 4px;
 }
 
-.altitudeColorButton {
+#settingsButton {
   pointer-events: auto;
 }
 .toggleActive {
