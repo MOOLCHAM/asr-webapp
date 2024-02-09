@@ -42,8 +42,8 @@ function initializeMapTiles() {
         };
         if (type == "geographic") {
             mapLink = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-            mapSettings.attribution = "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors",
-            mapSettings.tms = false
+                mapSettings.attribution = "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors",
+                mapSettings.tms = false
         }
         else {
             mapLink = "https://vfrmap.com/" + VFRMapCycle + "/tiles/" + type + "/{z}/{y}/{x}.jpg"
@@ -58,7 +58,7 @@ function initializeMapTiles() {
  * @param {string} mapType string input corresponding to map type can be "geograpgic", "vfrc", "sectc", "helic", "ifrlc", "ehc"
  * 
  */
-function setMapType(mapType) {    
+function setMapType(mapType) {
     if (currentMapType != null && mapType != currentMapType) {
         mapTiles[currentMapType].removeFrom(map);
         currentMapType = mapType;
@@ -428,62 +428,77 @@ function draw_airport_markers(airport_data) {
                 `);
             }
 
-             // If there are airport frequencies available, add them to the info pane
-             if (airport.tower_frequencies) {
+
+            // If there are airport frequencies available, add them to the info pane
+            if (airport.tower_frequencies) {
+
                 // collapsible button to show/hide media players
                 const $tower_freq = $(`
-                    <button type='button' class='collapsible'>Tower Frequencies</button>
+                        <h3>Tower Frequencies</h3>
                 `);
-                // container for the media players and labels
-                let $content_div = $("<div class='content'></div>");
-
-                // click event handler for the tower frequency dropdown
-                $tower_freq.on("click", () => {
-                    // toggle visibility
-                    $content_div.toggle();
-                    // toggle active class (mostly for visual feedback)
-                    $tower_freq.toggleClass("activeTower");
-                });
                 
-                $("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
 
-                // 'content' div for the media players after the frequency menus
-                $tower_freq.after($content_div);
 
-                for (const frequency of airport.tower_frequencies) {
-                    let $audio_figure = $(`
-                        <figure class ="audio-container">
-                            <button class="collapsible">${frequency}</button>
-                            <div class="content">
-                                <audio
-                                    controls
-                                    src="https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3"
-                        >
-                        </audio>
-                        <button id="transcribe-${airport.ident}_${frequency.replace(".", "")}">Transcribe</button>
-                    </div>
-                </figure>
+                // Select frequency button
+                const $selectFrequency = $(`
+                    <select id='frequencySelect'>
+                        <option value='' disabled selected>Select a Frequency</option>
+                    </select>
                     `);
 
-                    $content_div.append($audio_figure);
+                $("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
 
-                    // Add event listener to toggle the content when the button is clicked
-                    $audio_figure.find(".collapsible").on("click", function() {
-                        const content = $(this).next(".content");
-                        content.toggle();
-                    });
-
-                    $(`#transcribe-${airport.ident}_${frequency.replace(".", "")}`).on("click", (event) => {
-                        $.ajax({
-                            url: "/models/transcribe",
-                            method: "POST",
-                            contentType: "text/plain",
-                            data: `https://livetraffic2.near.aero/stream/${airport.ident}_${frequency.replace(".", "")}.mp3`,
-                        }).done(() => {
-                            console.log("Done");
-                        })
-                    });
+                // Add frequencies to the dropdown menu
+                for (const frequency of airport.tower_frequencies) {
+                    $selectFrequency.append(`<option value='${frequency}'>${frequency}</option>`);
                 }
+
+                 // Create an audio player container
+                const $audioContainer = $("<div class='audio-container'></div>");
+
+
+                // Event handler for when a frequency is selected
+                $selectFrequency.on("change", function () {
+                    const selectedFrequency = $(this).val();
+
+                    // Clear the audio container
+                    $audioContainer.empty();
+
+
+                    if (selectedFrequency) {
+                        // Create an audio player for the selected frequency
+                        const audioSrc = `https://livetraffic2.near.aero/stream/${airport.ident}_${selectedFrequency.replace(".", "")}.mp3`;
+                        const $audioPlayer = $(`
+                            <audio controls src="${audioSrc}"></audio>
+                            <button id="transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}">Transcribe</button>
+                        `);
+                        
+                        // Define $transcribeButton
+                        const $transcribeButton = $(`#transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}`);
+
+                        $transcribeButton.on("click", (event) => {
+                            $.ajax({
+                                url: "/models/transcribe",
+                                method: "POST",
+                                contentType: "text/plain",
+                                data: `https://livetraffic2.near.aero/stream/${airport.ident}_${selectedFrequency.replace(".", "")}.mp3`,
+                            }).done(() => {
+                                console.log("Done");
+                            })
+                        });
+                        // Append the audio player and transcribe button to the audio container
+                        $audioContainer.append($audioPlayer, $transcribeButton);
+                    }
+                    
+                });
+
+        
+                // Append the select frequency dropdown to the info pane
+                $("#infoPane").append($selectFrequency);
+
+                // Append the audio container to the info pane
+                $("#infoPane").append($audioContainer);
+
             }
 
             // Display data
@@ -555,15 +570,15 @@ function getMapLatLonBounds() { // this function order got fucked up, need to fi
 
     //var latLonBounds = [minLonEast, maxLonWest, minLatSouth, maxLatNorth]
     var latLonBounds = [minLatSouth, maxLatNorth, maxLonWest, minLonEast]
-    
+
     //console.log(JSON.stringify({latLonBounds : latLonBounds})); // for debugging purposes
     $.ajax({
         url: '/data/getMapLatLonBounds',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({latLonBounds: latLonBounds}),
-//        success: function(response) { console.log(response); },
-        error: function(error) {
+        data: JSON.stringify({ latLonBounds: latLonBounds }),
+        //        success: function(response) { console.log(response); },
+        error: function (error) {
             console.log(error);
         }
     })
