@@ -27,19 +27,17 @@
         </div>
         <div class="selectionClusterLocationParent">
             <div class="selectionClusterLocation">
-                <div class="mapControlButton">
+                <div class="mapSideControl">
                     <button title="Homepage" aria-label="Homepage">
-                        <a href="{{ url_for('index.index') }}">
-                            <span>H</span>
-                        </a>
+                        <a href="{{ url_for('index.index') }}">H</a>
                     </button>
                 </div>
-                <div class="settingsToggleCluster mapControlButton">
+                <div class="mapSideControl">
                     <button title="Settings" aria-label="Settings" onclick="toggleSettings()">
                         <span>S</span>
                     </button>
                 </div>
-                <div class="selectionCluster">
+                <div class="mapSideControl">
                     <button title="Map Type Toggle" aria-label="Map Type Toggle" onclick="dropDownSelection()" class="mapCollapsible primaryButton"></button>
                     <div class="contentDropdown">
                         <button title="Geographic Map" aria-label="Geographic Map" onclick="tileSetChange('geographic')" class="collapsibleContent" id="geographic">
@@ -62,8 +60,8 @@
                         </button>
                     </div>
                 </div>
-                <div>
-                    <button title="Audio Source" aria-label="Audio Source" onclick="findAudioSource()" class="mapControlButton">
+                <div class="mapSideControl">
+                    <button title="Audio Source" aria-label="Audio Source" onclick="findAudioSource()">
                         <span>S</span>
                     </button>
                 </div>

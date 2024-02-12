@@ -661,3 +661,7 @@ function resetLeftPane() {
         $("#settingsButton").removeClass("toggleActive");
     }
 }
+
+function findAudioSource() {
+    // need to center map camera to location of audio source: plane, airport, etc.
+}

@@ -106,7 +106,7 @@ body,
 
 /* for the collapsable menu menu on the map screen */
 
-.mapCollapsible, .collapsibleContent, .mapControlButton {
+.mapCollapsible, .collapsibleContent, .mapSideControl button, .mapSideControl button a {
     background-color: var(--white);
     color: var(--black);
     /*color: white;*/
@@ -120,13 +120,14 @@ body,
     font-size: 15px;
     font-family: Arial, sans-serif;
     font-weight: bold;
+    text-decoration: none;
   }
   
   .active {
     border-radius: 2px 2px 0px 0px !important;
   }
   
-  .active, .mapCollapsible:hover, .collapsibleContent:hover, .mapControlButton:hover{
+  .active, .mapCollapsible:hover, .collapsibleContent:hover, .mapSideControl button:hover{
     background-color: var(--leaflet-light-gray);  
   }
   
@@ -168,7 +169,7 @@ body,
     transition: max-height 0.2s ease-out;
   }
   
-  .selectionCluster, .mapControlButton {
+  /*.selectionCluster,*/ .mapSideControl {
     margin-bottom: 10px;
     width: 30px;
     border: 2px solid rgba(0,0,0,0.2);
@@ -257,7 +258,7 @@ body,
 * We want to override leaflet font configs so we mark as !important
 */
 
-.leaflet-control-zoom-in, .leaflet-control-zoom-out /*, .selectionCluster, .settingsToggleCluster */ {
+.leaflet-control-zoom-in, .leaflet-control-zoom-out {
   font-size: 15px !important;
   font-family: Arial, sans-serif !important;
   color: var(--black);
