@@ -27,8 +27,15 @@
         </div>
         <div class="selectionClusterLocationParent">
             <div class="selectionClusterLocation">
-                <div class="altitudeToggleCluster">
-                    <button title="Settings" aria-label="Settings" onclick="toggleSettings()" id="settingsButton">
+                <div class="mapControlButton">
+                    <button title="Homepage" aria-label="Homepage">
+                        <a href="{{ url_for('index.index') }}">
+                            <span>H</span>
+                        </a>
+                    </button>
+                </div>
+                <div class="settingsToggleCluster mapControlButton">
+                    <button title="Settings" aria-label="Settings" onclick="toggleSettings()">
                         <span>S</span>
                     </button>
                 </div>
@@ -54,6 +61,11 @@
                             <span>HI</span>
                         </button>
                     </div>
+                </div>
+                <div>
+                    <button title="Audio Source" aria-label="Audio Source" onclick="findAudioSource()" class="mapControlButton">
+                        <span>S</span>
+                    </button>
                 </div>
             </div>
         </div>
