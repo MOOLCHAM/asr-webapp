@@ -106,7 +106,7 @@ body,
 
 /* for the collapsable menu menu on the map screen */
 
-.mapCollapsible, .collapsibleContent, .mapSideControl button, .mapSideControl button a {
+.mapCollapsible, /*.collapsibleContent,*/ .mapSideControl button, .mapSideControl button a {
     background-color: var(--white);
     color: var(--black);
     /*color: white;*/
