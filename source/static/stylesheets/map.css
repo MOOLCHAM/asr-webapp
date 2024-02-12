@@ -184,7 +184,7 @@ body,
   }
   
   .collapsibleContent {
-    border-top: 1px solid var(--leaflet-dark-gray);
+    border-top: 1px solid var(--leaflet-dark-gray) !important;
     pointer-events: auto;
   }
 
@@ -225,7 +225,6 @@ body,
   margin-right: auto;
   padding-left: 5px;
   padding-right: 5px;
-
   content: " ";
   display: block;
   clear: both;
