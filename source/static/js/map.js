@@ -586,7 +586,7 @@ function getMapLatLonBounds() { // this function order got fucked up, need to fi
         error: function (error) {
             console.log(error);
         }
-    })
+    });
 }
 
 function onMapZoomEnd() {
@@ -676,4 +676,13 @@ function transcribeLiveAudio(liveAudioSource) {
     // fetch the transcriptions for given live audio stream
     $("#transcriptionOutput").text("Live Transcription Established from: " + liveAudioSource);
     // currently just changes a text element, in future we will want to append each "message" below the previous along with tagging the "speaker"
+
+    $.ajax({
+        url: "/models/transcribe",
+        method: "POST",
+        contentType: "text/plain",
+        data: 'text',
+        success: function(response) { console.log(response) },
+        error: function(error) { console.log(error) }
+    });
 }
