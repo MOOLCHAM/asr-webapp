@@ -42,8 +42,8 @@ function initializeMapTiles() {
         };
         if (type == "geographic") {
             mapLink = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-                mapSettings.attribution = "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors",
-                mapSettings.tms = false
+            mapSettings.attribution = "&copy; <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors",
+            mapSettings.tms = false
         }
         else {
             mapLink = "https://vfrmap.com/" + VFRMapCycle + "/tiles/" + type + "/{z}/{y}/{x}.jpg"
