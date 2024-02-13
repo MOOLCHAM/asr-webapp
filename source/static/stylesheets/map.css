@@ -9,9 +9,17 @@
 
 body {
     font-family: Arial, sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
     padding: 0;
     margin: 0;
+}
+
+ul {
+  font-size: 0;
+}
+
+li {
+  font-size: 12px;
 }
 
 html,
@@ -217,8 +225,8 @@ body,
 
 .infoPaneItem li {
   list-style-type: none;
-  /*display: inline-block;*/
-  float: left;
+  display: inline-block;
+  /*float: left;*/
 }
 
 .infoPaneLabel {
@@ -272,4 +280,18 @@ body,
 
 .toggleActive {
   background-color: var(--leaflet-dark-gray) !important;
+}
+
+.infoPaneSubtitle {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-weight: bold;
+  font-size: 14px;
+  text-align: center;
+  background-color: var(--riddle-navy);
+  color: var(--white);
 }
