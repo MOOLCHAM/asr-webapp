@@ -484,10 +484,7 @@ function draw_airport_markers(airport_data) {
                         const audioPlayer = $(`
                             <audio controls src="${audioSrc}" onplay="transcribeLiveAudio('${audioSrc}')"></audio>
                         `);
-                        // THIS GOES IN THE AUDIO PLAYER const ABOVE
-                        // <button id="transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}">Transcribe</button>
-                        //
-                        // Define $transcribeButton
+
                         /*
                         const $transcribeButton = $(`#transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}`);
 
@@ -678,4 +675,5 @@ function findAudioSource() {
 function transcribeLiveAudio(liveAudioSource) {
     // fetch the transcriptions for given live audio stream
     $("#transcriptionOutput").text("Live Transcription Established from: " + liveAudioSource);
+    // currently just changes a text element, in future we will want to append each "message" below the previous along with tagging the "speaker"
 }
