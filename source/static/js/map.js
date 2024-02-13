@@ -428,16 +428,13 @@ function draw_airport_markers(airport_data) {
                 `);
             }
 
-
             // If there are airport frequencies available, add them to the info pane
             if (airport.tower_frequencies) {
-
-                // collapsible button to show/hide media players
-                const $tower_freq = $(`
-                        <h3>Tower Frequencies</h3>
+                $("#infoPane").append(`
+                    <div>
+                        <span class="infoPaneSubtitle" id="towerFrequencySubtitle">Tower Frequencies</span>
+                    </div>
                 `);
-                
-
 
                 // Select frequency button
                 const $selectFrequency = $(`
@@ -446,16 +443,19 @@ function draw_airport_markers(airport_data) {
                     </select>
                     `);
 
-                $("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
+                //$("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
 
                 // Add frequencies to the dropdown menu
                 for (const frequency of airport.tower_frequencies) {
-                    $selectFrequency.append(`<option value='${frequency}'>${frequency}</option>`);
+                    $selectFrequency.append(`
+                        <option value='${frequency}'>${frequency}</option>
+                    `);
                 }
 
                  // Create an audio player container
-                const $audioContainer = $("<div class='audio-container'></div>");
-
+                const $audioContainer = $(`
+                    <div class='audio-container'></div>
+                `);
 
                 // Event handler for when a frequency is selected
                 $selectFrequency.on("change", function () {
@@ -464,18 +464,21 @@ function draw_airport_markers(airport_data) {
                     // Clear the audio container
                     $audioContainer.empty();
 
-
                     if (selectedFrequency) {
                         // Create an audio player for the selected frequency
                         const audioSrc = `https://livetraffic2.near.aero/stream/${airport.ident}_${selectedFrequency.replace(".", "")}.mp3`;
                         const $audioPlayer = $(`
                             <audio controls src="${audioSrc}"></audio>
-                            <button id="transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}">Transcribe</button>
+                            
                         `);
-                        
+                        // THIS GOES IN THE AUDIO PLAYER const ABOVE
+                        // <button id="transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}">Transcribe</button>
+                        //
                         // Define $transcribeButton
+                        /*
                         const $transcribeButton = $(`#transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}`);
 
+                        
                         $transcribeButton.on("click", (event) => {
                             $.ajax({
                                 url: "/models/transcribe",
@@ -486,10 +489,10 @@ function draw_airport_markers(airport_data) {
                                 console.log("Done");
                             })
                         });
+                        */
                         // Append the audio player and transcribe button to the audio container
-                        $audioContainer.append($audioPlayer, $transcribeButton);
+                        $audioContainer.append($audioPlayer /*, $transcribeButton*/);
                     }
-                    
                 });
 
         
@@ -664,4 +667,5 @@ function resetLeftPane() {
 
 function findAudioSource() {
     // need to center map camera to location of audio source: plane, airport, etc.
+    // map.panTo();
 }
