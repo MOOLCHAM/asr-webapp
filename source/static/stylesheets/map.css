@@ -32,13 +32,27 @@ body,
 }
 
 #infoPane {
-    height: 100%;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  z-index: 800;
+  display: none;
+  cursor: default;
+}
+
+#infoPaneContent {
     width: 350px;
-    z-index: 800;
-    background-color: var(--white);
-    border-right: 2px solid var(--leaflet-dark-gray);
-    display: none;
-    cursor: default;
+    background-color: var(--riddle-navy);
+    border-radius: 2px;
+    
+
+    /*
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    bottom: 10px;*/
 }
 
 #closeButton {
@@ -47,7 +61,8 @@ body,
     position: absolute;
     right: 0;
     top: 0;
-    padding: 5px 5px 5px 5px;
+    padding: 5px;
+    color: var(--white);
 }
 
 #closeButton:hover {
@@ -119,12 +134,12 @@ body,
 .mapSideControl button a {
     background-color: var(--white);
     color: var(--black);
-    /*color: white;*/
+    border: none;
+    border-radius: 2px;
     cursor: pointer;
     padding: 0px;
     width: 30px;
     height: 30px;
-    border: none;
     text-align: center;
     outline: none;
     font-size: 15px;
@@ -217,12 +232,6 @@ body,
 
 /* infoPane styles */
 
-.infoPaneItem {
-  margin: 0;
-  padding: 0;
-  display: block;
-}
-
 .infoPaneItem li {
   list-style-type: none;
   display: inline-block;
@@ -230,18 +239,20 @@ body,
 }
 
 .infoPaneLabel {
-  width: 125px;
+  width: 120px;
 }
 
 .infoPaneItem {
+  margin: 0;
   margin-left: auto;
   margin-right: auto;
   padding-left: 5px;
   padding-right: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
   content: " ";
   display: block;
   clear: both;
-  
 }
 
 #infoPaneTitle {
@@ -250,6 +261,22 @@ body,
   display: block;
   font-weight: bold;
   font-size: 16px;
+  color: var(--white);
+}
+.infoPaneName {
+  background-color: var(--white);
+  color: var(--riddle-navy);
+  font-size: 14px;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+}
+.infoPaneSubcategory {
+  background-color: var(--leaflet-dark-gray);
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 2px 2px 2px 2px;
 }
 
 #infoPanePrimaryHeader {
@@ -258,7 +285,7 @@ body,
 }
 
 .infoPaneData {
-  width: 215px;
+  width: 210px;
 }
 
 .clearFloat:after {
@@ -292,6 +319,5 @@ body,
   font-weight: bold;
   font-size: 14px;
   text-align: center;
-  background-color: var(--riddle-navy);
-  color: var(--white);
+  color: var(--riddle-gold);
 }

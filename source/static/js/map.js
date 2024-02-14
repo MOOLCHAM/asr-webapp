@@ -104,7 +104,7 @@ function get_position_source_string(position_source) {
  */
 function clear_table() {
     // Remove previous data
-    $("#infoPane").children().each(function (index) {
+    $("#infoPaneContent").children().each(function (index) {
         if ($(this).attr("id") != "infoPanePrimaryHeader") {
             $(this).remove();
         }
@@ -234,10 +234,10 @@ function draw_plane_markers(plane_data) {
             resetLeftPane();
 
             // Change the title text
-            $("#infoPaneTitle").text("Aircraft Information");
+            $("#infoPaneTitle").text("Aircraft");
 
             // Add airport properties
-            $("#infoPane").append(`
+            $("#infoPaneContent").append(`
                 <div>
                     <ul class="infoPaneItem">
                         <li class="infoPaneLabel">Callsign: </li>
@@ -327,7 +327,7 @@ function draw_plane_markers(plane_data) {
             draw_flight_path(plane.icao24);
 
             // Display data
-            $("#infoPane").show();
+            $("#infoPane").show().css("display","flex");
         });
     }
 }
@@ -358,67 +358,72 @@ function draw_airport_markers(airport_data) {
             resetLeftPane();
 
             // Change the title text
-            $("#infoPaneTitle").text("Airport Information");
+            $("#infoPaneTitle").text("Airport");
 
             // Add airport properties
-            $("#infoPane").append(`
-                <div class="infoPaneCategory" id="airportGeneralInformation">
+            $("#infoPaneContent").append(`
+                <div class="infoPaneCategory">
+                    <div class="infoPaneName">
+                        <span>${airport.name} ${airport.ident}</span>
+                    </div>
                     <div class="infoPaneSubtitle">
                         <span>General Information</span>
                     </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">Airport Identifier: </li>
-                            <li class="infoPaneData airportIdentifier">${airport.ident}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">Airport Name: </li>
-                            <li class="infoPaneData airportName">${airport.name}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">Position: </li>
-                            <li class="infoPaneData airportPosition">${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">Elevation: </li>
-                            <li class="infoPaneData airportElevation">${airport.elevation} Feet</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">Region: </li>
-                            <li class="infoPaneData airportRegion">${airport.region_name}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">Municipality: </li>
-                            <li class="infoPaneData airportMunicipality">${airport.municipality}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">GPS Code: </li>
-                            <li class="infoPaneData airportGPS">${airport.gps_code}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">IATA Code: </li>
-                            <li class="infoPaneData airportIATA">${airport.iata_code}</li>
-                        </ul>
-                    </div>
-                    <div>
-                        <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">Local Code: </li>
-                            <li class="infoPaneData airportLocal">${airport.local_code}</li>
-                        </ul>
+                    <div class="infoPaneSubcategory" id="airportGeneralInformation">
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Airport Identifier: </li>
+                                <li class="infoPaneData airportIdentifier">${airport.ident}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Airport Name: </li>
+                                <li class="infoPaneData airportName">${airport.name}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Position: </li>
+                                <li class="infoPaneData airportPosition">${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Elevation: </li>
+                                <li class="infoPaneData airportElevation">${airport.elevation} Feet</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Region: </li>
+                                <li class="infoPaneData airportRegion">${airport.region_name}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Municipality: </li>
+                                <li class="infoPaneData airportMunicipality">${airport.municipality}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">GPS Code: </li>
+                                <li class="infoPaneData airportGPS">${airport.gps_code}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">IATA Code: </li>
+                                <li class="infoPaneData airportIATA">${airport.iata_code}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Local Code: </li>
+                                <li class="infoPaneData airportLocal">${airport.local_code}</li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
             `);
@@ -435,30 +440,32 @@ function draw_airport_markers(airport_data) {
 
             // If there are airport frequencies available, add them to the info pane
             if (airport.tower_frequencies) {
-                $("#infoPane").append(`
-                    <div class="infoPaneCategory" id="airportFrequencyInformation">
+                $("#infoPaneContent").append(`
+                    <div class="infoPaneCategory">
                         <div class="infoPaneSubtitle">
                             <span>Tower Frequencies</span>
                         </div>
-                        <div>
-                            <ul class="infoPaneItem">
-                                <li class="infoPaneLabel">Frequency: </li>
-                                <li class="infoPaneData">
-                                    <select id='frequencySelect'>
-                                        <option disabled selected value=''>Select a Frequency</option>
-                                    </select>
-                                </li>
-                            </ul>
-                        </div>
-                        <div id="airportTowerAudioContainer">
+                        <div class="infoPaneSubcategory" id="airportFrequencyInformation">
+                            <div>
+                                <ul class="infoPaneItem">
+                                    <li class="infoPaneLabel">Frequency: </li>
+                                    <li class="infoPaneData">
+                                        <select id='frequencySelect'>
+                                            <option disabled selected value=''>Select a Frequency</option>
+                                        </select>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="airportTowerAudioContainer">
 
+                            </div>
                         </div>
                     </div>
                     <div class="infoPaneCategory" id="airportTranscriptionOutput">
                         <div class="infoPaneSubtitle">
                             <span>Live Transcription</span>
                         </div>
-                        <div>
+                        <div class="infoPaneSubcategory">
                             <span id="transcriptionOutput"></span>
                         </div>
                     </div>
@@ -507,7 +514,7 @@ function draw_airport_markers(airport_data) {
             }
 
             // Display data
-            $("#infoPane").show();
+            $("#infoPane").show().css("display","flex");
         });
     }
 }
@@ -646,8 +653,8 @@ function toggleSettings() {
     }
     else {
         $("#infoPaneTitle").text("Settings");
-        $("#infoPane").show();
-        $("#infoPane").append(`
+        $("#infoPane").show().css("display","flex");
+        $("#infoPaneContent").append(`
             <div>
                 <ul class="infoPaneItem">
                     <li class="infoPaneLabel">Example Setting: </li>

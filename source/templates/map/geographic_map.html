@@ -17,9 +17,11 @@
 <body onload="initializeMap()"> 
     <div id="map">
         <div id="infoPane">
-            <div id="infoPanePrimaryHeader">
-                <span id="infoPaneTitle">Information Pane</span>
-                <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
+            <div id="infoPaneContent">
+                <div id="infoPanePrimaryHeader">
+                    <span id="infoPaneTitle">Information Pane</span>
+                    <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
+                </div>
             </div>
         </div>
         <div id="zoomedTooFarOut">
