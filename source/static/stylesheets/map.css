@@ -29,6 +29,7 @@ body,
     width: 100%;
     position: fixed; 
     display: flex;
+    align-items: flex-start;
 }
 
 #infoPane {
@@ -46,6 +47,8 @@ body,
     width: 350px;
     background-color: var(--riddle-navy);
     border-radius: 2px;
+    display: flex;
+    flex-direction: column;
     
 
     /*
@@ -62,7 +65,8 @@ body,
     right: 0;
     top: 0;
     padding: 5px;
-    color: var(--white);
+    /*color: var(--white);*/
+    filter: invert(100%);
 }
 
 #closeButton:hover {
@@ -214,6 +218,7 @@ body,
   .collapsibleContent {
     border-top: 1px solid var(--leaflet-dark-gray) !important;
     pointer-events: auto;
+    border-radius: 0 !important;
   }
 
   .collapsibleContent:active {
@@ -320,4 +325,14 @@ body,
   font-size: 14px;
   text-align: center;
   color: var(--riddle-gold);
+}
+
+#airportTranscriptionOutput {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+#airportTranscriptionSubcategory {
+  height: 100%;
 }

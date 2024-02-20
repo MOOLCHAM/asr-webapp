@@ -238,93 +238,106 @@ function draw_plane_markers(plane_data) {
 
             // Add airport properties
             $("#infoPaneContent").append(`
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Callsign: </li>
-                        <li class="infoPaneData aircraftCallsign">${plane.callsign}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Position: </li>
-                        <li class="infoPaneData aircraftPosition">${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">ICAO 24-Bit Address: </li>
-                        <li class="infoPaneData aircraftICAO">${plane.icao24.toUpperCase()}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Origin Country: </li>
-                        <li class="infoPaneData aircraftOrigin">${plane.origin_country}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Time of Last Position Report: </li>
-                        <li class="infoPaneData aircraftTimePosition">${Date(plane.time_position)}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Last Contact: </li>
-                        <li class="infoPaneData aircraftLastContact">${Date(plane.last_contact)}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Geometric Altitude: </li>
-                        <li class="infoPaneData aircraftGeoAltitude">${plane.geo_altitude} meters</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">On Ground?: </li>
-                        <li class="infoPaneData aircraftGroundStatus">${plane.on_ground ? "Yes" : "No"}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Velocity: </li>
-                        <li class="infoPaneData aircraftVelocity">${plane.velocity} meters per second</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Heading: </li>
-                        <li class="infoPaneData aircraftHeading">${plane.true_track}\u00b0</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Vertical Rate: </li>
-                        <li class="infoPaneData aircraftVerticalRate">${plane.vertical_rate} meters per second</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Squawk: </li>
-                        <li class="infoPaneData aircraftSquawk">${plane.squawk}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Position Source: </li>
-                        <li class="infoPaneData aircraftPositionSource">${get_position_source_string(plane.position_source)}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Category: </li>
-                        <li class="infoPaneData aircraftCategory">${get_plane_category_string(plane.category)}</li>
-                    </ul>
+                <div class="infoPaneCategory">
+                    <div class="infoPaneName">
+                        <span>${plane.callsign}</span>
+                    </div>
+                    <div class="infoPaneSubtitle">
+                        <span>General Information</span>
+                    </div>
+                    <div class="infoPaneSubcategory" id="aircraftGeneralInformation">
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Callsign: </li>
+                                <li class="infoPaneData aircraftCallsign">${plane.callsign}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Position: </li>
+                                <li class="infoPaneData aircraftPosition">${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">ICAO 24-Bit Address: </li>
+                                <li class="infoPaneData aircraftICAO">${plane.icao24.toUpperCase()}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Origin Country: </li>
+                                <li class="infoPaneData aircraftOrigin">${plane.origin_country}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Time of Last Position Report: </li>
+                                <li class="infoPaneData aircraftTimePosition">${Date(plane.time_position)}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Last Contact: </li>
+                                <li class="infoPaneData aircraftLastContact">${Date(plane.last_contact)}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Geometric Altitude: </li>
+                                <li class="infoPaneData aircraftGeoAltitude">${plane.geo_altitude} meters</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">On Ground?: </li>
+                                <li class="infoPaneData aircraftGroundStatus">${plane.on_ground ? "Yes" : "No"}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Velocity: </li>
+                                <li class="infoPaneData aircraftVelocity">${plane.velocity} meters per second</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Heading: </li>
+                                <li class="infoPaneData aircraftHeading">${plane.true_track}\u00b0</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Vertical Rate: </li>
+                                <li class="infoPaneData aircraftVerticalRate">${plane.vertical_rate} meters per second</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Squawk: </li>
+                                <li class="infoPaneData aircraftSquawk">${plane.squawk}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Position Source: </li>
+                                <li class="infoPaneData aircraftPositionSource">${get_position_source_string(plane.position_source)}</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <ul class="infoPaneItem">
+                                <li class="infoPaneLabel">Category: </li>
+                                <li class="infoPaneData aircraftCategory">${get_plane_category_string(plane.category)}</li>
+                            </ul>
+                        </div>
+                    </div>
                 </div>
             `);
 
             draw_flight_path(plane.icao24);
+
+            // Set the last child to have margin for proper spacing at bottom
+            $("#infoPaneContent").children().last().css("margin-bottom","5px");
 
             // Display data
             $("#infoPane").show().css("display","flex");
@@ -465,7 +478,7 @@ function draw_airport_markers(airport_data) {
                         <div class="infoPaneSubtitle">
                             <span>Live Transcription</span>
                         </div>
-                        <div class="infoPaneSubcategory">
+                        <div class="infoPaneSubcategory" id="airportTranscriptionSubcategory">
                             <span id="transcriptionOutput"></span>
                         </div>
                     </div>
@@ -511,7 +524,11 @@ function draw_airport_markers(airport_data) {
                         $("#airportTowerAudioContainer").append(audioPlayer /*, $transcribeButton*/);
                     }
                 });
+                $("#map").css("align-items","normal");
             }
+
+            // Set the last child to have margin for proper spacing at bottom
+            $("#infoPaneContent").children().last().css("margin-bottom","5px");
 
             // Display data
             $("#infoPane").show().css("display","flex");
@@ -647,7 +664,8 @@ function tileSetChange(mapType) {
 }
 
 function toggleSettings() {
-    clear_table();
+    $("#map").css("align-items","flex-start"); // have to do this
+    clear_table(); // and this, because we don't call resetLeftPane() because it interferes with this function, ideally find better solution
     if ($("#settingsButton").hasClass("toggleActive")) {
         $("#infoPane").hide();
     }
@@ -655,18 +673,31 @@ function toggleSettings() {
         $("#infoPaneTitle").text("Settings");
         $("#infoPane").show().css("display","flex");
         $("#infoPaneContent").append(`
-            <div>
-                <ul class="infoPaneItem">
-                    <li class="infoPaneLabel">Example Setting: </li>
-                    <li class="infoPaneData">Change the setting</li>
-                </ul>
+            <div class="infoPaneCategory">
+                <div class="infoPaneName">
+                    <span>Change User Preferences</span>
+                </div>
+                <div class="infoPaneSubtitle">
+                    <span>General Settings</span>
+                </div>
+                <div class="infoPaneSubcategory">
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Example Setting: </li>
+                            <li class="infoPaneData">Change the setting</li>
+                       </ul>
+                   </div>
+                </div>
             </div>
-    `);
+        `);
+        // Set the last child to have margin for proper spacing at bottom
+        $("#infoPaneContent").children().last().css("margin-bottom","5px");
     }
     $("#settingsButton").toggleClass("toggleActive");
 }
 
 function resetLeftPane() {
+    $("#map").css("align-items","flex-start");
     clear_table();
     $("#infoPane").hide();
     if ($("#settingsButton").hasClass("toggleActive")) {
