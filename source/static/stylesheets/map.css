@@ -208,32 +208,40 @@ body,
     background-clip: padding-box;
     border-radius: 4px;
     pointer-events: auto;
-  }
+}
   
-  .primaryButton {
-    border-radius: 2px 2px 2px 2px;
-    pointer-events: auto;
-  }
-  
-  .collapsibleContent {
-    border-top: 1px solid var(--leaflet-dark-gray) !important;
-    pointer-events: auto;
-    border-radius: 0 !important;
-  }
+.primaryButton {
+  border-radius: 2px 2px 2px 2px;
+  pointer-events: auto;
+}
 
-  .collapsibleContent:active {
-    background-color: var(--leaflet-dark-gray);
-  }
+.collapsibleContent {
+  border-top: 1px solid var(--leaflet-dark-gray) !important;
+  pointer-events: auto;
+  border-radius: 0 !important;
+}
 
-  .selectionClusterLocation {
-    position: absolute;
-    z-index: 1000;
-    pointer-events: none;
-    margin-right: 10px;
-    margin-top: 84px;
-    top: 0;
-    right: 0;
-  }
+.collapsibleContent:active {
+  background-color: var(--leaflet-dark-gray);
+}
+
+.selectionClusterLocation {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+  margin-right: 10px;
+  margin-top: 10px;
+  top: 0;
+  right: 0;
+}
+
+#mapSideControlSettings {
+  margin-bottom: 84.67px;
+}
+
+.leaflet-top {
+  top: 88px !important;
+}
 
 /* infoPane styles */
 
