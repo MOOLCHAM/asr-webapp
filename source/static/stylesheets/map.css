@@ -32,6 +32,11 @@ body,
     align-items: flex-start;
 }
 
+.brightnessFilter {
+  background-color: rgba(0,0,0,0.35);
+  pointer-events: none !important;
+}
+
 #infoPane {
   border: 2px solid rgba(0,0,0,0.2);
   border-radius: 4px;

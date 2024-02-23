@@ -42,7 +42,7 @@ airport_data = pd.read_excel(
 )
 #! Table of airport data loaded from the excel sheet in "data/us-airports.xlsx"
 
-previousPlaneStateData = {"previousPlaneData": []}
+###previousPlaneStateData = {"previousPlaneData": []}
 #print(previousPlaneStateData)
 
 # THIS IS FOR WHEN OPENSKY DECIDES TO NOT WORK BECAUSE OF MAINTENANCE OR WHATEVER ISSUE OR TIMEOUT DUE TO TOO MANY CALLS, dpesnt work currently
@@ -80,7 +80,7 @@ def plane_states():
     * ``category`` - (``Number`` | ``int``) Category of the aircraft
     """
     data = {"plane_data": []}
-    global previousPlaneStateData
+    ###global previousPlaneStateData
 
     try:
         states = opensky.get_states(
@@ -124,7 +124,7 @@ def plane_states():
             }
         )
 
-    previousPlaneStateData = data
+    ###previousPlaneStateData = data
     
     #outputDumpFile = open("planeDataDumpFile.txt","a")
     #outputDumpFile.write(str(data) + "\n")

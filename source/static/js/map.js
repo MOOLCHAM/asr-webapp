@@ -1,7 +1,8 @@
 var map = L.map('map',{
     zoomControl: false,
     zoomSnap: 1,
-    zoomDelta: 1
+    zoomDelta: 1,
+    worldCopyJump: true
 }).fitWorld();
 L.control.zoom({ position: 'topright'}).addTo(map);
 
@@ -10,6 +11,10 @@ var planeLayer = L.layerGroup().addTo(map).setZIndex(600);          // For plane
 var airportLayer = L.layerGroup().addTo(map).setZIndex(600);        // For airport markers
 var infoLayer = L.layerGroup().addTo(map).setZIndex(800);           // For info pane
 var flightPathLayer = L.layerGroup().addTo(map).setZIndex(550);     // For flight path lines
+
+// To do brightness, created a marker that exceeds map size and moves with the screen, make sure to set zIndexOffset really low to be below all other icons.
+// Ideally this would be done cleaner but this is a solution.
+var brightnessMarker = L.marker(map.getCenter(), {zIndexOffset: -1000, icon: L.divIcon({ iconSize: [$(window).width() * 2, $(window).height() * 2], iconAnchor: [$(window).width(), $(window).height()], className: 'brightnessFilter' })}).addTo(map);
 
 var planeData = [];
 var airportData = [];
@@ -227,12 +232,15 @@ function draw_plane_markers(plane_data) {
         marker.addTo(planeLayer);
 
         marker.on('mouseover', (event) => { // testing mouseover for future hover for each aircraft
-            console.log(`${plane.callsign}`);
+            marker.setIcon(L.icon({ iconUrl: '../static/images/markers/airport.svg' })); //temporary
+        });
+        marker.on('mouseout',(event) => {
+            marker.setIcon(L.icon({ iconUrl: plane.category_icon }));
         });
 
         marker.on('click', (event) => {
             resetLeftPane();
-
+            console.log(marker.getElement());
             // Change the title text
             $("#infoPaneTitle").text("Aircraft");
 
@@ -558,7 +566,7 @@ function setup_event_listeners() {
 
     // Clears and redraws icons when a map zoom event fires.
     // This is to address an issue where the placement of the icons becomes less accurate the further in the map zooms.
-    map.on('zoom', function (event) {
+    map.on("zoom", function (event) {
         planeLayer.clearLayers();
         flightPathLayer.clearLayers();
         if (map.getZoom() > 7) {
@@ -567,6 +575,9 @@ function setup_event_listeners() {
     });
     map.on("zoomend", onMapZoomEnd);
     map.on("moveend", onMapMoveEnd);
+    map.on("move", function() {
+        brightnessMarker.setLatLng(map.getCenter());
+    });
 }
 
 /**
@@ -591,50 +602,53 @@ function main() {
     plane_data_request.send(); // Send request
 }
 
-function getMapLatLonBounds() { // this function order got fucked up, need to fix mm
-    var minLonEast = map.getBounds().getEast();
-    var maxLonWest = map.getBounds().getWest();
-    var minLatSouth = map.getBounds().getSouth();
-    var maxLatNorth = map.getBounds().getNorth();
-
-    //var latLonBounds = [minLonEast, maxLonWest, minLatSouth, maxLatNorth]
-    var latLonBounds = [minLatSouth, maxLatNorth, maxLonWest, minLonEast]
-
-    //console.log(JSON.stringify({latLonBounds : latLonBounds})); // for debugging purposes
-    $.ajax({
-        url: '/data/getMapLatLonBounds',
-        type: 'POST',
-        contentType: 'application/json',
-        data: JSON.stringify({ latLonBounds: latLonBounds }),
-        //        success: function(response) { console.log(response); },
-        error: function (error) {
-            console.log(error);
-        }
-    });
-}
-
 function onMapZoomEnd() {
-    getMapLatLonBounds();
+    updateMapBoundingBoxCoordinates();
     checkMapZoomLevel();
 }
 
 function onMapMoveEnd() {
-    getMapLatLonBounds();
+    updateMapBoundingBoxCoordinates();
+}
+
+/**
+ * Returns the geographical bounds visible in the current map view in an array.
+ *
+ * @returns {Array} Minimum Latitude (South), Maximum Latitude (North), Minimum Longitude (West), Maxiumum Longitude (East)
+ */
+function getMapBoundingBoxCoordinates() {
+    boundingCoordinates = [
+        map.getBounds().getSouth(),
+        map.getBounds().getNorth(),
+        map.getBounds().getWest(),
+        map.getBounds().getEast()
+    ]
+    return boundingCoordinates;
+}
+
+/**
+ * updates the geographical bounds visible in the current map view for data.
+ */
+function updateMapBoundingBoxCoordinates() {
+    $.ajax({
+        url: '/data/getMapLatLonBounds',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify({ latLonBounds: getMapBoundingBoxCoordinates() }),
+    });
 }
 
 function checkMapZoomLevel() {
-    // Enable the overlay, we are zoomed too far out
     if (map.getZoom() < 8) {
-        document.getElementsByClassName('leaflet-map-pane')[0].style.filter = 'blur(10px)';
-        document.getElementById('zoomedTooFarOut').style.display = 'flex';
+        $(".leaflet-map-pane").css("filter","blur(3px)");
+        $("#zoomedTooFarOut").css("display","flex");
 
         clearInterval(callInterval); // clear the current interval we have to stop calling planes
         callInterval = null;
     }
-    // Disable the overlay, we are zoomed in enough to load planes
     else {
-        document.getElementsByClassName('leaflet-map-pane')[0].style.filter = 'blur(0px)';
-        document.getElementById('zoomedTooFarOut').style.display = 'none';
+        $(".leaflet-map-pane").css("filter","blur(0px)");
+        $("#zoomedTooFarOut").css("display","none");
 
         if (map.getZoom() == 8 && callInterval == null) {
             callInterval = setInterval(main, 30000);
@@ -653,8 +667,6 @@ function dropDownSelection() {
         content.style.maxHeight = content.scrollHeight + "px";
     }
 }
-
-
 
 function tileSetChange(mapType) {
     $(`#${currentMapTilesetSelection}`).css("background-color","");
