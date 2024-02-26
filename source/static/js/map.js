@@ -556,20 +556,10 @@ function setup_event_listeners() {
     });
 
     // Prevent mouse events from interacting with the map below the info panel
-    $("#infoPane").on('click', (event) => {
+    
+    $("#infoPane").on('click dblclick mousedown', (event) => {
         event.stopImmediatePropagation();
-    });
-
-    $("#infoPane").on('dblclick', (event) => {
-        event.stopImmediatePropagation();
-    });
-
-    $("#infoPane").on('drag', (event) => {
-        event.stopImmediatePropagation();
-    });
-
-    $("#settingBrightness").on('input', function() {
-        $(".brightnessFilter").css("background-color",`rgba(0,0,0,${("#settingBrightness").val()})`);
+        console.log("prevent event");
     });
 
     // Clears and redraws icons when a map zoom event fires.
@@ -706,7 +696,7 @@ function toggleSettings() {
                             <li class="infoPaneLabel">Brightness: </li>
                             <li class="infoPaneData">
                                 <div class="settingSliderContainer">
-                                    <input type="range" min="0" max="0.7" value="0.35" class="settingSlider" id="settingBrightness">
+                                    <input type="range" min="0" max="70" value="35" class="settingSlider" id="settingBrightness">
                                 </div>
                             </li>
                        </ul>
@@ -714,6 +704,10 @@ function toggleSettings() {
                 </div>
             </div>
         `);
+        $("#settingBrightness").on('input change', (event) => {
+            $(".brightnessFilter").css("background-color",`rgba(0,0,0,${parseInt($("#settingBrightness").val()) / 100})`);
+            //console.log(`a: ${$("#settingBrightness").val()} b: ${$(".brightnessFilter").css("background-color")}`);
+        });
         // Set the last child to have margin for proper spacing at bottom
         $("#infoPaneContent").children().last().css("margin-bottom","5px");
     }

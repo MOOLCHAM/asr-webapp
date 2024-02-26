@@ -99,8 +99,8 @@ def plane_states():
         states = g.get("states_cache")
 
     if states is None:
-        #return make_response("Too many requests", 500)
-        return make_response(previousPlaneStateData, 500) # This just uses data from the previous cycle
+        return make_response("Too many requests", 500)
+        #return make_response(previousPlaneStateData, 500) # This just uses data from the previous cycle
 
     for state in states.states:
         data["plane_data"].append(
