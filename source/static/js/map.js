@@ -564,6 +564,14 @@ function setup_event_listeners() {
         event.stopImmediatePropagation();
     });
 
+    $("#infoPane").on('drag', (event) => {
+        event.stopImmediatePropagation();
+    });
+
+    $("#settingBrightness").on('input', function() {
+        $(".brightnessFilter").css("background-color",`rgba(0,0,0,${("#settingBrightness").val()})`);
+    });
+
     // Clears and redraws icons when a map zoom event fires.
     // This is to address an issue where the placement of the icons becomes less accurate the further in the map zooms.
     map.on("zoom", function (event) {
@@ -695,8 +703,12 @@ function toggleSettings() {
                 <div class="infoPaneSubcategory">
                     <div>
                         <ul class="infoPaneItem">
-                            <li class="infoPaneLabel">Example Setting: </li>
-                            <li class="infoPaneData">Change the setting</li>
+                            <li class="infoPaneLabel">Brightness: </li>
+                            <li class="infoPaneData">
+                                <div class="settingSliderContainer">
+                                    <input type="range" min="0" max="0.7" value="0.35" class="settingSlider" id="settingBrightness">
+                                </div>
+                            </li>
                        </ul>
                    </div>
                 </div>
