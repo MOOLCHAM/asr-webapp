@@ -142,7 +142,6 @@ body,
 .mapSideControl button,
 .mapSideControl button a {
     background-color: var(--white);
-    color: var(--black);
     border: none;
     border-radius: 2px;
     cursor: pointer;
@@ -178,13 +177,13 @@ body,
   
   
   .mapCollapsible:after {
-    color: var(--black);
+    color: var(--riddle-navy);
     font-weight: bold;
     content: '\002B';
   }
 
   .collapsibleContent {
-    color: var(--black);
+    color: var(--riddle-navy);
     font-weight: bold;
   }
   
@@ -207,12 +206,12 @@ body,
   }
   
 .mapSideControl {
-    margin-bottom: 10px;
-    width: 30px;
-    border: 2px solid rgba(0,0,0,0.2);
-    background-clip: padding-box;
-    border-radius: 4px;
-    pointer-events: auto;
+  margin-bottom: 10px;
+  width: 30px;
+  border: 2px solid rgba(0,0,0,0.2);
+  background-clip: padding-box;
+  border-radius: 4px;
+  pointer-events: auto;
 }
   
 .primaryButton {
@@ -319,7 +318,7 @@ body,
 .leaflet-control-zoom-out {
   font-size: 15px !important;
   font-family: Arial, sans-serif !important;
-  color: var(--black);
+  color: var(--riddle-navy) !important;
   font-weight: bold !important;
 }
 
@@ -344,8 +343,34 @@ body,
   height: 100%;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 #airportTranscriptionSubcategory {
   height: 100%;
+  overflow-y: scroll;
+}
+
+.transcriptionMessage {
+  margin: 5px;
+}
+
+.transcriptionMessage p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+.uiIcon {
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  text-align: center;
+  display: block;
+  filter: invert(5%) sepia(57%) saturate(4444%) hue-rotate(213deg) brightness(96%) contrast(105%); 
+}
+
+.mapSideControlSingle {
+  height: 30px;
 }

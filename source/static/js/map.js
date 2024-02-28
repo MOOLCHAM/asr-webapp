@@ -487,7 +487,7 @@ function draw_airport_markers(airport_data) {
                             <span>Live Transcription</span>
                         </div>
                         <div class="infoPaneSubcategory" id="airportTranscriptionSubcategory">
-                            <span id="transcriptionOutput"></span>
+                            
                         </div>
                     </div>
                 `);
@@ -559,7 +559,6 @@ function setup_event_listeners() {
     
     $("#infoPane").on('click dblclick mousedown', (event) => {
         event.stopImmediatePropagation();
-        console.log("prevent event");
     });
 
     // Clears and redraws icons when a map zoom event fires.
@@ -730,9 +729,17 @@ function findAudioSource() {
 
 function transcribeLiveAudio(liveAudioSource) {
     // fetch the transcriptions for given live audio stream
-    $("#transcriptionOutput").text("Live Transcription Established from: " + liveAudioSource);
+    //$("#transcriptionOutput").text("Live Transcription Established from: " + liveAudioSource);
     // currently just changes a text element, in future we will want to append each "message" below the previous along with tagging the "speaker"
 
+    $("#airportTranscriptionSubcategory").prepend(`
+    <div class="transcriptionMessage">
+        <p>><strong> [Speaker]: </strong>
+            Live Transcription Established from: ${liveAudioSource}
+        </p>
+    </div>
+    `);
+    
     $.ajax({
         url: "/models/transcribe",
         method: "POST",
@@ -741,4 +748,14 @@ function transcribeLiveAudio(liveAudioSource) {
         success: function(response) { console.log(response) },
         error: function(error) { console.log(error) }
     });
+}
+
+function appendMessage() {
+    $("#airportTranscriptionSubcategory").append(`
+    <div class="infoPaneCategory">
+        <p>><strong> [Speaker]: </strong>
+            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        </p>
+    </div>
+    `);
 }

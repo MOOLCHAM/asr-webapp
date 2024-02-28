@@ -20,7 +20,7 @@
             <div id="infoPaneContent">
                 <div id="infoPanePrimaryHeader">
                     <span id="infoPaneTitle">Information Pane</span>
-                    <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
+                    <img id="closeButton" src="{{ url_for('static', filename='images/ui/close-icon.svg') }}" />
                 </div>
             </div>
         </div>
@@ -29,14 +29,16 @@
         </div>
         <div class="selectionClusterLocationParent">
             <div class="selectionClusterLocation">
-                <div class="mapSideControl">
+                <div class="mapSideControl mapSideControlSingle">
                     <button title="Homepage" aria-label="Homepage" onclick="location.href='/'">
-                        <span>H</span>
+                        <img class="uiIcon" src="{{ url_for('static', filename='images/ui/home-icon.svg') }}" />
+                        <!--<span>H</span>-->
                     </button>
                 </div>
-                <div class="mapSideControl" id="mapSideControlSettings">
+                <div class="mapSideControl mapSideControlSingle" id="mapSideControlSettings">
                     <button title="Settings" aria-label="Settings" onclick="toggleSettings()" id="settingsButton">
-                        <span>S</span>
+                        <img class="uiIcon" src="{{ url_for('static', filename='images/ui/settings-icon.svg') }}" />
+                        <!--<span>S</span>-->
                     </button>
                 </div>
                 <div class="mapSideControl">
@@ -62,9 +64,10 @@
                         </button>
                     </div>
                 </div>
-                <div class="mapSideControl">
+                <div class="mapSideControl mapSideControlSingle">
                     <button title="Audio Source" aria-label="Audio Source" onclick="findAudioSource()">
-                        <span>A</span>
+                        <img class="uiIcon" src="{{ url_for('static', filename='images/ui/audio-icon.svg') }}" />
+                        <!--<span>A</span>-->
                     </button>
                 </div>
             </div>
