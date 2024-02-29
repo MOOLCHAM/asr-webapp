@@ -67,11 +67,20 @@ body,
     height: 24px; 
     width: 24px;
     position: absolute;
+<<<<<<< HEAD
+    right: 1550px;
+    top: 10px;
+    padding: 5px 5px 5px 5px;
+    color: white;
+    background-color: transparent;
+  
+=======
     right: 0;
     top: 0;
     padding: 5px;
     /*color: var(--white);*/
     filter: invert(100%);
+>>>>>>> main
 }
 
 #closeButton:hover {
@@ -80,6 +89,12 @@ body,
 
 .planeMarker {
     transform-origin: center;
+}
+
+.planeMarker svg {
+  fill: yellow; /* Sets the SVG fill color to yellow */
+  stroke: black; /* Sets the SVG stroke color to black */
+  stroke-width: 2; /* Sets the width of the stroke for the outline */
 }
 
 .airportMarker {
@@ -247,6 +262,30 @@ body,
   top: 88px !important;
 }
 
+<<<<<<< HEAD
+/* Airport Info Pane Styles */
+#infoPane {
+  background-color: #000e2e;
+  color: white;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.infoPaneTitle {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 20px;
+}
+
+.airport-info-container {
+  margin-bottom: 20px;
+}
+
+.airport-info-table {
+  width: 100%;
+  border-collapse: collapse;
+=======
 /* infoPane styles */
 
 .infoPaneItem li {
@@ -303,13 +342,66 @@ body,
 
 .infoPaneData {
   width: 210px;
+>>>>>>> main
 }
 
-.clearFloat:after {
-  content: " ";
-  display: block;
-  clear: both;
+.airport-info-table td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
 }
+
+.airport-info-table td:first-child {
+  font-weight: bold;
+  color: #f0c85a;
+}
+
+.airport-info-table td a {
+  color: #f0c85a;
+}
+
+.tower-frequencies-container {
+  margin-bottom: 20px;
+}
+
+.tower-frequencies-container h3 {
+  font-size: 20px;
+  font-weight: bold;
+  color: #009688;
+}
+
+#frequencySelect {
+  padding: 8px;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 100%;
+  font-size: 16px;
+}
+
+.audio-player-container {
+  margin-top: 10px;
+}
+
+.audio-player-container audio {
+  width: 100%;
+  margin-bottom: 10px;
+}
+
+.transcribe-button {
+  background-color: #009688;
+  color: #fff;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+.transcribe-button:hover {
+  background-color: #00796b;
+}
+
 /**
 * We want to override leaflet font configs so we mark as !important
 */
@@ -326,6 +418,29 @@ body,
   background-color: var(--leaflet-dark-gray) !important;
 }
 
+<<<<<<< HEAD
+
+/* PDF Viewer */
+.pdf-viewer {
+  position: absolute;
+  top: 60%;
+  left: 80%;
+  width: 400px;
+  height: 200px;
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+}
+
+.pdf-toolbar {
+  background-color: #f0f0f0;
+  padding: 5px;
+}
+
+.pdf-container {
+  height: calc(100% - 30px);
+  overflow: auto;
+}
+=======
 .infoPaneSubtitle {
   margin-left: auto;
   margin-right: auto;
@@ -374,3 +489,4 @@ body,
 .mapSideControlSingle {
   height: 30px;
 }
+>>>>>>> main

@@ -14,7 +14,7 @@
     <script src="{{ url_for('static', filename='vendor/leaflet.rotatedMarker.js') }}"></script>
 </head>
 
-<body onload="initializeMap()"> 
+<body onload="initializeMap()">
     <div id="map">
         <div id="infoPane">
             <div id="infoPaneContent">
@@ -23,12 +23,28 @@
                     <img id="closeButton" src="{{ url_for('static', filename='images/ui/close-icon.svg') }}" />
                 </div>
             </div>
+<<<<<<< HEAD
+
+            <table id="infoTable"></table>
+=======
+>>>>>>> main
         </div>
         <div id="zoomedTooFarOut">
             <span>Zoom to View Content</span>
         </div>
         <div class="selectionClusterLocationParent">
             <div class="selectionClusterLocation">
+<<<<<<< HEAD
+                <div class="altitudeToggleCluster">
+                    <button title="Altitude Coloring Toggle" aria-label="Altitude Coloring Toggle"
+                        onclick="toggleAltitudeColors()" class="altitudeColorButton">
+                        <span>A</span>
+                    </button>
+                </div>
+                <div class="selectionCluster">
+                    <button title="Map Type Toggle" aria-label="Map Type Toggle" onclick="dropDownSelection()"
+                        class="mapCollapsible primaryButton"></button>
+=======
                 <div class="mapSideControl mapSideControlSingle">
                     <button title="Homepage" aria-label="Homepage" onclick="location.href='/'">
                         <img class="uiIcon" src="{{ url_for('static', filename='images/ui/home-icon.svg') }}" />
@@ -43,23 +59,30 @@
                 </div>
                 <div class="mapSideControl">
                     <button title="Map Type Toggle" aria-label="Map Type Toggle" onclick="dropDownSelection()" class="mapCollapsible primaryButton"></button>
+>>>>>>> main
                     <div class="contentDropdown">
-                        <button title="Geographic Map" aria-label="Geographic Map" onclick="tileSetChange('geographic')" class="collapsibleContent" id="geographic">
+                        <button title="Geographic Map" aria-label="Geographic Map" onclick="tileSetChange('geographic')"
+                            class="collapsibleContent" id="geographic">
                             <span>G</span>
                         </button>
-                        <button title="Hybrid VFR Map" aria-label="Hybrid VFR Map" onclick="tileSetChange('vfrc')" class="collapsibleContent" id="vfrc">
+                        <button title="Hybrid VFR Map" aria-label="Hybrid VFR Map" onclick="tileSetChange('vfrc')"
+                            class="collapsibleContent" id="vfrc">
                             <span>V</span>
                         </button>
-                        <button title="Sectionals Map" aria-label="Sectionals Map" onclick="tileSetChange('sectc')" class="collapsibleContent" id="sectc">
+                        <button title="Sectionals Map" aria-label="Sectionals Map" onclick="tileSetChange('sectc')"
+                            class="collapsibleContent" id="sectc">
                             <span>S</span>
                         </button>
-                        <button title="Helicopter Map" aria-label="Helicopter Map" onclick="tileSetChange('helic')" class="collapsibleContent" id="helic">
+                        <button title="Helicopter Map" aria-label="Helicopter Map" onclick="tileSetChange('helic')"
+                            class="collapsibleContent" id="helic">
                             <span>H</span>
                         </button>
-                        <button title="Low IFR Map" aria-label="Low IFR Map" onclick="tileSetChange('ifrlc')" class="collapsibleContent" id="ifrlc">
+                        <button title="Low IFR Map" aria-label="Low IFR Map" onclick="tileSetChange('ifrlc')"
+                            class="collapsibleContent" id="ifrlc">
                             <span>LI</span>
                         </button>
-                        <button title="High IFR Map" aria-label="High IFR Map" onclick="tileSetChange('ehc')" class="collapsibleContent lastButton" id="ehc">
+                        <button title="High IFR Map" aria-label="High IFR Map" onclick="tileSetChange('ehc')"
+                            class="collapsibleContent lastButton" id="ehc">
                             <span>HI</span>
                         </button>
                     </div>
@@ -97,9 +120,21 @@
         airport_data_request.open("GET", "/data/airports/FL");
         airport_data_request.responseType = "json";
         airport_data_request.send();
-        
+
         main();
     </script>
-</body>
+
+    <title>PDF Viewer</title>
+    </head>
+
+    <body>
+       <object
+        type = "application/pdf"
+        data = "https://www.faa.gov/regulations_policies/handbooks_manuals/aviation/phak"
+        width = "600"
+        height= "700"
+        >
+    </object>
+    </body>
 
 </html>
