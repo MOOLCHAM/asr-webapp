@@ -9,9 +9,17 @@
 
 body {
     font-family: Arial, sans-serif;
-    font-size: 14pt;
+    font-size: 12pt;
     padding: 0;
     margin: 0;
+}
+
+ul {
+  font-size: 0;
+}
+
+li {
+  font-size: 12px;
 }
 
 html,
@@ -21,16 +29,38 @@ body,
     width: 100%;
     position: fixed; 
     display: flex;
+    align-items: flex-start;
+}
+
+.brightnessFilter {
+  background-color: rgba(0,0,0,0.35);
+  pointer-events: none !important;
 }
 
 #infoPane {
-    height: 100%;
+  border: 2px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  margin-left: 5px;
+  z-index: 800;
+  display: none;
+  cursor: default;
+}
+
+#infoPaneContent {
     width: 350px;
-    z-index: 800;
-    background-color: var(--white);
-    border-right: 2px solid var(--leaflet-dark-gray);
-    display: none;
-    cursor: default;
+    background-color: var(--riddle-navy);
+    border-radius: 2px;
+    display: flex;
+    flex-direction: column;
+    
+
+    /*
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    bottom: 10px;*/
 }
 
 #closeButton {
@@ -39,7 +69,9 @@ body,
     position: absolute;
     right: 0;
     top: 0;
-    padding: 5px 5px 5px 5px;
+    padding: 5px;
+    /*color: var(--white);*/
+    filter: invert(100%);
 }
 
 #closeButton:hover {
@@ -106,27 +138,32 @@ body,
 
 /* for the collapsable menu menu on the map screen */
 
-.mapCollapsible, .collapsibleContent, #settingsButton {
+.mapCollapsible,
+.mapSideControl button,
+.mapSideControl button a {
     background-color: var(--white);
-    color: var(--black);
-    /*color: white;*/
+    border: none;
+    border-radius: 2px;
     cursor: pointer;
     padding: 0px;
     width: 30px;
     height: 30px;
-    border: none;
     text-align: center;
     outline: none;
     font-size: 15px;
     font-family: Arial, sans-serif;
     font-weight: bold;
+    text-decoration: none;
   }
   
   .active {
     border-radius: 2px 2px 0px 0px !important;
   }
   
-  .active, .mapCollapsible:hover, .collapsibleContent:hover, #settingsButton:hover{
+  .active,
+  .mapCollapsible:hover,
+  .collapsibleContent:hover,
+  .mapSideControl button:hover{
     background-color: var(--leaflet-light-gray);  
   }
   
@@ -140,13 +177,13 @@ body,
   
   
   .mapCollapsible:after {
-    color: var(--black);
+    color: var(--riddle-navy);
     font-weight: bold;
     content: '\002B';
   }
 
   .collapsibleContent {
-    color: var(--black);
+    color: var(--riddle-navy);
     font-weight: bold;
   }
   
@@ -168,65 +205,71 @@ body,
     transition: max-height 0.2s ease-out;
   }
   
-  .selectionCluster {
-    width: 30px;
-    border: 2px solid rgba(0,0,0,0.2);
-    background-clip: padding-box;
-    border-radius: 4px;
-  }
+.mapSideControl {
+  margin-bottom: 10px;
+  width: 30px;
+  border: 2px solid rgba(0,0,0,0.2);
+  background-clip: padding-box;
+  border-radius: 4px;
+  pointer-events: auto;
+}
   
-  .primaryButton {
-    border-radius: 2px 2px 2px 2px;
-    pointer-events: auto;
-  }
-  
-  .collapsibleContent {
-    border-top: 1px solid var(--leaflet-dark-gray);
-    pointer-events: auto;
-  }
+.primaryButton {
+  border-radius: 2px 2px 2px 2px;
+  pointer-events: auto;
+}
 
-  .collapsibleContent:active {
-    background-color: var(--leaflet-dark-gray);
-  }
+.collapsibleContent {
+  border-top: 1px solid var(--leaflet-dark-gray) !important;
+  pointer-events: auto;
+  border-radius: 0 !important;
+}
 
-  .selectionClusterLocation {
-    position: absolute;
-    z-index: 1000;
-    pointer-events: none;
-    margin-right: 10px;
-    margin-top: 84px;
-    top: 0;
-    right: 0;
-  }
+.collapsibleContent:active {
+  background-color: var(--leaflet-dark-gray);
+}
+
+.selectionClusterLocation {
+  position: absolute;
+  z-index: 1000;
+  pointer-events: none;
+  margin-right: 10px;
+  margin-top: 10px;
+  top: 0;
+  right: 0;
+}
+
+#mapSideControlSettings {
+  margin-bottom: 84.67px;
+}
+
+.leaflet-top {
+  top: 88px !important;
+}
 
 /* infoPane styles */
 
-.infoPaneItem {
-  margin: 0;
-  padding: 0;
-  display: block;
-}
-
 .infoPaneItem li {
   list-style-type: none;
-  /*display: inline-block;*/
-  float: left;
+  display: inline-block;
+  /*float: left;*/
 }
 
 .infoPaneLabel {
-  width: 125px;
+  width: 120px;
 }
 
 .infoPaneItem {
+  margin: 0;
   margin-left: auto;
   margin-right: auto;
   padding-left: 5px;
   padding-right: 5px;
-
+  padding-top: 3px;
+  padding-bottom: 3px;
   content: " ";
   display: block;
   clear: both;
-  
 }
 
 #infoPaneTitle {
@@ -235,6 +278,22 @@ body,
   display: block;
   font-weight: bold;
   font-size: 16px;
+  color: var(--white);
+}
+.infoPaneName {
+  background-color: var(--white);
+  color: var(--riddle-navy);
+  font-size: 14px;
+  font-weight: bold;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  text-align: center;
+}
+.infoPaneSubcategory {
+  background-color: var(--leaflet-dark-gray);
+  margin-left: 5px;
+  margin-right: 5px;
+  border-radius: 2px 2px 2px 2px;
 }
 
 #infoPanePrimaryHeader {
@@ -243,7 +302,7 @@ body,
 }
 
 .infoPaneData {
-  width: 215px;
+  width: 210px;
 }
 
 .clearFloat:after {
@@ -254,56 +313,64 @@ body,
 /**
 * We want to override leaflet font configs so we mark as !important
 */
-.leaflet-control-zoom-in, .leaflet-control-zoom-out /*, .selectionCluster, .altitudeToggleCluster */ {
+
+.leaflet-control-zoom-in,
+.leaflet-control-zoom-out {
   font-size: 15px !important;
   font-family: Arial, sans-serif !important;
-  color: var(--black);
+  color: var(--riddle-navy) !important;
   font-weight: bold !important;
 }
 
-.altitudeToggleCluster {
-  margin-bottom: 10px;
-  width: 30px;
-  border: 2px solid rgba(0,0,0,0.2);
-  background-clip: padding-box;
-  border-radius: 4px;
-}
-
-#settingsButton {
-  pointer-events: auto;
-}
 .toggleActive {
   background-color: var(--leaflet-dark-gray) !important;
 }
 
-.audio-container {
-  margin-bottom: 10px;
-}
-
-.content {
-  display: none;
-  padding: 10px;
-}
-
-audio {
-  width: 100%;
-  max-width: 200px;
-}
-
-button.collapsible {
-  background-color: #3498db;
-  color: white;
-  border: none;
+.infoPaneSubtitle {
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  font-weight: bold;
+  font-size: 14px;
   text-align: center;
-  padding: 10px;
-  cursor: pointer;
-  width: 100%;
+  color: var(--riddle-gold);
 }
 
-button.collapsible:hover {
-  background-color: #2980b9;
+#airportTranscriptionOutput {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
-button.collapsible:focus {
-  outline: none;
+#airportTranscriptionSubcategory {
+  height: 100%;
+  overflow-y: scroll;
+}
+
+.transcriptionMessage {
+  margin: 5px;
+}
+
+.transcriptionMessage p {
+  margin-block-start: 0;
+  margin-block-end: 0;
+  margin-inline-start: 0;
+  margin-inline-end: 0;
+}
+
+.uiIcon {
+  width: 20px;
+  height: 20px;
+  margin: auto;
+  text-align: center;
+  display: block;
+  filter: invert(5%) sepia(57%) saturate(4444%) hue-rotate(213deg) brightness(96%) contrast(105%); 
+}
+
+.mapSideControlSingle {
+  height: 30px;
 }

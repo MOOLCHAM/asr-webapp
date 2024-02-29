@@ -21,6 +21,6 @@ def create_app(test_config=None):
     app.register_blueprint(replay.bp)
     app.register_blueprint(site_map.bp)
     app.register_blueprint(contact.bp)
- #   app.register_blueprint(models.bp)
+    app.register_blueprint(models.bp)
 
     return app
