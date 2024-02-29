@@ -214,8 +214,12 @@ function draw_plane_markers(plane_data) {
         marker.setRotationOrigin('center center') // This is required otherwise the rotation will mess up where planes actually are
         marker.addTo(planeLayer);
 
-        marker.on('mouseover', (event) => { // testing mouseover for future hover for each aircraft
-            console.log(`${plane.callsign}`);
+        marker.on('mouseover', (event) => {
+            marker.bindTooltip(plane.callsign, { permanent: true }).openTooltip();
+        });
+
+        marker.on('mouseout', (event) => {
+            marker.closeTooltip();
         });
 
         marker.on('click', (event) => {
@@ -226,90 +230,66 @@ function draw_plane_markers(plane_data) {
 
             // Add airport properties
             $("#infoPane").append(`
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Callsign: </li>
-                        <li class="infoPaneData aircraftCallsign">${plane.callsign}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Position: </li>
-                        <li class="infoPaneData aircraftPosition">${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">ICAO 24-Bit Address: </li>
-                        <li class="infoPaneData aircraftICAO">${plane.icao24.toUpperCase()}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Origin Country: </li>
-                        <li class="infoPaneData aircraftOrigin">${plane.origin_country}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Time of Last Position Report: </li>
-                        <li class="infoPaneData aircraftTimePosition">${Date(plane.time_position)}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Last Contact: </li>
-                        <li class="infoPaneData aircraftLastContact">${Date(plane.last_contact)}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Geometric Altitude: </li>
-                        <li class="infoPaneData aircraftGeoAltitude">${plane.geo_altitude} meters</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">On Ground?: </li>
-                        <li class="infoPaneData aircraftGroundStatus">${plane.on_ground ? "Yes" : "No"}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Velocity: </li>
-                        <li class="infoPaneData aircraftVelocity">${plane.velocity} meters per second</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Heading: </li>
-                        <li class="infoPaneData aircraftHeading">${plane.true_track}\u00b0</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Vertical Rate: </li>
-                        <li class="infoPaneData aircraftVerticalRate">${plane.vertical_rate} meters per second</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Squawk: </li>
-                        <li class="infoPaneData aircraftSquawk">${plane.squawk}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Position Source: </li>
-                        <li class="infoPaneData aircraftPositionSource">${get_position_source_string(plane.position_source)}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Category: </li>
-                        <li class="infoPaneData aircraftCategory">${get_plane_category_string(plane.category)}</li>
-                    </ul>
-                </div>
+            <div class="aircraft-info-container">
+            <table class="aircraft-info-table">
+                <tr>
+                    <td>Callsign:</td>
+                    <td>${plane.callsign}</td>
+                </tr>
+                <tr>
+                    <td>Position:</td>
+                    <td>${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</td>
+                </tr>
+                <tr>
+                    <td>ICAO 24-Bit Address:</td>
+                    <td>${plane.icao24.toUpperCase()}</td>
+                </tr>
+                <tr>
+                    <td>Origin Country:</td>
+                    <td>${plane.origin_country}</td>
+                </tr>
+                <tr>
+                    <td>Time of Last Position Report:</td>
+                    <td>${Date(plane.time_position)}</td>
+                </tr>
+                <tr>
+                    <td>Last Contact:</td>
+                    <td>${Date(plane.last_contact)}</td>
+                </tr>
+                <tr>
+                    <td>Geometric Altitude:</td>
+                    <td>${plane.geo_altitude} meters</td>
+                </tr>
+                <tr>
+                    <td>On Ground?:</td>
+                    <td>${plane.on_ground ? "Yes" : "No"}</td>
+                </tr>
+                <tr>
+                    <td>Velocity:</td>
+                    <td>${plane.velocity} meters per second</td>
+                </tr>
+                <tr>
+                    <td>Heading:</td>
+                    <td>${plane.true_track}\u00b0</td>
+                </tr>
+                <tr>
+                    <td>Vertical Rate:</td>
+                    <td>${plane.vertical_rate} meters per second</td>
+                </tr>
+                <tr>
+                    <td>Squawk:</td>
+                    <td>${plane.squawk}</td>
+                </tr>
+                <tr>
+                    <td>Position Source:</td>
+                    <td>${get_position_source_string(plane.position_source)}</td>
+                </tr>
+                <tr>
+                    <td>Category:</td>
+                    <td>${get_plane_category_string(plane.category)}</td>
+                </tr>
+            </table>
+        </div>
             `);
 
             draw_flight_path(plane.icao24);
@@ -339,11 +319,21 @@ function draw_airport_markers(airport_data) {
     for (const airport of airport_data) {
         let marker = L.marker([airport.latitude, airport.longitude]);
 
-        marker.setIcon(L.icon({ iconUrl: "../static/images/markers/airport.svg", iconSize: [30, 30], iconAnchor: [15, 15], className: "airportMarker" }));
+        marker.setIcon(L.icon({
+            iconUrl: "../static/images/markers/airport.svg",
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            className: "airportMarker"
+        }));
+
         marker.addTo(airportLayer);
 
-        marker.on('mouseover', (event) => { // testing mouseover for future hover for each airport
-            console.log(`${airport.ident} ${airport.name}`);
+        marker.on('mouseover', (event) => {
+            marker.bindTooltip(airport.name, { permanent: true }).openTooltip();
+        });
+
+        marker.on('mouseout', (event) => {
+            marker.closeTooltip();
         });
 
         marker.on('click', (event) => {
@@ -354,60 +344,46 @@ function draw_airport_markers(airport_data) {
 
             // Add airport properties
             $("#infoPane").append(`
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Airport Identifier: </li>
-                        <li class="infoPaneData airportIdentifier">${airport.ident}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Airport Name: </li>
-                        <li class="infoPaneData airportName">${airport.name}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Position: </li>
-                        <li class="infoPaneData airportPosition">${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Elevation: </li>
-                        <li class="infoPaneData airportElevation">${airport.elevation} Feet</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Region: </li>
-                        <li class="infoPaneData airportRegion">${airport.region_name}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Municipality: </li>
-                        <li class="infoPaneData airportMunicipality">${airport.municipality}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">GPS Code: </li>
-                        <li class="infoPaneData airportGPS">${airport.gps_code}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">IATA Code: </li>
-                        <li class="infoPaneData airportIATA">${airport.iata_code}</li>
-                    </ul>
-                </div>
-                <div>
-                    <ul class="infoPaneItem">
-                        <li class="infoPaneLabel">Local Code: </li>
-                        <li class="infoPaneData airportLocal">${airport.local_code}</li>
-                    </ul>
-                </div>
+            <div class="airport-info-container">
+            <table class="airport-info-table">
+                <tr>
+                    <td>Identifier:</td>
+                    <td>${airport.ident}</td>
+                </tr>
+                <tr>
+                    <td>Airport Name:</td>
+                    <td>${airport.name}</td>
+                </tr>
+                <tr>
+                    <td>Position:</td>
+                    <td>${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</td>
+                </tr>
+                <tr>
+                    <td>Elevation:</td>
+                    <td>${airport.elevation} Feet</td>
+                </tr>
+                <tr>
+                    <td>Region:</td>
+                    <td>${airport.region_name}</td>
+                </tr>
+                <tr>
+                    <td>Municipality:</td>
+                    <td>${airport.municipality}</td>
+                </tr>
+                <tr>
+                    <td>GPS Code:</td>
+                    <td>${airport.gps_code}</td>
+                </tr>
+                <tr>
+                    <td>IATA Code:</td>
+                    <td>${airport.iata_code}</td>
+                </tr>
+                <tr>
+                    <td>Local Code:</td>
+                    <td>${airport.local_code}</td>
+                </tr>
+            </table>
+        </div>
             `);
             if (airport.home_link != null) { // if the airport doesn't have a website, don't display a website block
                 $("#infoPane").append(`
@@ -428,7 +404,7 @@ function draw_airport_markers(airport_data) {
                 const $tower_freq = $(`
                         <h3>Tower Frequencies</h3>
                 `);
-                
+
 
 
                 // Select frequency button
@@ -445,7 +421,7 @@ function draw_airport_markers(airport_data) {
                     $selectFrequency.append(`<option value='${frequency}'>${frequency}</option>`);
                 }
 
-                 // Create an audio player container
+                // Create an audio player container
                 const $audioContainer = $("<div class='audio-container'></div>");
 
 
@@ -464,7 +440,7 @@ function draw_airport_markers(airport_data) {
                             <audio controls src="${audioSrc}"></audio>
                             <button id="transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}">Transcribe</button>
                         `);
-                        
+
                         // Define $transcribeButton
                         const $transcribeButton = $(`#transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}`);
 
@@ -481,10 +457,10 @@ function draw_airport_markers(airport_data) {
                         // Append the audio player and transcribe button to the audio container
                         $audioContainer.append($audioPlayer, $transcribeButton);
                     }
-                    
+
                 });
 
-        
+
                 // Append the select frequency dropdown to the info pane
                 $("#infoPane").append($selectFrequency);
 
@@ -640,3 +616,53 @@ function toggleAltitudeColors() {
 
     /* do other stuff to change plane icon color */
 }
+
+//Function for PDF
+/*
+// Function to create and initialize the PDF viewer window
+function initializePDFViewer() {
+    // Create the PDF viewer container
+    const pdfViewerContainer = document.createElement('div');
+    pdfViewerContainer.id = 'pdfViewer';
+    pdfViewerContainer.classList.add('pdf-viewer');
+
+    // Create the PDF toolbar
+    const pdfToolbar = document.createElement('div');
+    pdfToolbar.classList.add('pdf-toolbar');
+
+    // Previous page button
+    const prevPageButton = document.createElement('button');
+    prevPageButton.id = 'prevPage';
+    prevPageButton.textContent = 'Previous';
+
+    // Current page indicator
+    const currentPageIndicator = document.createElement('span');
+    currentPageIndicator.id = 'currentPage';
+    currentPageIndicator.textContent = 'Page 1';
+
+    // Next page button
+    const nextPageButton = document.createElement('button');
+    nextPageButton.id = 'nextPage';
+    nextPageButton.textContent = 'Next';
+
+    // Append toolbar elements to the toolbar container
+    pdfToolbar.appendChild(prevPageButton);
+    pdfToolbar.appendChild(currentPageIndicator);
+    pdfToolbar.appendChild(nextPageButton);
+
+    // Create the PDF container
+    const pdfContainer = document.createElement('div');
+    pdfContainer.id = 'viewerContainer';
+    pdfContainer.classList.add('pdf-container');
+
+    // Append toolbar and PDF container to the PDF viewer container
+    pdfViewerContainer.appendChild(pdfToolbar);
+    pdfViewerContainer.appendChild(pdfContainer);
+
+    // Append PDF viewer container to the document body
+    document.body.appendChild(pdfViewerContainer);
+}
+
+// Call the function to initialize the PDF viewer
+initializePDFViewer();
+*/
