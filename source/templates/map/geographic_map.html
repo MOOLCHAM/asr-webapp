@@ -17,18 +17,24 @@
 <body onload="initializeMap()">
     <div id="map">
         <div id="infoPane">
-            <div class="INFOPANETEMP">
-                <span class="infoPaneTitle">Info Pane</span>
-                <img id="closeButton" src="{{ url_for('static', filename='images/xmark-solid.svg') }}" />
+            <div id="infoPaneContent">
+                <div id="infoPanePrimaryHeader">
+                    <span id="infoPaneTitle">Information Pane</span>
+                    <img id="closeButton" src="{{ url_for('static', filename='images/ui/close-icon.svg') }}" />
+                </div>
             </div>
+<<<<<<< HEAD
 
             <table id="infoTable"></table>
+=======
+>>>>>>> main
         </div>
         <div id="zoomedTooFarOut">
             <span>Zoom to View Content</span>
         </div>
         <div class="selectionClusterLocationParent">
             <div class="selectionClusterLocation">
+<<<<<<< HEAD
                 <div class="altitudeToggleCluster">
                     <button title="Altitude Coloring Toggle" aria-label="Altitude Coloring Toggle"
                         onclick="toggleAltitudeColors()" class="altitudeColorButton">
@@ -38,6 +44,22 @@
                 <div class="selectionCluster">
                     <button title="Map Type Toggle" aria-label="Map Type Toggle" onclick="dropDownSelection()"
                         class="mapCollapsible primaryButton"></button>
+=======
+                <div class="mapSideControl mapSideControlSingle">
+                    <button title="Homepage" aria-label="Homepage" onclick="location.href='/'">
+                        <img class="uiIcon" src="{{ url_for('static', filename='images/ui/home-icon.svg') }}" />
+                        <!--<span>H</span>-->
+                    </button>
+                </div>
+                <div class="mapSideControl mapSideControlSingle" id="mapSideControlSettings">
+                    <button title="Settings" aria-label="Settings" onclick="toggleSettings()" id="settingsButton">
+                        <img class="uiIcon" src="{{ url_for('static', filename='images/ui/settings-icon.svg') }}" />
+                        <!--<span>S</span>-->
+                    </button>
+                </div>
+                <div class="mapSideControl">
+                    <button title="Map Type Toggle" aria-label="Map Type Toggle" onclick="dropDownSelection()" class="mapCollapsible primaryButton"></button>
+>>>>>>> main
                     <div class="contentDropdown">
                         <button title="Geographic Map" aria-label="Geographic Map" onclick="tileSetChange('geographic')"
                             class="collapsibleContent" id="geographic">
@@ -64,6 +86,12 @@
                             <span>HI</span>
                         </button>
                     </div>
+                </div>
+                <div class="mapSideControl mapSideControlSingle">
+                    <button title="Audio Source" aria-label="Audio Source" onclick="findAudioSource()">
+                        <img class="uiIcon" src="{{ url_for('static', filename='images/ui/audio-icon.svg') }}" />
+                        <!--<span>A</span>-->
+                    </button>
                 </div>
             </div>
         </div>

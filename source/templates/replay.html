@@ -5,7 +5,181 @@
 {% block content %}
 <div>
     <div class="content">
-        <h2>Add Audio Replay stuff here</h2>
+        <h1 style="margin-top: 5px; margin-bottom: 10px;">Audio Replay</h1>
+        <form name="search" id="searchForm">
+            <label for="callsign">Call Sign: </label>
+            <input type="text" id="callsign" class="margin-right-small"/>
+            <label for="oneDate" id="oneDateLabel">Singular Date</label>
+            <input type="radio" id="oneDate" name="date" value="One Date" onclick="get_date_value()" />
+            <label for="range" id="rangeLabel">Date Range</label>
+            <input type="radio" id="range" name="date" value="Date Range" onclick="get_date_value()" />
+            <input type="button" id="searchSubmit" value="Search" />
+        </form>
+    </div>
+    <div class="small-div"></div>
+    <div class="small-minimum-height">
+
     </div>
 </div>
+
+<script type="text/javascript">
+
+    function get_date_value() {
+        for (var i = 0; i < document.search.date.length; i++) {
+            if (document.search.date[i].checked) {
+                var date_type = document.search.date[i].value;
+            }
+        }
+
+        if (date_type == "One Date") {
+            one_date();            
+        } else {
+            date_range();
+        }
+    }
+
+    function one_date() {
+        const element = document.getElementById("searchForm");
+        document.getElementById("oneDateLabel").innerText = "Date: ";
+        element.removeChild(oneDate);
+        element.removeChild(rangeLabel);
+        element.removeChild(range);
+
+        button = document.getElementById("searchSubmit");
+        element.removeChild(button);
+
+        dateElement = document.createElement("input");
+        dateElement.setAttribute("type", "date");
+        dateElement.setAttribute("id", "singleDate");
+        element.appendChild(dateElement);
+        element.appendChild(button);
+
+        const resetButton = document.createElement("input");
+        resetButton.setAttribute("type", "button");
+        resetButton.setAttribute("id", "reset1");
+        resetButton.setAttribute("value", "Reset");
+        resetButton.setAttribute("onclick", "reset_search()");
+        element.appendChild(resetButton);
+    }
+
+    function date_range() {
+        const element = document.getElementById("searchForm");
+        element.removeChild(oneDateLabel);
+        element.removeChild(oneDate);
+        element.removeChild(rangeLabel);
+        element.removeChild(range);
+
+        button = document.getElementById("searchSubmit");
+        element.removeChild(button);
+
+        firstDateLabel = document.createElement("label");
+        firstDateLabel.setAttribute("id", "fromLabel");
+        firstDateLabel.innerText = "From: ";
+        element.appendChild(firstDateLabel);
+
+        const firstDate = document.createElement("input");
+        firstDate.setAttribute("type", "date");
+        firstDate.setAttribute("id", "firstDate");
+        element.appendChild(firstDate);
+
+        secondDateLabel = document.createElement("label");
+        secondDateLabel.setAttribute("id", "toLabel");
+        secondDateLabel.innerText = "To: ";
+        element.appendChild(secondDateLabel);
+
+        const secondDate = document.createElement("input");
+        secondDate.setAttribute("type", "date");
+        secondDate.setAttribute("id", "secondDate");
+        element.appendChild(secondDate);
+        element.appendChild(button);
+
+        const resetButton = document.createElement("input");
+        resetButton.setAttribute("type", "button");
+        resetButton.setAttribute("id", "reset2");
+        resetButton.setAttribute("value", "Reset");
+        resetButton.setAttribute("onclick", "reset_range_search()");
+        element.appendChild(resetButton);
+
+
+    }
+
+    function reset_search() {
+        button = document.getElementById("searchSubmit");
+        const element = document.getElementById("searchForm");
+        element.removeChild(button);
+        element.removeChild(reset1);
+
+        document.getElementById("oneDateLabel").innerText = "Singular Date";
+        element.removeChild(dateElement);
+        
+        const singleDate = document.createElement("input");
+        singleDate.setAttribute("type", "radio");
+        singleDate.setAttribute("id", "oneDate");
+        singleDate.setAttribute("value", "One Date");
+        singleDate.setAttribute("name", "date");
+        singleDate.setAttribute("onclick", "get_date_value()");
+        element.appendChild(singleDate);
+
+        const rangeLabel = document.createElement("label");
+        rangeLabel.setAttribute("id", "rangeLabel");
+        rangeLabel.setAttribute("for", "range");
+        rangeLabel.innerText = "Date Range";
+        element.appendChild(rangeLabel);
+
+        const range = document.createElement("input");
+        range.setAttribute("type", "radio");
+        range.setAttribute("id", "range");
+        range.setAttribute("name", "date");
+        range.setAttribute("value", "Date Range");
+        range.setAttribute("onclick", "get_date_value()");
+        element.appendChild(range);
+
+        element.appendChild(button); 
+    }
+
+    function reset_range_search() {
+        button = document.getElementById("searchSubmit");
+        const element = document.getElementById("searchForm");
+        element.removeChild(button);
+        element.removeChild(reset2);
+        element.removeChild(fromLabel);
+        element.removeChild(firstDate);
+        element.removeChild(toLabel);
+        element.removeChild(secondDate);
+
+        const singleDateLabel = document.createElement("label");
+        singleDateLabel.setAttribute("id", "oneDateLabel");
+        singleDateLabel.innerText = "Singular Date";
+        singleDateLabel.setAttribute("for", "oneDate");
+        element.appendChild(singleDateLabel);
+
+
+        const singleDate = document.createElement("input");
+        singleDate.setAttribute("type", "radio");
+        singleDate.setAttribute("id", "oneDate");
+        singleDate.setAttribute("value", "One Date");
+        singleDate.setAttribute("name", "date");
+        singleDate.setAttribute("onclick", "get_date_value()");
+        element.appendChild(singleDate);
+
+        const rangeLabel = document.createElement("label");
+        rangeLabel.setAttribute("id", "rangeLabel");
+        rangeLabel.setAttribute("for", "range");
+        rangeLabel.innerText = "Date Range";
+        element.appendChild(rangeLabel);
+
+        const range = document.createElement("input");
+        range.setAttribute("type", "radio");
+        range.setAttribute("id", "range");
+        range.setAttribute("name", "date");
+        range.setAttribute("value", "Date Range");
+        range.setAttribute("onclick", "get_date_value()");
+        element.appendChild(range);
+
+        element.appendChild(button);
+    }
+
+
+
+</script>
 {% endblock %}
