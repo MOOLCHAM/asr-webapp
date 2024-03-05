@@ -276,9 +276,9 @@ body,
 }
 
 .airport-info-table {
-  width: 100%;
-  border-collapse: collapse;
-=======
+    width: 100%;
+    border-collapse: collapse;
+}
 /* infoPane styles */
 
 .infoPaneItem li {
@@ -335,7 +335,6 @@ body,
 
 .infoPaneData {
   width: 210px;
->>>>>>> main
 }
 
 .airport-info-table td {
@@ -411,8 +410,6 @@ body,
   background-color: var(--leaflet-dark-gray) !important;
 }
 
-<<<<<<< HEAD
-
 /* PDF Viewer */
 .pdf-viewer {
   position: absolute;
@@ -433,7 +430,7 @@ body,
   height: calc(100% - 30px);
   overflow: auto;
 }
-=======
+
 .infoPaneSubtitle {
   margin-left: auto;
   margin-right: auto;
