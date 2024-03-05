@@ -231,11 +231,12 @@ function draw_plane_markers(plane_data) {
         marker.setRotationOrigin('center center') // This is required otherwise the rotation will mess up where planes actually are
         marker.addTo(planeLayer);
 
-        marker.on('mouseover', (event) => { // testing mouseover for future hover for each aircraft
-            marker.setIcon(L.icon({ iconUrl: '../static/images/markers/airport.svg' })); //temporary
+        marker.on('mouseover', (event) => {
+            marker.bindTooltip(plane.callsign, { permanent: true }).openTooltip();
         });
-        marker.on('mouseout',(event) => {
-            marker.setIcon(L.icon({ iconUrl: plane.category_icon }));
+
+        marker.on('mouseout', (event) => {
+            marker.closeTooltip();
         });
 
         marker.on('click', (event) => {
@@ -245,6 +246,7 @@ function draw_plane_markers(plane_data) {
             $("#infoPaneTitle").text("Aircraft");
 
             // Add airport properties
+
             $("#infoPaneContent").append(`
                 <div class="infoPaneCategory">
                     <div class="infoPaneName">
@@ -368,11 +370,21 @@ function draw_airport_markers(airport_data) {
     for (const airport of airport_data) {
         let marker = L.marker([airport.latitude, airport.longitude]);
 
-        marker.setIcon(L.icon({ iconUrl: "../static/images/markers/airport.svg", iconSize: [30, 30], iconAnchor: [15, 15], className: "airportMarker" }));
+        marker.setIcon(L.icon({
+            iconUrl: "../static/images/markers/airport.svg",
+            iconSize: [30, 30],
+            iconAnchor: [15, 15],
+            className: "airportMarker"
+        }));
+
         marker.addTo(airportLayer);
 
-        marker.on('mouseover', (event) => { // testing mouseover for future hover for each airport
-            console.log(`${airport.ident} ${airport.name}`);
+        marker.on('mouseover', (event) => {
+            marker.bindTooltip(airport.name, { permanent: true }).openTooltip();
+        });
+
+        marker.on('mouseout', (event) => {
+            marker.closeTooltip();
         });
 
         marker.on('click', (event) => {
@@ -382,6 +394,7 @@ function draw_airport_markers(airport_data) {
             $("#infoPaneTitle").text("Airport");
 
             // Add airport properties
+
             $("#infoPaneContent").append(`
                 <div class="infoPaneCategory">
                     <div class="infoPaneName">
@@ -491,6 +504,7 @@ function draw_airport_markers(airport_data) {
                         </div>
                     </div>
                 `);
+
 
                 // Add frequencies to the dropdown menu
                 for (const frequency of airport.tower_frequencies) {
@@ -759,3 +773,4 @@ function appendMessage() {
     </div>
     `);
 }
+
