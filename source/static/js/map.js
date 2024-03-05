@@ -734,7 +734,7 @@ function transcribeLiveAudio(liveAudioSource) {
 
     $("#airportTranscriptionSubcategory").prepend(`
     <div class="transcriptionMessage">
-        <p>><strong> [Speaker]: </strong>
+        <p><strong> [Speaker]: </strong>
             Live Transcription Established from: ${liveAudioSource}
         </p>
     </div>
