@@ -66,6 +66,12 @@ body,
   filter: invert(100%);
 }
 
+#frequencySelect {
+  width: 100%;
+  border-radius: 2px;
+  border: 1px solid var(--leaflet-dark-gray);
+}
+
 #closeButton:hover {
   cursor: pointer;
 }
