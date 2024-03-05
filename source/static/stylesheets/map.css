@@ -67,20 +67,14 @@ body,
     height: 24px; 
     width: 24px;
     position: absolute;
-<<<<<<< HEAD
     right: 1550px;
     top: 10px;
     padding: 5px 5px 5px 5px;
     color: white;
     background-color: transparent;
-  
-=======
     right: 0;
-    top: 0;
-    padding: 5px;
     /*color: var(--white);*/
     filter: invert(100%);
->>>>>>> main
 }
 
 #closeButton:hover {
@@ -262,7 +256,6 @@ body,
   top: 88px !important;
 }
 
-<<<<<<< HEAD
 /* Airport Info Pane Styles */
 #infoPane {
   background-color: #000e2e;
@@ -489,4 +482,3 @@ body,
 .mapSideControlSingle {
   height: 30px;
 }
->>>>>>> main

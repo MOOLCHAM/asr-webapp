@@ -231,20 +231,12 @@ function draw_plane_markers(plane_data) {
         marker.setRotationOrigin('center center') // This is required otherwise the rotation will mess up where planes actually are
         marker.addTo(planeLayer);
 
-<<<<<<< HEAD
         marker.on('mouseover', (event) => {
             marker.bindTooltip(plane.callsign, { permanent: true }).openTooltip();
         });
 
         marker.on('mouseout', (event) => {
             marker.closeTooltip();
-=======
-        marker.on('mouseover', (event) => { // testing mouseover for future hover for each aircraft
-            marker.setIcon(L.icon({ iconUrl: '../static/images/markers/airport.svg' })); //temporary
-        });
-        marker.on('mouseout',(event) => {
-            marker.setIcon(L.icon({ iconUrl: plane.category_icon }));
->>>>>>> main
         });
 
         marker.on('click', (event) => {
@@ -254,69 +246,7 @@ function draw_plane_markers(plane_data) {
             $("#infoPaneTitle").text("Aircraft");
 
             // Add airport properties
-<<<<<<< HEAD
-            $("#infoPane").append(`
-            <div class="aircraft-info-container">
-            <table class="aircraft-info-table">
-                <tr>
-                    <td>Callsign:</td>
-                    <td>${plane.callsign}</td>
-                </tr>
-                <tr>
-                    <td>Position:</td>
-                    <td>${plane.latitude}\u00b0N ${plane.longitude}\u00b0W</td>
-                </tr>
-                <tr>
-                    <td>ICAO 24-Bit Address:</td>
-                    <td>${plane.icao24.toUpperCase()}</td>
-                </tr>
-                <tr>
-                    <td>Origin Country:</td>
-                    <td>${plane.origin_country}</td>
-                </tr>
-                <tr>
-                    <td>Time of Last Position Report:</td>
-                    <td>${Date(plane.time_position)}</td>
-                </tr>
-                <tr>
-                    <td>Last Contact:</td>
-                    <td>${Date(plane.last_contact)}</td>
-                </tr>
-                <tr>
-                    <td>Geometric Altitude:</td>
-                    <td>${plane.geo_altitude} meters</td>
-                </tr>
-                <tr>
-                    <td>On Ground?:</td>
-                    <td>${plane.on_ground ? "Yes" : "No"}</td>
-                </tr>
-                <tr>
-                    <td>Velocity:</td>
-                    <td>${plane.velocity} meters per second</td>
-                </tr>
-                <tr>
-                    <td>Heading:</td>
-                    <td>${plane.true_track}\u00b0</td>
-                </tr>
-                <tr>
-                    <td>Vertical Rate:</td>
-                    <td>${plane.vertical_rate} meters per second</td>
-                </tr>
-                <tr>
-                    <td>Squawk:</td>
-                    <td>${plane.squawk}</td>
-                </tr>
-                <tr>
-                    <td>Position Source:</td>
-                    <td>${get_position_source_string(plane.position_source)}</td>
-                </tr>
-                <tr>
-                    <td>Category:</td>
-                    <td>${get_plane_category_string(plane.category)}</td>
-                </tr>
-            </table>
-        </div>
-=======
+
             $("#infoPaneContent").append(`
                 <div class="infoPaneCategory">
                     <div class="infoPaneName">
@@ -412,7 +342,6 @@ function draw_plane_markers(plane_data) {
                         </div>
                     </div>
                 </div>
->>>>>>> main
             `);
 
             draw_flight_path(plane.icao24);
@@ -465,49 +394,7 @@ function draw_airport_markers(airport_data) {
             $("#infoPaneTitle").text("Airport");
 
             // Add airport properties
-<<<<<<< HEAD
-            $("#infoPane").append(`
-            <div class="airport-info-container">
-            <table class="airport-info-table">
-                <tr>
-                    <td>Identifier:</td>
-                    <td>${airport.ident}</td>
-                </tr>
-                <tr>
-                    <td>Airport Name:</td>
-                    <td>${airport.name}</td>
-                </tr>
-                <tr>
-                    <td>Position:</td>
-                    <td>${airport.latitude}\u00b0N  ${airport.longitude}\u00b0W</td>
-                </tr>
-                <tr>
-                    <td>Elevation:</td>
-                    <td>${airport.elevation} Feet</td>
-                </tr>
-                <tr>
-                    <td>Region:</td>
-                    <td>${airport.region_name}</td>
-                </tr>
-                <tr>
-                    <td>Municipality:</td>
-                    <td>${airport.municipality}</td>
-                </tr>
-                <tr>
-                    <td>GPS Code:</td>
-                    <td>${airport.gps_code}</td>
-                </tr>
-                <tr>
-                    <td>IATA Code:</td>
-                    <td>${airport.iata_code}</td>
-                </tr>
-                <tr>
-                    <td>Local Code:</td>
-                    <td>${airport.local_code}</td>
-                </tr>
-            </table>
-        </div>
-=======
+
             $("#infoPaneContent").append(`
                 <div class="infoPaneCategory">
                     <div class="infoPaneName">
@@ -573,7 +460,6 @@ function draw_airport_markers(airport_data) {
                         </div>
                     </div>
                 </div>
->>>>>>> main
             `);
             if (airport.home_link != null) { // if the airport doesn't have a website, don't display a website block
                 $("#airportGeneralInformation").append(`
@@ -618,20 +504,7 @@ function draw_airport_markers(airport_data) {
                         </div>
                     </div>
                 `);
-<<<<<<< HEAD
 
-
-
-                // Select frequency button
-                const $selectFrequency = $(`
-                    <select id='frequencySelect'>
-                        <option value='' disabled selected>Select a Frequency</option>
-                    </select>
-                    `);
-
-                $("#infoPane").children().last().after($tower_freq); // after the last div for the above block place this
-=======
->>>>>>> main
 
                 // Add frequencies to the dropdown menu
                 for (const frequency of airport.tower_frequencies) {
@@ -640,13 +513,6 @@ function draw_airport_markers(airport_data) {
                     `);
                 }
 
-<<<<<<< HEAD
-                // Create an audio player container
-                const $audioContainer = $("<div class='audio-container'></div>");
-
-
-=======
->>>>>>> main
                 // Event handler for when a frequency is selected
                 $("#frequencySelect").on("change", function() {
                     const selectedFrequency = $(this).val();
@@ -661,11 +527,7 @@ function draw_airport_markers(airport_data) {
                             <audio controls src="${audioSrc}" onplay="transcribeLiveAudio('${audioSrc}')"></audio>
                         `);
 
-<<<<<<< HEAD
-                        // Define $transcribeButton
-=======
                         /*
->>>>>>> main
                         const $transcribeButton = $(`#transcribe-${airport.ident}_${selectedFrequency.replace(".", "")}`);
 
                         
@@ -683,21 +545,8 @@ function draw_airport_markers(airport_data) {
                         // Append the audio player and transcribe button to the audio container
                         $("#airportTowerAudioContainer").append(audioPlayer /*, $transcribeButton*/);
                     }
-<<<<<<< HEAD
-
-                });
-
-
-                // Append the select frequency dropdown to the info pane
-                $("#infoPane").append($selectFrequency);
-
-                // Append the audio container to the info pane
-                $("#infoPane").append($audioContainer);
-
-=======
                 });
                 $("#map").css("align-items","normal");
->>>>>>> main
             }
 
             // Set the last child to have margin for proper spacing at bottom
@@ -878,57 +727,6 @@ function toggleSettings() {
     $("#settingsButton").toggleClass("toggleActive");
 }
 
-<<<<<<< HEAD
-//Function for PDF
-/*
-// Function to create and initialize the PDF viewer window
-function initializePDFViewer() {
-    // Create the PDF viewer container
-    const pdfViewerContainer = document.createElement('div');
-    pdfViewerContainer.id = 'pdfViewer';
-    pdfViewerContainer.classList.add('pdf-viewer');
-
-    // Create the PDF toolbar
-    const pdfToolbar = document.createElement('div');
-    pdfToolbar.classList.add('pdf-toolbar');
-
-    // Previous page button
-    const prevPageButton = document.createElement('button');
-    prevPageButton.id = 'prevPage';
-    prevPageButton.textContent = 'Previous';
-
-    // Current page indicator
-    const currentPageIndicator = document.createElement('span');
-    currentPageIndicator.id = 'currentPage';
-    currentPageIndicator.textContent = 'Page 1';
-
-    // Next page button
-    const nextPageButton = document.createElement('button');
-    nextPageButton.id = 'nextPage';
-    nextPageButton.textContent = 'Next';
-
-    // Append toolbar elements to the toolbar container
-    pdfToolbar.appendChild(prevPageButton);
-    pdfToolbar.appendChild(currentPageIndicator);
-    pdfToolbar.appendChild(nextPageButton);
-
-    // Create the PDF container
-    const pdfContainer = document.createElement('div');
-    pdfContainer.id = 'viewerContainer';
-    pdfContainer.classList.add('pdf-container');
-
-    // Append toolbar and PDF container to the PDF viewer container
-    pdfViewerContainer.appendChild(pdfToolbar);
-    pdfViewerContainer.appendChild(pdfContainer);
-
-    // Append PDF viewer container to the document body
-    document.body.appendChild(pdfViewerContainer);
-}
-
-// Call the function to initialize the PDF viewer
-initializePDFViewer();
-*/
-=======
 function resetLeftPane() {
     $("#map").css("align-items","flex-start");
     clear_table();
@@ -975,4 +773,4 @@ function appendMessage() {
     </div>
     `);
 }
->>>>>>> main
+
