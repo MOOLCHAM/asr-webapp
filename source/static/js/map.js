@@ -248,10 +248,10 @@ function draw_plane_markers(plane_data) {
             // Add airport properties
 
             $("#infoPaneContent").append(`
+                <div class="infoPaneName">
+                    <span>${plane.callsign}</span>
+                </div>
                 <div class="infoPaneCategory">
-                    <div class="infoPaneName">
-                        <span>${plane.callsign}</span>
-                    </div>
                     <div class="infoPaneSubtitle">
                         <span>General Information</span>
                     </div>
@@ -396,10 +396,10 @@ function draw_airport_markers(airport_data) {
             // Add airport properties
 
             $("#infoPaneContent").append(`
+                <div class="infoPaneName">
+                    <span>${airport.name} ${airport.ident}</span>
+                </div>
                 <div class="infoPaneCategory">
-                    <div class="infoPaneName">
-                        <span>${airport.name} ${airport.ident}</span>
-                    </div>
                     <div class="infoPaneSubtitle">
                         <span>General Information</span>
                     </div>
@@ -696,10 +696,10 @@ function toggleSettings() {
         $("#infoPaneTitle").text("Settings");
         $("#infoPane").show().css("display","flex");
         $("#infoPaneContent").append(`
+            <div class="infoPaneName">
+                <span>Change User Preferences</span>
+            </div>
             <div class="infoPaneCategory">
-                <div class="infoPaneName">
-                    <span>Change User Preferences</span>
-                </div>
                 <div class="infoPaneSubtitle">
                     <span>General Settings</span>
                 </div>
@@ -712,8 +712,79 @@ function toggleSettings() {
                                     <input type="range" min="0" max="70" value="35" class="settingSlider" id="settingBrightness">
                                 </div>
                             </li>
-                       </ul>
-                   </div>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Flight Paths: </li>
+                            <li class="infoPaneData">
+                                <label class="settingsToggleSwitch">
+                                    <input type="checkbox">
+                                    <div class="settingsToggleSlider"></div>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Aircraft Search: </li>
+                            <li class="infoPaneData">
+                                <label class="settingsToggleSwitch">
+                                    <input type="checkbox">
+                                    <div class="settingsToggleSlider"></div>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Icon Hover: </li>
+                            <li class="infoPaneData">
+                                <label class="settingsToggleSwitch">
+                                    <input type="checkbox">
+                                    <div class="settingsToggleSlider"></div>
+                                </label>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="infoPaneCategory">
+                <div class="infoPaneSubtitle">
+                    <span>Units</span>
+                </div>
+                <div class="infoPaneSubcategory">
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Altitude: </li>
+                            <li class="infoPaneData">[Feet/Meters]</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Velocity: </li>
+                            <li class="infoPaneData">[FPS/MPS/MPH/KMPH/Knots]</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Veertical Rate: </li>
+                            <li class="infoPaneData">[FPS/MPS/FPM/MPM]</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="infoPaneCategory">
+                <div class="infoPaneSubtitle">
+                    <span>Accessibility</span>
+                </div>
+                <div class="infoPaneSubcategory">
+                    <div>
+                        <ul class="infoPaneItem">
+                            <li class="infoPaneLabel">Setting: </li>
+                            <li class="infoPaneData">Future Accessibility Setting</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
         `);
