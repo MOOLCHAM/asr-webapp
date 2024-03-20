@@ -26,9 +26,14 @@ except Exception: # command may result in several different errors depending on 
 # model_init_process = Process(target=asr_model_thread)
 # model_init_process.start()
 
-
-@bp.route("/transcribe", methods=["GET", "POST"])
+@bp.route("/transcribe", methods=["POST"])
 def transcribe():
+    """
+    Endpoint URI: /models/transcribe
+
+    """
+    requestBody = request.get_data()
+
     if isNVIDIAGPUEnabled == True:
         return make_response("Service has not been implemented", 501)
     else:
@@ -49,3 +54,4 @@ def transcribe():
 #     print(request_body)
 #     # response = requests.get(request_body["audio_url"])
 #     return make_response("Service has not been implemented", 501)
+
