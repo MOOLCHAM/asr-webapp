@@ -41,7 +41,7 @@ function initializeMapTiles() {
     for (var type in mapTypes) {
         var mapLink;
         var mapSettings = {
-            attribution: "&copy; <a href='https://vfrmap.com/tos.html'>VFRMap</a> contributors",
+            attribution: "&copy; <a href='https://vfrmap.com/tos.html'>VFRMap.com</a> contributors",
             maxZoom: mapTypes[type].maxZoom,
             tms: true
         };
@@ -60,7 +60,7 @@ function initializeMapTiles() {
 /**
  * Sets the map type to the input map type
  *
- * @param {string} mapType string input corresponding to map type can be "geograpgic", "vfrc", "sectc", "helic", "ifrlc", "ehc"
+ * @param {string} mapType string input corresponding to map type can be "geographic", "vfrc", "sectc", "helic", "ifrlc", "ehc"
  * 
  */
 function setMapType(mapType) {
@@ -613,11 +613,17 @@ function main() {
     plane_data_request.send(); // Send request
 }
 
+/**
+ * Updates map bounding box coordinates after map zoom and checks for zoom limit
+ */
 function onMapZoomEnd() {
     updateMapBoundingBoxCoordinates();
     checkMapZoomLevel();
 }
 
+/**
+ * Updates map bounding box coordinates after map movement
+ */
 function onMapMoveEnd() {
     updateMapBoundingBoxCoordinates();
 }
@@ -649,6 +655,9 @@ function updateMapBoundingBoxCoordinates() {
     });
 }
 
+/**
+ * Checks map zoom level, if beyond limit blurs map
+ */
 function checkMapZoomLevel() {
     if (map.getZoom() < 8) {
         $(".leaflet-map-pane").css("filter","blur(3px)");
@@ -667,6 +676,9 @@ function checkMapZoomLevel() {
     }
 }
 
+/**
+ * controls the dropdown for mapCollapsible class
+ */
 function dropDownSelection() {
     var coll = document.getElementsByClassName("mapCollapsible");
     coll[0].classList.toggle("active");
@@ -679,6 +691,11 @@ function dropDownSelection() {
     }
 }
 
+/**
+ * Changes the map type and background color of appropriate background color of button.
+ * 
+ * @param {string} mapType 
+ */
 function tileSetChange(mapType) {
     $(`#${currentMapTilesetSelection}`).css("background-color","");
     $(`#${mapType}`).css("background-color","#cccccc");
@@ -686,6 +703,9 @@ function tileSetChange(mapType) {
     setMapType(mapType);
 }
 
+/**
+ * Toggles the settings pane
+ */
 function toggleSettings() {
     $("#map").css("align-items","flex-start"); // have to do this
     clear_table(); // and this, because we don't call resetLeftPane() because it interferes with this function, ideally find better solution
@@ -798,6 +818,9 @@ function toggleSettings() {
     $("#settingsButton").toggleClass("toggleActive");
 }
 
+/**
+ * Resets the left pane back to default
+ */
 function resetLeftPane() {
     $("#map").css("align-items","flex-start");
     clear_table();
@@ -807,11 +830,20 @@ function resetLeftPane() {
     }
 }
 
+/**
+ * Finds the audio source active on the map and pans camera to that location
+ */
 function findAudioSource() {
     // need to center map camera to location of audio source: plane, airport, etc.
     // map.panTo();
 }
 
+
+/**
+ * sends the desired audio source string to the NeMo model and recieves the transcription feed back from NeMo model
+ * 
+ * @param {string} liveAudioSource 
+ */
 function transcribeLiveAudio(liveAudioSource) {
     // fetch the transcriptions for given live audio stream
     //$("#transcriptionOutput").text("Live Transcription Established from: " + liveAudioSource);
@@ -825,6 +857,13 @@ function transcribeLiveAudio(liveAudioSource) {
     </div>
     `);
     
+    const transcribeRequest = new XMLHttpRequest();
+
+    transcribeRequest.open("POST", "/models/transcribe");
+    transcribeRequest.responseType = "json";
+    transcribeRequest.send(liveAudioSource);
+
+    /*
     $.ajax({
         url: "/models/transcribe",
         method: "POST",
@@ -832,9 +871,12 @@ function transcribeLiveAudio(liveAudioSource) {
         data: 'text',
         success: function(response) { console.log(response) },
         error: function(error) { console.log(error) }
-    });
+    });*/
 }
 
+/**
+ * Appends selected audio feed message to message UI
+ */
 function appendMessage() {
     $("#airportTranscriptionSubcategory").append(`
     <div class="infoPaneCategory">

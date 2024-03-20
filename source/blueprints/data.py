@@ -175,6 +175,7 @@ def flight_track(icao24):
     return make_response(response_data, 200)
 
 
+
 @bp.route("/airports/<state>")
 def airports(state):
     """
@@ -243,3 +244,5 @@ def getMapLatLonBounds():
 def getLatLonBoundBox():
     global latLonBoundBox
     return latLonBoundBox
+
+    
