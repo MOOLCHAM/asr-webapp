@@ -4,7 +4,7 @@
 ## Dependency Setup
 First, clone the repository if you haven't already
 ```
-git clone https://github.com/AVanDeBrook/asr-webapp.git
+git clone https://github.com/TheCreepOfWar/asr-webapp
 ```
 ### JavaScript Dependencies
 **The JavaScript-side dependencies are already set up** i.e. they are already linked in the HTML templates (`source/templates`) and/or downloaded (`source/static/vendor`).
