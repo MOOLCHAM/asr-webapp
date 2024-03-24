@@ -256,5 +256,19 @@ h1 {
     background-color: var(--leaflet-light-gray);
 }
 
+.navy-link {
+    font-weight: bold;
+    text-decoration: underline;
+    color: var(--riddle-navy);
+}
+
+.normal-font {
+    font-weight: normal;
+}
+
+hr {
+    color: var(--riddle-navy);
+}
+
 
 
