@@ -3,8 +3,6 @@ from multiprocessing import Process, Lock
 from flask import Blueprint, make_response, request
 import subprocess
 import sys
-from ..utils.transcribing import audio_fetch_and_transcribe
-
 
 # # from multiprocessing import Process, Queue
 # from asr_project.models import PretrainedFineTunedJasper, Model
@@ -22,6 +20,8 @@ except Exception: # command may result in several different errors depending on 
     print('NVIDIA GPU Not Found!\nNVIDIA NeMo ASR will not be able to run without NVIDIA GPU, this may result in webapp features such as transcription\n unable to be used or unexpected issues.')
     isNVIDIAGPUEnabled = False
 
+if isNVIDIAGPUEnabled == True:
+    from ..utils.transcribing import audio_fetch_and_transcribe
 # def asr_model_thread():
 #     model = PretrainedFineTunedJasper(checkpoint_path="models/jasper_finetuned.nemo")
 
