@@ -2,6 +2,9 @@ import requests
 from multiprocessing import Process, Lock
 from flask import Blueprint, make_response, request
 import subprocess
+import sys
+from ..utils.transcribing import audio_fetch_and_transcribe
+
 
 # # from multiprocessing import Process, Queue
 # from asr_project.models import PretrainedFineTunedJasper, Model
