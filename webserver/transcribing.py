@@ -2,11 +2,14 @@ from transcribe_given_audio_file import Transcribe_ATC
 import numpy as np
 import requests
 import subprocess
+import nemo.collections.asr as nemo_asr
 
 transcription_buffer = []
 
 # this object does the transcription
-transcribe = Transcribe_ATC()
+#transcribe = Transcribe_ATC()
+
+transcribe = nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En")
 
 
 def fetch_stream():
@@ -22,7 +25,8 @@ def get_transcription_array(filename):
     # [src/libmpg123/layer3.c:INT123_do_layer3():1773] error: part2_3_length (1088) too large for available bit count (712)
 
     # Pass file to model, get transcription result
-    return transcribe.transcribe_audio("stream.wav")
+    #return transcribe.transcribe_audio("stream.wav")
+    return transcribe.transcribe(["stream.wav"])
 
 
 def audio_fetch_and_transcribe():
@@ -39,13 +43,14 @@ def audio_fetch_and_transcribe():
 
         # Transcribe
         transcription = get_transcription_array(filename)
-        if transcription:
-            transcription_buffer += transcription.split(" ")  # Add new words to array
-            transcription_buffer = transcription_buffer[
-                -20:
-            ]  # Truncate the array to only the last 20
-
-        print(f"transcription_buffer: {transcription_buffer}")
+        print(transcription)
+#        if transcription:
+#            transcription_buffer += transcription.split(" ")  # Add new words to array
+#            transcription_buffer = transcription_buffer[
+#                -20:
+#            ]  # Truncate the array to only the last 20
+#
+#        print(f"transcription_buffer: {transcription_buffer}")
 
 
 def get_latest_transcription():
