@@ -522,7 +522,9 @@ function draw_airport_markers(airport_data) {
 
                     if (selectedFrequency) {
                         // Create an audio player for the selected frequency
-                        const audioSrc = `https://livetraffic2.near.aero/stream/${airport.ident}_${selectedFrequency.replace(".", "")}.mp3`;
+                        // const audioSrc = `https://livetraffic2.near.aero/stream/${airport.ident}_${selectedFrequency.replace(".", "")}.mp3`;
+                        // For now we use live atc because near aero doesn't seem to be having a fun time
+                        const audioSrc = `http://d.liveatc.net/kdab_del_gnd`;
                         const audioPlayer = $(`
                             <audio controls src="${audioSrc}" onplay="transcribeLiveAudio('${audioSrc}')"></audio>
                         `);

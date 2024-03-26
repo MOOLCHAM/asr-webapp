@@ -38,6 +38,7 @@ def transcribe():
     requestBody = request.get_data()
 
     if isNVIDIAGPUEnabled == True:
+        audio_fetch_and_transcribe(requestBody)
         return make_response("Service has not been implemented", 501)
     else:
         return make_response("Does not have NVIDIA GPU for transcription", 500)

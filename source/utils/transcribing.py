@@ -12,9 +12,10 @@ transcription_buffer = []
 transcribe = nemo_asr.models.EncDecCTCModel.from_pretrained(model_name="QuartzNet15x5Base-En")
 
 
-def fetch_stream():
+def fetch_stream(stream_url):
     # Read stream, save to wav
-    stream_url = "http://d.liveatc.net/kdab_del_gnd"
+    # stream_url = "http://d.liveatc.net/kdab_del_gnd"
+    
     return requests.get(stream_url, stream=True)
 
 
@@ -29,10 +30,10 @@ def get_transcription_array(filename):
     return transcribe.transcribe(["stream.wav"])
 
 
-def audio_fetch_and_transcribe():
+def audio_fetch_and_transcribe(stream_url):
     global transcription_buffer
 
-    r = fetch_stream()
+    r = fetch_stream(stream_url)
     filename = "stream.mp3"
 
     for block in r.iter_content(6144):
@@ -46,9 +47,7 @@ def audio_fetch_and_transcribe():
         print(transcription)
 #        if transcription:
 #            transcription_buffer += transcription.split(" ")  # Add new words to array
-#            transcription_buffer = transcription_buffer[
-#                -20:
-#            ]  # Truncate the array to only the last 20
+#            transcription_buffer = transcription_buffer[-20:]  # Truncate the array to only the last 20
 #
 #        print(f"transcription_buffer: {transcription_buffer}")
 
