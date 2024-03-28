@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JavaScript Map Functions (map.js) &mdash; ASR Webapp Demo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="prev" title="API Reference for Static Files" href="../api.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../../index.html" class="icon icon-home">
+            ASR Webapp Demo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../../dependencies.html">Dependency Installation &amp; Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../setup_and_run.html">Setup and Running</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../blueprints/blueprints.html">Endpoint Blueprints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../static.html">Static Files</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../templates/templates.html">HTML Template Documentation</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../blueprints/api.html">Server Endpoints Reference</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../api.html">API Reference for Static Files</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">JavaScript Map Functions (<code class="docutils literal notranslate"><span class="pre">map.js</span></code>)</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#initializeMapTiles"><code class="docutils literal notranslate"><span class="pre">initializeMapTiles()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setMapType"><code class="docutils literal notranslate"><span class="pre">setMapType()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#initializeMap"><code class="docutils literal notranslate"><span class="pre">initializeMap()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_position_source_string"><code class="docutils literal notranslate"><span class="pre">get_position_source_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#clear_table"><code class="docutils literal notranslate"><span class="pre">clear_table()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#get_plane_category_string"><code class="docutils literal notranslate"><span class="pre">get_plane_category_string()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#draw_flight_path"><code class="docutils literal notranslate"><span class="pre">draw_flight_path()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#draw_plane_markers"><code class="docutils literal notranslate"><span class="pre">draw_plane_markers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#draw_airport_markers"><code class="docutils literal notranslate"><span class="pre">draw_airport_markers()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup_event_listeners"><code class="docutils literal notranslate"><span class="pre">setup_event_listeners()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#main"><code class="docutils literal notranslate"><span class="pre">main()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#onMapZoomEnd"><code class="docutils literal notranslate"><span class="pre">onMapZoomEnd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#onMapMoveEnd"><code class="docutils literal notranslate"><span class="pre">onMapMoveEnd()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#getMapBoundingBoxCoordinates"><code class="docutils literal notranslate"><span class="pre">getMapBoundingBoxCoordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#updateMapBoundingBoxCoordinates"><code class="docutils literal notranslate"><span class="pre">updateMapBoundingBoxCoordinates()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#checkMapZoomLevel"><code class="docutils literal notranslate"><span class="pre">checkMapZoomLevel()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dropDownSelection"><code class="docutils literal notranslate"><span class="pre">dropDownSelection()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#tileSetChange"><code class="docutils literal notranslate"><span class="pre">tileSetChange()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#toggleSettings"><code class="docutils literal notranslate"><span class="pre">toggleSettings()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#resetLeftPane"><code class="docutils literal notranslate"><span class="pre">resetLeftPane()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#findAudioSource"><code class="docutils literal notranslate"><span class="pre">findAudioSource()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#transcribeLiveAudio"><code class="docutils literal notranslate"><span class="pre">transcribeLiveAudio()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#appendMessage"><code class="docutils literal notranslate"><span class="pre">appendMessage()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../../index.html">ASR Webapp Demo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="../api.html">API Reference for Static Files</a></li>
+      <li class="breadcrumb-item active">JavaScript Map Functions (<code class="docutils literal notranslate"><span class="pre">map.js</span></code>)</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../../_sources/static/js/api.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="javascript-map-functions-map-js">
+<h1>JavaScript Map Functions (<code class="docutils literal notranslate"><span class="pre">map.js</span></code>)<a class="headerlink" href="#javascript-map-functions-map-js" title="Link to this heading"></a></h1>
+<dl class="js function">
+<dt class="sig sig-object js" id="initializeMapTiles">
+<span class="sig-name descname"><span class="n"><span class="pre">initializeMapTiles</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#initializeMapTiles" title="Link to this definition"></a></dt>
+<dd><p>Initalizes the map tilesets from OpenStreetMap and VFRMap</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="setMapType">
+<span class="sig-name descname"><span class="n"><span class="pre">setMapType</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#setMapType" title="Link to this definition"></a></dt>
+<dd><p>Sets the map type to the input map type</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mapType</strong> (<em>string</em>) – string input corresponding to map type can be “geographic”, “vfrc”, “sectc”, “helic”, “ifrlc”, “ehc”</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="initializeMap">
+<span class="sig-name descname"><span class="n"><span class="pre">initializeMap</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#initializeMap" title="Link to this definition"></a></dt>
+<dd><p>Initalizes the map with geographical map when the page is loaded</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="get_position_source_string">
+<span class="sig-name descname"><span class="n"><span class="pre">get_position_source_string</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">position_source</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#get_position_source_string" title="Link to this definition"></a></dt>
+<dd><p>Decodes a transponder type to the string version (i.e. int -&gt; string). Useful for displaying this data in the UI.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>position_source</strong> (<em>int</em>) – the position source from the API endpoint</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>string</strong> – transponder source type</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="clear_table">
+<span class="sig-name descname"><span class="n"><span class="pre">clear_table</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#clear_table" title="Link to this definition"></a></dt>
+<dd><p>Clears the table in the info pane in preparation for new data.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="get_plane_category_string">
+<span class="sig-name descname"><span class="n"><span class="pre">get_plane_category_string</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">category_plane</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#get_plane_category_string" title="Link to this definition"></a></dt>
+<dd><p>Decodes a plane category from the integer representation (i.e. int -&gt; string)</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>category_plane</strong> (<em>int</em>) – plane category from API endpoint</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>string</strong> – decoded plane category</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="draw_flight_path">
+<span class="sig-name descname"><span class="n"><span class="pre">draw_flight_path</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">icao24</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw_flight_path" title="Link to this definition"></a></dt>
+<dd><p>Draws the estimated flight path of the plane specified by the ICAO 24-bit address (from as far back as the waypoints go to
+its current position).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>icao24</strong> (<em>string</em>) – 24-bit ICAO identification number. This is a hexadecimal number represented as a string in the API.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="draw_plane_markers">
+<span class="sig-name descname"><span class="n"><span class="pre">draw_plane_markers</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">plane_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw_plane_markers" title="Link to this definition"></a></dt>
+<dd><p>Draws the plane markers on the Leaflet map based on the latitude, longitude, and heading information.
+Also sets up the callback for the click event to populate the table in the information pane and draw flight path(s).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>plane_data</strong> (<em>Array</em>) – An array of objects associated with a valid API response (i.e. response body isn’t null).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="draw_airport_markers">
+<span class="sig-name descname"><span class="n"><span class="pre">draw_airport_markers</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">airport_data</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#draw_airport_markers" title="Link to this definition"></a></dt>
+<dd><p>Draws the airport markers that are fetched from the data API when the app starts.
+Sets up the callback functions for clicking the icons and populating the info table
+with whatever data is available.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>airport_data</strong> (<em>Array</em>) – An array of objects associated with a valid API response from the /data/airports/&lt;state&gt; API endpoint.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="setup_event_listeners">
+<span class="sig-name descname"><span class="n"><span class="pre">setup_event_listeners</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#setup_event_listeners" title="Link to this definition"></a></dt>
+<dd><p>One-time event listener setup.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="main">
+<span class="sig-name descname"><span class="n"><span class="pre">main</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#main" title="Link to this definition"></a></dt>
+<dd><p>Main function that gets called on map startup.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="onMapZoomEnd">
+<span class="sig-name descname"><span class="n"><span class="pre">onMapZoomEnd</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#onMapZoomEnd" title="Link to this definition"></a></dt>
+<dd><p>Updates map bounding box coordinates after map zoom and checks for zoom limit</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="onMapMoveEnd">
+<span class="sig-name descname"><span class="n"><span class="pre">onMapMoveEnd</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#onMapMoveEnd" title="Link to this definition"></a></dt>
+<dd><p>Updates map bounding box coordinates after map movement</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="getMapBoundingBoxCoordinates">
+<span class="sig-name descname"><span class="n"><span class="pre">getMapBoundingBoxCoordinates</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#getMapBoundingBoxCoordinates" title="Link to this definition"></a></dt>
+<dd><p>Returns the geographical bounds visible in the current map view in an array.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>Array</strong> – Minimum Latitude (South), Maximum Latitude (North), Minimum Longitude (West), Maxiumum Longitude (East)</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="updateMapBoundingBoxCoordinates">
+<span class="sig-name descname"><span class="n"><span class="pre">updateMapBoundingBoxCoordinates</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#updateMapBoundingBoxCoordinates" title="Link to this definition"></a></dt>
+<dd><p>updates the geographical bounds visible in the current map view for data.</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="checkMapZoomLevel">
+<span class="sig-name descname"><span class="n"><span class="pre">checkMapZoomLevel</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#checkMapZoomLevel" title="Link to this definition"></a></dt>
+<dd><p>Checks map zoom level, if beyond limit blurs map</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="dropDownSelection">
+<span class="sig-name descname"><span class="n"><span class="pre">dropDownSelection</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dropDownSelection" title="Link to this definition"></a></dt>
+<dd><p>controls the dropdown for mapCollapsible class</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="tileSetChange">
+<span class="sig-name descname"><span class="n"><span class="pre">tileSetChange</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mapType</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#tileSetChange" title="Link to this definition"></a></dt>
+<dd><p>Changes the map type and background color of appropriate background color of button.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mapType</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="toggleSettings">
+<span class="sig-name descname"><span class="n"><span class="pre">toggleSettings</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#toggleSettings" title="Link to this definition"></a></dt>
+<dd><p>Toggles the settings pane</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="resetLeftPane">
+<span class="sig-name descname"><span class="n"><span class="pre">resetLeftPane</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#resetLeftPane" title="Link to this definition"></a></dt>
+<dd><p>Resets the left pane back to default</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="findAudioSource">
+<span class="sig-name descname"><span class="n"><span class="pre">findAudioSource</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#findAudioSource" title="Link to this definition"></a></dt>
+<dd><p>Finds the audio source active on the map and pans camera to that location</p>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="transcribeLiveAudio">
+<span class="sig-name descname"><span class="n"><span class="pre">transcribeLiveAudio</span></span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">liveAudioSource</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#transcribeLiveAudio" title="Link to this definition"></a></dt>
+<dd><p>sends the desired audio source string to the NeMo model and recieves the transcription feed back from NeMo model</p>
+<dl class="field-list simple">
+<dt class="field-odd">Arguments<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>liveAudioSource</strong> (<em>string</em>) – </p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="js function">
+<dt class="sig sig-object js" id="appendMessage">
+<span class="sig-name descname"><span class="n"><span class="pre">appendMessage</span></span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#appendMessage" title="Link to this definition"></a></dt>
+<dd><p>Appends selected audio feed message to message UI</p>
+</dd></dl>
+
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../api.html" class="btn btn-neutral float-left" title="API Reference for Static Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Aaron Van De Brook.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

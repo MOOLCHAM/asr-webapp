@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HTML Template Documentation &mdash; ASR Webapp Demo  documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="../_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Server Endpoints Reference" href="../blueprints/api.html" />
+    <link rel="prev" title="Static Files" href="../static/static.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            ASR Webapp Demo
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">Contents</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../dependencies.html">Dependency Installation &amp; Setup</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../setup_and_run.html">Setup and Running</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../blueprints/blueprints.html">Endpoint Blueprints</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../static/static.html">Static Files</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">HTML Template Documentation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#base-template">Base Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#index-template">Index Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#about-template">About Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#replay-template">Replay Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#site-map-template">Site Map Template</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#map-templates">Map Templates</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#geographic-map">Geographic Map</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#aeronautical-map">Aeronautical Map</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">API Reference</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../blueprints/api.html">Server Endpoints Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../static/api.html">API Reference for Static Files</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">ASR Webapp Demo</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">HTML Template Documentation</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/templates/templates.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="html-template-documentation">
+<h1>HTML Template Documentation<a class="headerlink" href="#html-template-documentation" title="Link to this heading"></a></h1>
+<p>Since this application is built with Flask, it makes use of the <a class="reference external" href="https://jinja.palletsprojects.com/en/latest/">Jinja2 Template Engine</a>. If you are unfamiliar with the syntax
+of the templates, you should (re-)familiarize yourself with it before continuing. Although the templates and rendered and technically
+written in HTML, the raw templates often look nothing like HTML at first glance.</p>
+<section id="base-template">
+<h2>Base Template<a class="headerlink" href="#base-template" title="Link to this heading"></a></h2>
+<p>File: <code class="docutils literal notranslate"><span class="pre">template.html</span></code></p>
+<p>This file serves - perhaps confusingly - as the base template for the rest of the HTML pages in this project, with the exception
+of the map pages.</p>
+<p>For clarity, this is the base template from which all the other pages are built. From an inheritance point-of-view, this is the parent
+template from which all the other templates inherit.</p>
+<p>There are two blocks defined in this template:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code> - This is reserved for the title of the page (that shows up in the web browser tab)</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">content</span></code> - This is where the entirety of the page content is contained</p></li>
+</ul>
+<p>A style sheet is also automatically linked (<code class="docutils literal notranslate"><span class="pre">static/stylesheets/stylesheet.css</span></code>), so styles defined in that sheet will apply to all
+pages that inherit from <code class="docutils literal notranslate"><span class="pre">template.html</span></code>.</p>
+<p>There is also a navigation bar with the title/name of the application and links to the “Home” and “About” pages.</p>
+</section>
+<section id="index-template">
+<h2>Index Template<a class="headerlink" href="#index-template" title="Link to this heading"></a></h2>
+<p>File: <code class="docutils literal notranslate"><span class="pre">index.html</span></code></p>
+<p>The two blocks from the base template are defined with the following data:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;Home&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">content</span></code>: At the moment this is just two buttons for the geographic and aeronautical (or sectional chart) maps</p></li>
+</ul>
+</section>
+<section id="about-template">
+<h2>About Template<a class="headerlink" href="#about-template" title="Link to this heading"></a></h2>
+<p>File: <code class="docutils literal notranslate"><span class="pre">about.html</span></code></p>
+<p>The two blocks from the base template are defined with the following data:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;About&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">content</span></code>: TODO (nothing at the moment)</p></li>
+</ul>
+</section>
+<section id="replay-template">
+<h2>Replay Template<a class="headerlink" href="#replay-template" title="Link to this heading"></a></h2>
+<p>File: <code class="docutils literal notranslate"><span class="pre">replay.html</span></code></p>
+<p>The two blocks from the base template are defined with the following data:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;Audio</span> <span class="pre">Replays&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">content</span></code>: TODO (nothing at the moment)</p></li>
+</ul>
+</section>
+<section id="site-map-template">
+<h2>Site Map Template<a class="headerlink" href="#site-map-template" title="Link to this heading"></a></h2>
+<p>File: <code class="docutils literal notranslate"><span class="pre">site_map.html</span></code></p>
+<p>The two blocks from the base template are defined with the following data:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">title</span></code>: <code class="docutils literal notranslate"><span class="pre">&quot;Site</span> <span class="pre">Map&quot;</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">content</span></code>: TODO (nothing at the moment)</p></li>
+</ul>
+</section>
+<section id="map-templates">
+<h2>Map Templates<a class="headerlink" href="#map-templates" title="Link to this heading"></a></h2>
+<p>Directory: <code class="docutils literal notranslate"><span class="pre">map</span></code></p>
+<p>This is where the templates for the geographic and aeronautical maps are stored.</p>
+<p><strong>These templates do not extend from ``template.html``, so styles and block definitions will differ between them.</strong></p>
+<section id="geographic-map">
+<h3>Geographic Map<a class="headerlink" href="#geographic-map" title="Link to this heading"></a></h3>
+<p>File: <code class="docutils literal notranslate"><span class="pre">geographic_map.html</span></code></p>
+<p>Since this template is completely independent from the other pages, there are no blocks or base templates defined or used.</p>
+<p>There is a stylesheet specifically for this map that is linked (<code class="docutils literal notranslate"><span class="pre">static/stylesheets/map.css</span></code>) along with the stylesheet for
+Leaflet.</p>
+<p>There are three scripts linked in the head:</p>
+<ol class="arabic simple">
+<li><p>Leaflet library (Leaflet.js)</p></li>
+<li><p>JQuery library (<code class="docutils literal notranslate"><span class="pre">static/vendor/jquery-3.7.0.min.js</span></code>)</p></li>
+<li><p>Leaflet Rotated Marker Extension (<code class="docutils literal notranslate"><span class="pre">static/vendor/leaflet.rotatedMarker.js</span></code>)</p></li>
+</ol>
+<p>There are two more scripts linked in the body of the document:</p>
+<ol class="arabic simple">
+<li><p>Static asset for map initialization and icon rendering and overall app functionalities (<code class="docutils literal notranslate"><span class="pre">static/js/map.js</span></code>)</p></li>
+<li><p>An inline script to initialize selectors, icons, HTTP requests, and start the main loop of the app</p></li>
+</ol>
+</section>
+<section id="aeronautical-map">
+<h3>Aeronautical Map<a class="headerlink" href="#aeronautical-map" title="Link to this heading"></a></h3>
+<p>File: <code class="docutils literal notranslate"><span class="pre">sectional_map.html</span></code></p>
+<p>TODO; this is unimplemented at the moment.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../static/static.html" class="btn btn-neutral float-left" title="Static Files" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../blueprints/api.html" class="btn btn-neutral float-right" title="Server Endpoints Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2023, Aaron Van De Brook.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
