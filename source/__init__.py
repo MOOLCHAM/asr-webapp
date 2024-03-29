@@ -1,11 +1,14 @@
 import os
 from flask import Flask
 
-from .blueprints import index, about, map, data, models, replay, site_map, contact
+from .socketevents import socketio
 
+from .blueprints import index, about, map, data, models, replay, site_map, contact
 
 def create_app(test_config=None):
     app = Flask(__name__, instance_relative_config=True)
+    app.config["DEBUG"] = True
+    app.config["SECRET_KEY"] = "secret"
 
     if test_config is None:
         app.config.from_pyfile("config.py", silent=True)
@@ -22,5 +25,8 @@ def create_app(test_config=None):
     app.register_blueprint(site_map.bp)
     app.register_blueprint(contact.bp)
     app.register_blueprint(models.bp)
+    #app.register_blueprint()
+
+    socketio.init_app(app)
 
     return app

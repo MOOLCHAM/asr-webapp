@@ -43,13 +43,13 @@ def audio_fetch_and_transcribe(stream_url):
         f.close()
 
         # Transcribe
-        transcription = get_transcription_array(filename)
-        print(transcription)
-#        if transcription:
-#            transcription_buffer += transcription.split(" ")  # Add new words to array
-#            transcription_buffer = transcription_buffer[-20:]  # Truncate the array to only the last 20
-#
-#        print(f"transcription_buffer: {transcription_buffer}")
+        transcription = get_transcription_array(filename)[0]
+#        print(transcription)
+        if transcription:
+            transcription_buffer += transcription.split(" ")  # Add new words to array
+            transcription_buffer = transcription_buffer[-20:]  # Truncate the array to only the last 20
+
+        print(f"transcription_buffer: {transcription_buffer}")
 
 
 def get_latest_transcription():
