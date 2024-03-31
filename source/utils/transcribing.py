@@ -1,10 +1,16 @@
+from flask import request
 from ..utils.transcribe_given_audio_file import Transcribe_ATC
+import os
 import numpy as np
 import requests
 import subprocess
 import nemo.collections.asr as nemo_asr
+from ..socketevents import socketio
 
-transcription_buffer = []
+activeTranscriptionSessions = {}
+activeTranscriptionBuffers = {}
+
+#transcription_buffer = []
 
 # this object does the transcription
 #transcribe = Transcribe_ATC()
@@ -22,6 +28,7 @@ def fetch_stream(stream_url):
 def get_transcription_array(filename):
     # Convert mp3 to wav
     subprocess.call(["ffmpeg", "-y", "-i", filename, "stream.wav"])
+
     # TODO address error: Estimating duration from bitrate, this may be inaccurate
     # [src/libmpg123/layer3.c:INT123_do_layer3():1773] error: part2_3_length (1088) too large for available bit count (712)
 
@@ -30,27 +37,49 @@ def get_transcription_array(filename):
     return transcribe.transcribe(["stream.wav"])
 
 
-def audio_fetch_and_transcribe(stream_url):
-    global transcription_buffer
+def audio_fetch_and_transcribe(stream_url, sessionID):
+    activeTranscriptionSessions[sessionID] = True
+    activeTranscriptionBuffers[sessionID] = []
+    #transcriptionProcessSessions[sessionID] = os.getpid()
+
+    #global transcription_buffer
 
     r = fetch_stream(stream_url)
     filename = "stream.mp3"
 
     for block in r.iter_content(6144):
-        # Write 3 seconds of streamed data to the file
-        with open(filename, "wb") as f:
-            f.write(block)
-        f.close()
+        if activeTranscriptionSessions[sessionID] == True:
+            # Write 3 seconds of streamed data to the file
+            with open(filename, "wb") as f:
+                f.write(block)
+            f.close()
 
-        # Transcribe
-        transcription = get_transcription_array(filename)[0]
-#        print(transcription)
-        if transcription:
-            transcription_buffer += transcription.split(" ")  # Add new words to array
-            transcription_buffer = transcription_buffer[-20:]  # Truncate the array to only the last 20
+            # Transcribe
+            transcription = get_transcription_array(filename)[0]
 
-        print(f"transcription_buffer: {transcription_buffer}")
+            #if transcription:
+            #    transcription_buffer += transcription.split(" ")  # Add new words to array
+            #    transcription_buffer = transcription_buffer[-20:]  # Truncate the array to only the last 20
 
+            if transcription:
+                activeTranscriptionBuffers[sessionID] += transcription.split(" ")  # Add new words to array
+                activeTranscriptionBuffers[sessionID] = activeTranscriptionBuffers[sessionID][-20:]  # Truncate the array to only the last 20
 
-def get_latest_transcription():
-    return " ".join(transcription_buffer)
+            # print(f"transcription_buffer: {transcription_buffer}")
+            #transcriptionMessage = " ".join(transcription_buffer)
+            transcriptionMessage = " ".join(activeTranscriptionBuffers[sessionID])
+            socketio.emit("latestTranscription", transcriptionMessage, to=sessionID)
+
+        else:
+            #print("closing stream request")
+            r.close()
+            del activeTranscriptionSessions[request.sid]
+            del activeTranscriptionBuffers[request.sid]
+            break
+
+@socketio.on("endTranscription")
+def endTranscription():
+    activeTranscriptionSessions[request.sid] = False
+
+#def get_latest_transcription():
+#    return " ".join(transcription_buffer)

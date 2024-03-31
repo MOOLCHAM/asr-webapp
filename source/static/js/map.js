@@ -1,3 +1,6 @@
+const socket = io({autoConnect: false});
+socket.connect();
+
 var map = L.map('map',{
     zoomControl: false,
     zoomSnap: 1,
@@ -526,7 +529,7 @@ function draw_airport_markers(airport_data) {
                         // For now we use live atc because near aero doesn't seem to be having a fun time
                         const audioSrc = `http://d.liveatc.net/kdab_del_gnd`;
                         const audioPlayer = $(`
-                            <audio controls src="${audioSrc}" onplay="transcribeLiveAudio('${audioSrc}')"></audio>
+                            <audio controls src="${audioSrc}" onplay="transcribeLiveAudio('${audioSrc}')" onpause="stopTranscription()"></audio>
                         `);
 
                         /*
@@ -564,6 +567,9 @@ function draw_airport_markers(airport_data) {
  * One-time event listener setup.
  */
 function setup_event_listeners() {
+    addEventListener("beforeunload", (event) => {
+        socket.emit("disconnect");
+    });
     // Event listener for clicking on the close button
     $("#closeButton").on('click', (event) => {
         // Hide table
@@ -859,11 +865,15 @@ function transcribeLiveAudio(liveAudioSource) {
     </div>
     `);
     
+    socket.emit("sendFrequencyURL", liveAudioSource);
+
+    /*
     const transcribeRequest = new XMLHttpRequest();
 
     transcribeRequest.open("POST", "/models/transcribe");
     transcribeRequest.responseType = "json";
     transcribeRequest.send(liveAudioSource);
+    */
 
     /*
     $.ajax({
@@ -876,16 +886,16 @@ function transcribeLiveAudio(liveAudioSource) {
     });*/
 }
 
-/**
- * Appends selected audio feed message to message UI
- */
-function appendMessage() {
-    $("#airportTranscriptionSubcategory").append(`
-    <div class="infoPaneCategory">
-        <p>><strong> [Speaker]: </strong>
-            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+socket.on("latestTranscription", function(latestTranscription) {
+    $("#airportTranscriptionSubcategory").prepend(`
+    <div class="transcriptionMessage">
+        <p><strong> [Speaker]: </strong>
+            ${latestTranscription}
         </p>
     </div>
     `);
-}
+});
 
+function stopTranscription() {
+    socket.emit("endTranscription");
+}
