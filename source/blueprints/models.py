@@ -2,7 +2,6 @@ from flask import Blueprint
 import subprocess
 from ..socketevents import socketio
 
-# # from multiprocessing import Process, Queue
 # from asr_project.models import PretrainedFineTunedJasper, Model
 # from asr_project.utils import transcribe_audio_buffer
 
