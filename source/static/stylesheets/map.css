@@ -64,6 +64,10 @@ body,
   flex-direction: column;
 }
 
+.planePane {
+    height: 480px;
+}
+
 #closeButton {
   height: 24px; 
   width: 24px;
